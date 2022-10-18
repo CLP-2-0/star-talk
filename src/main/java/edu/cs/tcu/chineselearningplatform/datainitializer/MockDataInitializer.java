@@ -1,7 +1,7 @@
-package edu.tcu.chineselearningplatform.datainitializer;
+package edu.cs.tcu.chineselearningplatform.datainitializer;
 
-import edu.tcu.chineselearningplatform.dao.UserRepository;
-import edu.tcu.chineselearningplatform.entity.User;
+import edu.cs.tcu.chineselearningplatform.dao.UserRepository;
+import edu.cs.tcu.chineselearningplatform.entity.User;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
