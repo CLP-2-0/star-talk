@@ -1,9 +1,7 @@
-package edu.tcu.chineselearningplatform.entity;
+package edu.cs.tcu.chineselearningplatform.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,42 +9,28 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@Document("users")
+@Document("User")
 public class User implements Serializable {
     @Id
     private String id;
-    private String fname;
-    private String lname;
-    @Indexed(unique=true)
+    private String name;
     private String username;
     private String password;
     private String role;
     @DBRef
-    @JsonBackReference
-    private List<Course> assigned = new ArrayList<>();
-    @DBRef
-    @JsonBackReference
-    private List<Course> created = new ArrayList<>();
+    private List<Course> courses = new ArrayList<Course>();
 
     public User(String username) {
         this.username = username;
     }
 
 
-    public String getFname() {
-        return fname;
+    public String getName() {
+        return name;
     }
 
-    public void setFname(String fname) {
-        this.fname = fname;
-    }
-
-    public String getLname() {
-        return lname;
-    }
-
-    public void setLname(String lname) {
-        this.lname = lname;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getUsername() {
@@ -62,7 +46,6 @@ public class User implements Serializable {
         return password;
     }
 
-    @JsonIgnore
     public void setPassword(String password) {
         this.password = password;
     }
@@ -73,6 +56,23 @@ public class User implements Serializable {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+    @JsonIgnore
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
     }
 
     @Override
