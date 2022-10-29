@@ -3,7 +3,6 @@ package edu.cs.tcu.chineselearningplatform.controller;
 import edu.cs.tcu.chineselearningplatform.entity.util.Result;
 import edu.cs.tcu.chineselearningplatform.entity.util.StatusCode;
 import edu.cs.tcu.chineselearningplatform.service.CourseService;
-import edu.cs.tcu.chineselearningplatform.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
