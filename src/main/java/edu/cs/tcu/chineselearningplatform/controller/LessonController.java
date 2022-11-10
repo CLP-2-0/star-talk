@@ -17,16 +17,6 @@ public class LessonController {
     }
 
     /**
-     * Method to find one lesson.
-     * @param id of the lesson to be sought.
-     * @return Result object that contains flag, status code, message, and found lesson.
-     */
-    @GetMapping("/{lessonId}")
-    @ResponseBody
-    public Result findById(@PathVariable String lessonId) {
-        return new Result(true, StatusCode.SUCCESS, "Find lesson by id success", lessonService.findById(lessonId));
-    }
-    /**
      * Method to save one lesson.
      * @param lesson to be saved.
      * @return Result object that contains flag, status code, message.
@@ -37,4 +27,15 @@ public class LessonController {
         lessonService.save(newLesson);
         return new Result(true, StatusCode.SUCCESS, "Save lesson success");
     }
+    /**
+     * Method to find one lesson.
+     * @param id of the lesson to be sought.
+     * @return Result object that contains flag, status code, message, and found lesson.
+     */
+    @GetMapping("/{lessonId}")
+    @ResponseBody
+    public Result findById(@PathVariable String lessonId) {
+        return new Result(true, StatusCode.SUCCESS, "Find lesson by id success", lessonService.findById(lessonId));
+    }
+
 }
