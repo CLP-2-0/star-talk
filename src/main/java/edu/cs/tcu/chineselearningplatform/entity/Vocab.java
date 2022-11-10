@@ -1,5 +1,6 @@
 package edu.cs.tcu.chineselearningplatform.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -61,7 +62,7 @@ public class Vocab implements Serializable {
     public void setType(String type) {
         this.type = type;
     }
-
+    @JsonIgnore
     public Lesson getLesson() {
         return lesson;
     }
