@@ -19,7 +19,7 @@ public class VocabService {
     /**
      * Method to find one vocab.
      * @param id of the vocab to be sought.
-     * @return Result object that contains flag, status code, message, and found vocab.
+     * @return Vocab object
      */
     public Vocab findByObjectId(String id) {
         return vocabRepository.findByObjectId(new ObjectId(id));
@@ -28,7 +28,6 @@ public class VocabService {
     /**
      * Method to save one vocab.
      * @param vocab to be saved.
-     * @return Result object that contains flag, status code, message.
      */
     public void save(Vocab newVocab, String lessonId) {
         Lesson lesson = lessonService.findById(lessonId);
@@ -36,12 +35,30 @@ public class VocabService {
         vocabRepository.save(newVocab);
         lessonService.save(lesson);
     }
-
+    /**
+     * Method to delete one vocab.
+     * @param vocab to be deleted.
+     */
     public void delete(String vocabId, String lessonId) {
         Lesson lesson = lessonService.findById(lessonId);
         Vocab vocab = vocabRepository.findByObjectId(new ObjectId(vocabId));
         lesson.removeVocab(vocab);
         vocabRepository.delete(vocab);
         lessonService.save(lesson);
+    }
+
+    public void update(String vocabId, Vocab updatedVocab, String lessonId) {
+        Lesson lesson = lessonService.findById(lessonId);
+        Vocab vocab = vocabRepository.findByObjectId(new ObjectId(vocabId));
+        System.out.println("first " + lessonId);
+
+        updatedVocab.setId(vocabId);
+
+        lesson.updateVocab(vocab, updatedVocab);
+        System.out.println("second " + vocabId);
+
+        vocabRepository.save(updatedVocab);
+        lessonService.save(lesson);
+
     }
 }
