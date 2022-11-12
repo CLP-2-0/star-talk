@@ -49,4 +49,17 @@ public class VocabController {
         vocabService.delete(vocabId, lessonId);
         return new Result(true, StatusCode.SUCCESS, "Delete vocab success!");
     }
+
+    /**
+     * Method to update a vocab.
+     * @param id of the lesson the vocab belongs to, id of the vocab.
+     * @return Result object that contains flag, status code, message.
+     */
+    @PutMapping("/update/{lessonId}/{vocabId}")
+    @ResponseBody
+    public Result update(@PathVariable String lessonId, @PathVariable String vocabId, @RequestBody Vocab updatedVocab) {
+        vocabService.update(vocabId, updatedVocab, lessonId);
+        return new Result(true, StatusCode.SUCCESS, "Update vocab success!");
+    }
+
 }

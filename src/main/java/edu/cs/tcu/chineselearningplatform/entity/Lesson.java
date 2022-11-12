@@ -35,6 +35,19 @@ public class Lesson implements Serializable {
         vocab.setLesson(null);
     }
 
+    public void updateVocab(Vocab oldVocab, Vocab updatedVocab) {
+        int idx = -1;
+        for(int i = 0; i < vocabs.size(); i++){
+            Vocab vocab = vocabs.get(i);
+            if(vocab.getMeaning().equals(oldVocab.getMeaning())){
+                idx = i;
+            }
+        }
+
+        this.vocabs.set(idx, updatedVocab);
+        updatedVocab.setLesson(this);
+    }
+
     public String getId() {
         return id;
     }
