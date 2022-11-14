@@ -60,5 +60,17 @@ public class LessonController {
     public Result findById(@PathVariable String lessonId) {
         return new Result(true, StatusCode.SUCCESS, "Find lesson by id success", lessonService.findById(lessonId));
     }
+    //
+    /**
+     * Method to save one lesson.
+     * @param lesson to be saved.
+     * @return Result object that contains flag, status code, message.
+     */
+    @PostMapping
+    @ResponseBody
+    public Result save(@RequestBody Lesson newLesson) {
+        lessonService.save(newLesson);
+        return new Result(true, StatusCode.SUCCESS, "Save lesson success");
+    }
 
 }
