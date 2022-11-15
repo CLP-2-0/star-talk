@@ -7,6 +7,8 @@ import edu.cs.tcu.chineselearningplatform.service.LessonService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/lessons")
 public class LessonController {
@@ -16,6 +18,18 @@ public class LessonController {
         this.lessonService = lessonService;
     }
 
+    //
+    /**
+     * Method to save one lesson.
+     * @param lesson to be saved.
+     * @return Result object that contains flag, status code, message.
+     */
+    @PostMapping
+    @ResponseBody
+    public Result save(@RequestBody Lesson newLesson) {
+        lessonService.save(newLesson);
+        return new Result(true, StatusCode.SUCCESS, "Save lesson success");
+    }
     /**
      * Method to find one lesson.
      * @param id of the lesson to be sought.
@@ -26,15 +40,38 @@ public class LessonController {
     public Result findById(@PathVariable String lessonId) {
         return new Result(true, StatusCode.SUCCESS, "Find lesson by id success", lessonService.findById(lessonId));
     }
+
     /**
-     * Method to save one lesson.
-     * @param lesson to be saved.
+     * Method to find all lesson.
+     * @param
+     * @return Result object that contains flag, status code, message, and found lesson.
+     */
+    @GetMapping
+    @ResponseBody
+    public Result findAll(){
+        List<Lesson> all = lessonService.findAll();
+        return new Result(true,StatusCode.SUCCESS,"Find all lessons", all);
+    }
+    /**
+     * Method to update one lesson.
+     * @param lesson to be updated.
      * @return Result object that contains flag, status code, message.
      */
-    @PostMapping("/save")
+    @PutMapping("/{lessonId}")
     @ResponseBody
-    public Result save(@RequestBody Lesson newLesson) {
-        lessonService.save(newLesson);
-        return new Result(true, StatusCode.SUCCESS, "Save lesson success");
+    public Result update(@PathVariable String lessonId, @RequestBody Lesson updatedLesson){
+        lessonService.update(lessonId,updatedLesson);
+        return new Result(true, StatusCode.SUCCESS, "Update lesson success");
+    }
+    /**
+     * Method to delte one lesson.
+     * @param lesson to be deleted.
+     * @return Result object that contains flag, status code, message.
+     */
+    @DeleteMapping("/{lessonId}")
+    @ResponseBody
+    public Result delete(@PathVariable String lessonId){
+        lessonService.delete(lessonId);
+        return new Result(true,StatusCode.SUCCESS,"Delete lesson success");
     }
 }
