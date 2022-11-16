@@ -15,6 +15,7 @@ public class DBDataInitializer implements CommandLineRunner {
     }
 
     @Override
+    /*
     public void run(String... args) throws Exception {
         Vocab v1 = new Vocab();
         v1.setWord("无论");
@@ -57,7 +58,7 @@ public class DBDataInitializer implements CommandLineRunner {
         v6.setType("conj.");
         v6.setMeaning("generally speaking");
         // v6.setLesson();
-
+        
         Vocab v7 = new Vocab();
         v7.setWord("正式");
         v7.setPinyin("zhèngshì");
@@ -306,3 +307,5 @@ public class DBDataInitializer implements CommandLineRunner {
         vocabRepository.save(v36);
     }
 }
+
+     */
