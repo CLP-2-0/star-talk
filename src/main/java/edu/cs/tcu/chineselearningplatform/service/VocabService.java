@@ -3,18 +3,26 @@ package edu.cs.tcu.chineselearningplatform.service;
 import edu.cs.tcu.chineselearningplatform.dao.VocabRepository;
 import edu.cs.tcu.chineselearningplatform.entity.Lesson;
 import edu.cs.tcu.chineselearningplatform.entity.Vocab;
+import edu.cs.tcu.chineselearningplatform.wrapper.VocabWrapper;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class VocabService {
     private VocabRepository vocabRepository;
     private LessonService lessonService;
+    private VocabWrapper vocabWrapper;
 
     public VocabService(VocabRepository vocabRepository, LessonService lessonService){
         this.vocabRepository = vocabRepository;
         this.lessonService = lessonService;
     }
+
+
+
 
     /**
      * Method to find one vocab.
@@ -34,6 +42,12 @@ public class VocabService {
         lesson.addVocab(newVocab);
         vocabRepository.save(newVocab);
         lessonService.save(lesson);
+    }
+
+    public void saveVocabs(List<Vocab> vocabs, String lessonId){
+        for(Vocab v: vocabs){
+            save(v, lessonId);
+        }
     }
     /**
      * Method to delete one vocab.

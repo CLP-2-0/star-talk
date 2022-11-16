@@ -1,11 +1,15 @@
 package edu.cs.tcu.chineselearningplatform.controller;
 
+import edu.cs.tcu.chineselearningplatform.entity.Lesson;
 import edu.cs.tcu.chineselearningplatform.entity.Vocab;
 import edu.cs.tcu.chineselearningplatform.entity.util.Result;
 import edu.cs.tcu.chineselearningplatform.entity.util.StatusCode;
 import edu.cs.tcu.chineselearningplatform.service.VocabService;
+import edu.cs.tcu.chineselearningplatform.wrapper.VocabWrapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/vocabs")
@@ -18,7 +22,7 @@ public class VocabController {
 
     /**
      * Method to find one vocab.
-     * @param id of the vocab to be sought.
+     * @param "id" of the vocab to be sought.
      * @return Result object that contains flag, status code, message, and found vocab.
      */
     @GetMapping("/{vocabId}")
@@ -28,7 +32,7 @@ public class VocabController {
     }
     /**
      * Method to save one vocab.
-     * @param vocab to be saved.
+     * @param "vocab" to be saved.
      * @return Result object that contains flag, status code, message.
      */
     @PostMapping("/save/{lessonId}")
@@ -37,10 +41,18 @@ public class VocabController {
         vocabService.save(newVocab, lessonId);
         return new Result(true, StatusCode.SUCCESS, "Save vocab success");
     }
+    @PostMapping("/save-vocab/{lessonId}")
+    @ResponseBody
+    public Result save(@PathVariable String lessonId, @RequestBody List<Vocab> vocabs){
+        {
+            vocabService.saveVocabs(vocabs, lessonId);
+            return new Result(true, StatusCode.SUCCESS, "Save vocabList success");
+        }
+    }
 
     /**
      * Method to delete a vocab.
-     * @param id of the lesson the vocab belongs to, id of the vocab.
+     * @param "id" of the lesson the vocab belongs to, id of the vocab.
      * @return Result object that contains flag, status code, message.
      */
     @DeleteMapping("/delete/{lessonId}/{vocabId}")
@@ -52,7 +64,7 @@ public class VocabController {
 
     /**
      * Method to update a vocab.
-     * @param id of the lesson the vocab belongs to, id of the vocab.
+     * @param "id" of the lesson the vocab belongs to, id of the vocab.
      * @return Result object that contains flag, status code, message.
      */
     @PutMapping("/update/{lessonId}/{vocabId}")
