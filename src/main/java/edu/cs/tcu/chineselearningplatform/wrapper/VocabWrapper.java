@@ -10,6 +10,7 @@ public class VocabWrapper {
 
     public VocabWrapper(){
         vocabs = new ArrayList<>();
+
     }
 
 
