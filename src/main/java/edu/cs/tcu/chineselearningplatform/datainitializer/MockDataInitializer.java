@@ -1,12 +1,7 @@
 package edu.cs.tcu.chineselearningplatform.datainitializer;
 
-import edu.cs.tcu.chineselearningplatform.dao.LessonRepository;
 import edu.cs.tcu.chineselearningplatform.dao.UserRepository;
-import edu.cs.tcu.chineselearningplatform.dao.HomeworkRepository;
 
-import edu.cs.tcu.chineselearningplatform.entity.Homework;
-import edu.cs.tcu.chineselearningplatform.entity.Lesson;
-import edu.cs.tcu.chineselearningplatform.entity.Vocab;
 import edu.cs.tcu.chineselearningplatform.entity.User;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
