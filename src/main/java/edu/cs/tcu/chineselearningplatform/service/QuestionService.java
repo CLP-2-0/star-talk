@@ -3,10 +3,12 @@ package edu.cs.tcu.chineselearningplatform.service;
 import edu.cs.tcu.chineselearningplatform.dao.QuestionRepository;
 import edu.cs.tcu.chineselearningplatform.entity.Question;
 import org.bson.types.ObjectId;
+import org.springframework.stereotype.Service;
 
 
 import java.util.List;
 
+@Service
 public class QuestionService {
     private QuestionRepository questionRepository;
 
