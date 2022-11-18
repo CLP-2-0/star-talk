@@ -1,9 +1,7 @@
 package edu.cs.tcu.chineselearningplatform.service;
 
 import edu.cs.tcu.chineselearningplatform.dao.QuestionRepository;
-import edu.cs.tcu.chineselearningplatform.entity.Lesson;
 import edu.cs.tcu.chineselearningplatform.entity.Question;
-import edu.cs.tcu.chineselearningplatform.entity.Vocab;
 import org.bson.types.ObjectId;
 
 
@@ -11,12 +9,10 @@ import java.util.List;
 
 public class QuestionService {
     private QuestionRepository questionRepository;
-    private LessonService lessonService;
 
 
-    public QuestionService(QuestionRepository questionRepository, LessonService lessonService){
+    public QuestionService(QuestionRepository questionRepository){
         this.questionRepository = questionRepository;
-        this.lessonService = lessonService;
     }
 
     /**
@@ -33,11 +29,8 @@ public class QuestionService {
      * @param question to be saved.
      * @return Result object that contains flag, status code, message.
      */
-    public void save(Question newQuestion, String lessonId) {
-        Lesson lesson = lessonService.findById(lessonId);
-        lesson.addQuestion(newQuestion);
+    public void save(Question newQuestion) {
         questionRepository.save(newQuestion);
-        lessonService.save(lesson);
     }
 
     /**
@@ -66,11 +59,9 @@ public class QuestionService {
      * @param question to be deleted.
      * @return Result object that contains flag, status code, message.
      */
-    public void delete(String questionId, String lessonId) {
-        Lesson lesson = lessonService.findById(lessonId);
+    public void delete(String questionId) {
         Question question = questionRepository.findByObjectId(new ObjectId(questionId));
         questionRepository.delete(question);
-        lessonService.save(lesson);
     }
 
 }

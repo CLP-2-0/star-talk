@@ -25,10 +25,10 @@ public class QuestionController {
      * @param question to be saved.
      * @return Result object that contains flag, status code, message.
      */
-    @PostMapping("/save/{lessonId}")
+    @PostMapping("/questions")
     @ResponseBody
-    public Result save(@RequestBody String lessonId, @RequestBody Question newQuestion) {
-        questionService.save(newQuestion, lessonId);
+    public Result save( @RequestBody Question newQuestion) {
+        questionService.save(newQuestion);
         return new Result(true, StatusCode.SUCCESS, "Save question success");
     }
 
@@ -37,7 +37,7 @@ public class QuestionController {
      * @param id of the question to be sought.
      * @return Result object that contains flag, status code, message, and found lesson.
      */
-    @GetMapping("/{questionId}")
+    @GetMapping("/questions/{questionId}")
     @ResponseBody
     public Result findById(@PathVariable String questionId) {
         return new Result(true, StatusCode.SUCCESS, "Find question by id success", questionService.findByObjectId(questionId));
@@ -48,7 +48,7 @@ public class QuestionController {
      * @param
      * @return Result object that contains flag, status code, message, and found lesson.
      */
-    @GetMapping
+    @GetMapping("/questions")
     @ResponseBody
     public Result findAll(){
         List<Question> all = questionService.findAll();
@@ -60,7 +60,7 @@ public class QuestionController {
      * @param question to be updated.
      * @return Result object that contains flag, status code, message.
      */
-    @PutMapping("/update/{lessonId}/{questionId}")
+    @PutMapping("/questions/{questionId}")
     @ResponseBody
     public Result update( @PathVariable String questionId, @RequestBody Question updatedQuestion){
         questionService.update(questionId, updatedQuestion);
@@ -72,10 +72,10 @@ public class QuestionController {
      * @param question to be deleted.
      * @return Result object that contains flag, status code, message.
      */
-    @DeleteMapping("/delete/{lessonId}/{questionId}")
+    @DeleteMapping("/questions/{questionId}")
     @ResponseBody
-    public Result deleteById(@PathVariable String lessonId, @PathVariable String questionId){
-        questionService.delete(questionId, lessonId);
+    public Result delete( @PathVariable String questionId){
+        questionService.delete(questionId);
         return new Result(true,StatusCode.SUCCESS,"Delete question success");
     }
 }
