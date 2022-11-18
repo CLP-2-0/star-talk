@@ -25,7 +25,7 @@ public class QuestionController {
      * @param question to be saved.
      * @return Result object that contains flag, status code, message.
      */
-    @PostMapping("/questions")
+    @PostMapping
     @ResponseBody
     public Result save( @RequestBody Question newQuestion) {
         questionService.save(newQuestion);
@@ -37,7 +37,7 @@ public class QuestionController {
      * @param id of the question to be sought.
      * @return Result object that contains flag, status code, message, and found lesson.
      */
-    @GetMapping("/questions/{questionId}")
+    @GetMapping("/{questionId}")
     @ResponseBody
     public Result findById(@PathVariable String questionId) {
         return new Result(true, StatusCode.SUCCESS, "Find question by id success", questionService.findByObjectId(questionId));
@@ -48,7 +48,7 @@ public class QuestionController {
      * @param
      * @return Result object that contains flag, status code, message, and found lesson.
      */
-    @GetMapping("/questions")
+    @GetMapping
     @ResponseBody
     public Result findAll(){
         List<Question> all = questionService.findAll();
@@ -60,7 +60,7 @@ public class QuestionController {
      * @param question to be updated.
      * @return Result object that contains flag, status code, message.
      */
-    @PutMapping("/questions/{questionId}")
+    @PutMapping("/{questionId}")
     @ResponseBody
     public Result update( @PathVariable String questionId, @RequestBody Question updatedQuestion){
         questionService.update(questionId, updatedQuestion);
@@ -72,7 +72,7 @@ public class QuestionController {
      * @param question to be deleted.
      * @return Result object that contains flag, status code, message.
      */
-    @DeleteMapping("/questions/{questionId}")
+    @DeleteMapping("/{questionId}")
     @ResponseBody
     public Result delete( @PathVariable String questionId){
         questionService.delete(questionId);
