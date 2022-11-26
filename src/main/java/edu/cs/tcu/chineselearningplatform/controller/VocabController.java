@@ -31,7 +31,7 @@ public class VocabController {
         return new Result(true, StatusCode.SUCCESS, "Find vocab by id success", vocabService.findByObjectId(vocabId));
     }
 
-    @GetMapping("/{lessonId}")
+    @GetMapping("vocab-lesson/{lessonId}")
     @ResponseBody
     public Result findAllByLesson(@PathVariable String lessonId){
         return new Result(true, StatusCode.SUCCESS, "list of all vocabs for that lesson success", vocabService.findAllByLesson(lessonId));

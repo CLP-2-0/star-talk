@@ -13,7 +13,7 @@ public interface VocabRepository extends MongoRepository<Vocab, String> {
     @Query("{ '_id': ?0}")
     Vocab findByObjectId(ObjectId id);
 
-    @Query("{'lesson': ?0")
+    @Query("{'lesson': ?0}")
     List<Vocab> findAllByLesson(String LessonId);
 
 }
