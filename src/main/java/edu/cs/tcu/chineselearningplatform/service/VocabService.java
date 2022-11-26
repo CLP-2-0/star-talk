@@ -33,6 +33,8 @@ public class VocabService {
         return vocabRepository.findByObjectId(new ObjectId(id));
     }
 
+    public List<Vocab> findAll(String lessonId){return vocabRepository.findAllByLesson(lessonId);}
+
     /**
      * Method to save one vocab.
      * @param vocab to be saved.
