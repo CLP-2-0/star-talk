@@ -22,8 +22,8 @@ public class QuestionService {
      * @param id of the question to be sought.
      * @return Result object that contains flag, status code, message, and found homework.
      */
-    public Question findByObjectId(String id) {
-        return questionRepository.findByObjectId(new ObjectId(id));
+    public Question findById(String id) {
+        return questionRepository.findById(id).get();
     }
 
     /**
@@ -47,7 +47,6 @@ public class QuestionService {
     /**
      * Method to update one question.
      * @param question to be updated.
-     * @param lessonId
      * @return Result object that contains flag, status code, message.
      */
     public void update(String questionId, Question updatedQuestion) {
@@ -62,7 +61,7 @@ public class QuestionService {
      * @return Result object that contains flag, status code, message.
      */
     public void delete(String questionId) {
-        Question question = questionRepository.findByObjectId(new ObjectId(questionId));
+        Question question = questionRepository.findById(questionId).get();
         questionRepository.delete(question);
     }
 

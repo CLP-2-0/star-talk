@@ -40,7 +40,7 @@ public class QuestionController {
     @GetMapping("/{questionId}")
     @ResponseBody
     public Result findById(@PathVariable String questionId) {
-        return new Result(true, StatusCode.SUCCESS, "Find question by id success", questionService.findByObjectId(questionId));
+        return new Result(true, StatusCode.SUCCESS, "Find question by id success", questionService.findById(questionId));
     }
 
     /**
