@@ -33,7 +33,9 @@ public class VocabController {
 
     @GetMapping("/{lessonId}")
     @ResponseBody
-    public Result findAll()
+    public Result findAllByLesson(@PathVariable String lessonId){
+        return new Result(true, StatusCode.SUCCESS, "list of all vocabs for that lesson success", vocabService.findAllByLesson(lessonId));
+    }
     /**
      * Method to save one vocab.
      * @param "vocab" to be saved.
