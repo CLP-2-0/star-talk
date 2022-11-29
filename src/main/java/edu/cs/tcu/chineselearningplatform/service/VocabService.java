@@ -45,6 +45,8 @@ public class VocabService {
     }
 
     public void saveVocabs(List<Vocab> vocabs, String lessonId){
+        Lesson lesson = lessonService.findById(lessonId);
+        lesson.setVocabs(new ArrayList<>());
         for(Vocab v: vocabs){
             save(v, lessonId);
         }

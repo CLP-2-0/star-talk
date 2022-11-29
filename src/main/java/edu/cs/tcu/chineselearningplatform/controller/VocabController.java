@@ -41,6 +41,11 @@ public class VocabController {
         vocabService.save(newVocab, lessonId);
         return new Result(true, StatusCode.SUCCESS, "Save vocab success");
     }
+    /**
+     * Method to save vocab list.
+     * @param vocabList to be saved.
+     * @return Result object that contains flag, status code, message.
+     */
     @PostMapping("/{lessonId}")
     @ResponseBody
     public Result save(@PathVariable String lessonId, @RequestBody List<Vocab> vocabs){
