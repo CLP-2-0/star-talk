@@ -18,10 +18,20 @@ public class User implements Serializable {
     private String password;
     private String role;
     @DBRef
-    private List<Course> courses = new ArrayList<Course>();
+    private List<Section> sections = new ArrayList<>();
 
     public User(String username) {
         this.username = username;
+    }
+
+    public void addSection(Section section){
+        this.sections.add(section);
+        section.setInstructor(this);
+    }
+
+    public void removeSection(Section section){
+        this.sections.remove(section);
+        section.setInstructor(null);
     }
 
 
@@ -67,12 +77,12 @@ public class User implements Serializable {
         this.id = id;
     }
     @JsonIgnore
-    public List<Course> getCourses() {
-        return courses;
+    public List<Section> getSections() {
+        return sections;
     }
 
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
+    public void setSections(List<Section> sections) {
+        this.sections = sections;
     }
 
     @Override
