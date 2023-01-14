@@ -46,8 +46,12 @@ public class LessonService {
      * @return Result object that contains flag, status code, message.
      */
     public void update(String lessonId, Lesson updatedLesson) {
-        updatedLesson.setId(lessonId);
-        lessonRepository.save(updatedLesson);
+        Lesson lesson = lessonRepository.findById(lessonId).get();
+        lesson.setId(lessonId);
+        lesson.setTitle(updatedLesson.getTitle());
+        lesson.setContent(updatedLesson.getContent());
+        System.out.println(lesson.getContent());
+        lessonRepository.save(lesson);
 
     }
     /**

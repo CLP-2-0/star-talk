@@ -25,10 +25,10 @@ public class QuestionController {
      * @param question to be saved.
      * @return Result object that contains flag, status code, message.
      */
-    @PostMapping
+    @PostMapping("/{lessonId}")
     @ResponseBody
-    public Result save( @RequestBody Question newQuestion) {
-        questionService.save(newQuestion);
+    public Result save( @RequestBody Question newQuestion, @PathVariable String lessonId) {
+        questionService.save(newQuestion, lessonId);
         return new Result(true, StatusCode.SUCCESS, "Save question success");
     }
 

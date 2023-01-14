@@ -1,6 +1,7 @@
 package edu.cs.tcu.chineselearningplatform.service;
 
 import edu.cs.tcu.chineselearningplatform.dao.QuestionRepository;
+import edu.cs.tcu.chineselearningplatform.entity.Lesson;
 import edu.cs.tcu.chineselearningplatform.entity.Question;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
@@ -11,10 +12,13 @@ import java.util.List;
 @Service
 public class QuestionService {
     private QuestionRepository questionRepository;
+    private LessonService lessonService;
 
 
-    public QuestionService(QuestionRepository questionRepository){
+    public QuestionService(QuestionRepository questionRepository, LessonService lessonService){
+
         this.questionRepository = questionRepository;
+        this.lessonService = lessonService;
     }
 
     /**
@@ -31,8 +35,12 @@ public class QuestionService {
      * @param question to be saved.
      * @return Result object that contains flag, status code, message.
      */
-    public void save(Question newQuestion) {
+    public void save(Question newQuestion, String lessonId) {
+        Lesson lesson = lessonService.findById(lessonId);
+        lesson.addQuestion(newQuestion);
+        System.out.println(lessonId);
         questionRepository.save(newQuestion);
+        lessonService.save(lesson);
     }
 
     /**
