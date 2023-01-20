@@ -30,6 +30,11 @@ public class QuestionService {
         return questionRepository.findById(id).get();
     }
 
+    public List<Question> findAllByLesson(String lessonId) {
+        return questionRepository.findAllByLesson(lessonId);
+    }
+
+
     /**
      * Method to save one question.
      * @param question to be saved.

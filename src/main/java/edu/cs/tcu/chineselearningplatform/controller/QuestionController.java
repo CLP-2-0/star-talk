@@ -44,6 +44,18 @@ public class QuestionController {
     }
 
     /**
+     * Method to find all questions for a lesson.
+     * @param id of the question under a lesson to be sought.
+     * @return Result object that contains flag, status code, message, and found lesson.
+     */
+    @GetMapping("question-lesson/{lessonId}")
+    @ResponseBody
+    public Result findAllByLesson(@PathVariable String lessonId) {
+        return new Result(true, StatusCode.SUCCESS, "List of all questions for that lesson", questionService.findAllByLesson(lessonId));
+    }
+
+
+    /**
      * Method to find all questions.
      * @param
      * @return Result object that contains flag, status code, message, and found lesson.

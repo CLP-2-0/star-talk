@@ -13,5 +13,4 @@ public interface VocabRepository extends MongoRepository<Vocab, String> {
 
     @Query("{'lesson': ?0}")
     List<Vocab> findAllByLesson(String LessonId);
-
 }
