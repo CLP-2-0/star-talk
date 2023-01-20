@@ -44,10 +44,15 @@ public class VocabController {
     @PostMapping("/save/{lessonId}")
     @ResponseBody
     public Result save(@PathVariable String lessonId, @RequestBody Vocab newVocab) {
-        vocabService.save(newVocab, lessonId);
+//        vocabService.save(newVocab, lessonId);
         return new Result(true, StatusCode.SUCCESS, "Save vocab success");
     }
-    @PostMapping("/save-vocab/{lessonId}")
+    /**
+     * Method to save vocab list.
+     * @param vocabList to be saved.
+     * @return Result object that contains flag, status code, message.
+     */
+    @PostMapping("/{lessonId}")
     @ResponseBody
     public Result save(@PathVariable String lessonId, @RequestBody List<Vocab> vocabs){
         {

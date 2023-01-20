@@ -9,12 +9,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.io.Serializable;
 
 
-@Document("Questions")
+@Document("Question")
 public class Question implements Serializable {
     @Id
     private String id;
-    private String lessonId;
-    private String content;
+    private String question;
+    private String answer;
 
     @DBRef
     private Lesson belongedTo;
@@ -31,20 +31,20 @@ public class Question implements Serializable {
         this.id = id;
     }
 
-    public String getLessonId() {
-        return lessonId;
+    public String getQuestion() {
+        return question;
     }
 
-    public void setLessonId(String lessonId) {
-        this.lessonId = lessonId;
+    public void setQuestion(String question) {
+        this.question = question;
     }
 
-    public String getContent() {
-        return content;
+    public String getAnswer() {
+        return answer;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 
     @JsonIgnore

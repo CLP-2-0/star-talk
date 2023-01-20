@@ -25,10 +25,10 @@ public class QuestionController {
      * @param question to be saved.
      * @return Result object that contains flag, status code, message.
      */
-    @PostMapping
+    @PostMapping("/{lessonId}")
     @ResponseBody
-    public Result save( @RequestBody Question newQuestion) {
-        questionService.save(newQuestion);
+    public Result save( @RequestBody Question newQuestion, @PathVariable String lessonId) {
+        questionService.save(newQuestion, lessonId);
         return new Result(true, StatusCode.SUCCESS, "Save question success");
     }
 
@@ -42,6 +42,18 @@ public class QuestionController {
     public Result findById(@PathVariable String questionId) {
         return new Result(true, StatusCode.SUCCESS, "Find question by id success", questionService.findById(questionId));
     }
+
+    /**
+     * Method to find all questions for a lesson.
+     * @param id of the question under a lesson to be sought.
+     * @return Result object that contains flag, status code, message, and found lesson.
+     */
+    @GetMapping("question-lesson/{lessonId}")
+    @ResponseBody
+    public Result findAllByLesson(@PathVariable String lessonId) {
+        return new Result(true, StatusCode.SUCCESS, "List of all questions for that lesson", questionService.findAllByLesson(lessonId));
+    }
+
 
     /**
      * Method to find all questions.

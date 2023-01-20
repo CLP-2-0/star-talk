@@ -22,4 +22,12 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
+    /**
+     * Method to save an user.
+     * @param user to be saved.
+     */
+    public void save(User user) {
+        userRepository.save(user);
+    }
+
 }

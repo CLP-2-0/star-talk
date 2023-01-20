@@ -39,17 +39,20 @@ public class VocabService {
      * Method to save one vocab.
      * @param vocab to be saved.
      */
-    public void save(Vocab newVocab, String lessonId) {
-        Lesson lesson = lessonService.findById(lessonId);
-        lesson.addVocab(newVocab);
+    public void save(Vocab newVocab, String lessonId, List newVocabs) {
+        newVocabs.add(newVocab);
         vocabRepository.save(newVocab);
-        lessonService.save(lesson);
     }
 
     public void saveVocabs(List<Vocab> vocabs, String lessonId){
+        Lesson lesson = lessonService.findById(lessonId);
+        List newVocabs = new ArrayList<>();
         for(Vocab v: vocabs){
-            save(v, lessonId);
+            System.out.println(v.getWord());
+            save(v, lessonId, newVocabs);
         }
+        lesson.setVocabs(newVocabs);
+        lessonService.save(lesson);
     }
     /**
      * Method to delete one vocab.
