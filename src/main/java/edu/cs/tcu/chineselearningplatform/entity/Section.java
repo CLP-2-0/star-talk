@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Document("Section")
-public class Course implements Serializable {
+public class Section implements Serializable {
     @Id
     private String id;
     private String section;
@@ -19,7 +19,7 @@ public class Course implements Serializable {
     @DBRef
     private List<User> students;
 
-    public Course() {
+    public Section() {
 
     }
 

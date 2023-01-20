@@ -16,6 +16,8 @@ public class Lesson implements Serializable {
     private String content;
     @DBRef
     private List<Vocab> vocabs = new ArrayList<>();
+    @DBRef
+    private List<Question> questionsBank = new ArrayList<>();
 
     public Lesson() {
 
@@ -46,6 +48,25 @@ public class Lesson implements Serializable {
 
         this.vocabs.set(idx, updatedVocab);
         updatedVocab.setLesson(this);
+    }
+
+    public void addQuestion(Question question){
+
+        this.questionsBank.add(question);
+        question.setLesson(this);
+    }
+
+    public void removeQuestion(Question question){
+        this.questionsBank.remove(question);
+        question.setLesson(null);
+    }
+
+    public List<Question> getQuestionsBank() {
+        return questionsBank;
+    }
+
+    public void setQuestionsBank(List<Question> questionsBank) {
+        this.questionsBank = questionsBank;
     }
 
 
