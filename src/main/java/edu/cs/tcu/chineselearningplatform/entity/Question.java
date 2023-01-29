@@ -22,7 +22,6 @@ public class Question implements Serializable {
     public Question() {
 
     }
-
     public String getId() {
         return id;
     }

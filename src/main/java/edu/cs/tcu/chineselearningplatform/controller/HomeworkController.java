@@ -55,6 +55,20 @@ public class HomeworkController {
         return new Result(true, StatusCode.SUCCESS, "List of all homework for that section", homeworkService.findAllBySection(sectionId));
     }
 
+    @GetMapping("/user/{userId}")
+    @ResponseBody
+    public Result findAllByUserId(@PathVariable String userId) {
+        return new Result(true, StatusCode.SUCCESS, "List of all homework for that user", homeworkService.findAllByUserId(userId));
+    }
+
+    @GetMapping("/question/{questionId}")
+    @ResponseBody
+    public Result findAllByQuestionId(@PathVariable String questionId) {
+        return new Result(true, StatusCode.SUCCESS, "List of all questions for that question", homeworkService.findAllByQuestionId(questionId));
+    }
+
+
+
     /**
      * Method to find all homeworks.
      * @param

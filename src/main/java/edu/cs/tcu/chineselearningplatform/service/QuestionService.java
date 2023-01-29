@@ -3,6 +3,7 @@ package edu.cs.tcu.chineselearningplatform.service;
 import edu.cs.tcu.chineselearningplatform.dao.QuestionRepository;
 import edu.cs.tcu.chineselearningplatform.entity.Lesson;
 import edu.cs.tcu.chineselearningplatform.entity.Question;
+import edu.cs.tcu.chineselearningplatform.entity.Vocab;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,11 @@ public class QuestionService {
     public Question findById(String id) {
         return questionRepository.findById(id).get();
     }
+
+    public Question findByObjectId(String id) {
+        return questionRepository.findByObjectId(new ObjectId(id));
+    }
+
 
     public List<Question> findAllByLesson(String lessonId) {
         return questionRepository.findAllByLesson(lessonId);

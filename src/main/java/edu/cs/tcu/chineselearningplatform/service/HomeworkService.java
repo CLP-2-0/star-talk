@@ -4,6 +4,7 @@ import edu.cs.tcu.chineselearningplatform.dao.HomeworkRepository;
 import edu.cs.tcu.chineselearningplatform.dao.QuestionRepository;
 import edu.cs.tcu.chineselearningplatform.entity.Homework;
 import edu.cs.tcu.chineselearningplatform.entity.Question;
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -24,9 +25,23 @@ public class HomeworkService {
         return homeworkRepository.findById(id).get();
     }
 
+    public Homework findByObjectId(String id) {
+        return homeworkRepository.findByObjectId(new ObjectId(id));
+    }
+
+
     public List<Homework> findAllBySection(String sectionId) {
         return homeworkRepository.findAllBySection(sectionId);
     }
+
+    public List<Homework> findAllByUserId(String userId) {
+        return homeworkRepository.findAllByUserId(userId);
+    }
+
+    public List<Homework> findAllByQuestionId(String questionId) {
+        return homeworkRepository.findAllByQuestionId(questionId);
+    }
+
 
     /**
      * Method to save one homework.

@@ -13,4 +13,11 @@ public interface HomeworkRepository extends MongoRepository<Homework, String> {
 
     @Query("{'section': ?0}")
     List<Homework> findAllBySection(String SectionId);
+
+    @Query("{'userId': ?0}")
+    List<Homework> findAllByUserId(String userId);
+
+    @Query("{'questionsId': ?0}")
+    List<Homework> findAllByQuestionId(String questionId);
+
 }
