@@ -5,7 +5,9 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Document("Section")
 public class Section implements Serializable {
@@ -18,6 +20,7 @@ public class Section implements Serializable {
 
     @DBRef
     private List<User> students;
+    private Map<String, String> homeworkMap = new HashMap<>();
 
     public Section() {
 
@@ -39,6 +42,25 @@ public class Section implements Serializable {
         this.instructor = instructor;
     }
 
+    public Map<String, String> getHomeworkMap() {
+        return homeworkMap;
+    }
+
+    public void setHomeworkMap(Map<String, String> homeworkMap) {
+        this.homeworkMap = homeworkMap;
+    }
+
+    public String addHomework(String lesson, String hw) {
+        if(homeworkMap.containsKey(lesson)){
+            String oldHw = homeworkMap.get(lesson);
+            homeworkMap.put(lesson, hw);
+            return oldHw;
+        }
+        homeworkMap.put(lesson, hw);
+        System.out.println("after put");
+
+        return null;
+    }
 
     public String getSection() {
         return section;
