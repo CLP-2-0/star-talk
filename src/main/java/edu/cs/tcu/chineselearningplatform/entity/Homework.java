@@ -5,16 +5,19 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Document("Homework")
 public class Homework implements Serializable {
     @Id
     private String id;
-    private String sectionId;
-    private String userId;
+    private Section section;
+    private Lesson lesson;
     private String type;
     private String attachment;
-    private String questionsId;
+    private List<GradedQuestion> questionList = new ArrayList<>();
+    private List<Integer> points = new ArrayList<>();
 
     public Homework(){
 
@@ -28,28 +31,44 @@ public class Homework implements Serializable {
         this.id = id;
     }
 
-    public String getSectionId() {
-        return sectionId;
-    }
-
-    public void setSectionId(String sectionId) {
-        this.sectionId = sectionId;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     public String getType() {
         return type;
     }
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Section getSection() {
+        return section;
+    }
+
+    public void setSection(Section section) {
+        this.section = section;
+    }
+
+    public Lesson getLesson() {
+        return lesson;
+    }
+
+    public void setLesson(Lesson lesson) {
+        this.lesson = lesson;
+    }
+
+    public List<Integer> getPoints() {
+        return points;
+    }
+
+    public void setGrade(List<Integer> points) {
+        this.points = points;
+    }
+
+    public List<GradedQuestion> getQuestionList() {
+        return questionList;
+    }
+
+    public void setQuestionList(List<GradedQuestion> questionList) {
+        this.questionList = questionList;
     }
 
     public String getAttachment() {
@@ -60,11 +79,4 @@ public class Homework implements Serializable {
         this.attachment = attachment;
     }
 
-    public String getQuestionsId() {
-        return questionsId;
-    }
-
-    public void setQuestionsId(String questionsId) {
-        this.questionsId = questionsId;
-    }
 }
