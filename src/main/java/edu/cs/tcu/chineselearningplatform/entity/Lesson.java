@@ -19,6 +19,16 @@ public class Lesson implements Serializable {
     @DBRef
     private List<Question> questionsBank = new ArrayList<>();
 
+    @DBRef private List<Grammar> grammars = new ArrayList<>();
+
+    public List<Grammar> getGrammars() {
+        return grammars;
+    }
+
+    public void setGrammars(List<Grammar> grammars) {
+        this.grammars = grammars;
+    }
+
     public Lesson() {
 
     }
@@ -36,6 +46,10 @@ public class Lesson implements Serializable {
         this.vocabs.remove(vocab);
         vocab.setLesson(null);
     }
+    public void removeGrammar(Grammar grammar){
+        this.grammars.remove(grammar);
+        grammar.setLesson(null);
+    }
 
     public void updateVocab(Vocab oldVocab, Vocab updatedVocab) {
         int idx = -1;
@@ -48,6 +62,18 @@ public class Lesson implements Serializable {
 
         this.vocabs.set(idx, updatedVocab);
         updatedVocab.setLesson(this);
+    }
+
+    public void updateGrammar(Grammar oldGrammar, Grammar updatedGrammar){
+        int idx = -1;
+        for(int i = 0; i < grammars.size(); i++){
+            Grammar grammar = grammars.get(i);
+            if(grammar.getExplaination().equals(oldGrammar.getExplaination())){
+                idx = i;
+            }
+        }
+        this.grammars.set(idx, updatedGrammar);
+        updatedGrammar.setLesson(this);
     }
 
     public void addQuestion(Question question){
