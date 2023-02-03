@@ -4,10 +4,11 @@ import edu.cs.tcu.chineselearningplatform.dao.GrammarRepository;
 import edu.cs.tcu.chineselearningplatform.entity.Grammar;
 import edu.cs.tcu.chineselearningplatform.entity.Lesson;
 import org.bson.types.ObjectId;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Service
 public class GrammarService {
     private GrammarRepository grammarRepository;
     private LessonService lessonService;
@@ -18,7 +19,7 @@ public class GrammarService {
         this.lessonService = lessonService;
     }
 
-    public Grammar findById(String id) {
+    public Grammar findByObjectId(String id) {
         return grammarRepository.findById(id).get();
     }
     public List<Grammar> findAllByLesson(String lessonId){
