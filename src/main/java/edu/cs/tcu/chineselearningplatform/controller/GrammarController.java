@@ -11,7 +11,7 @@ import java.util.List;
 
 
 @Controller
-@RequestMapping("/vocabs")
+@RequestMapping("/grammars")
 public class GrammarController {
     private GrammarService grammarService;
 
@@ -39,8 +39,8 @@ public class GrammarController {
 
     @PostMapping("/{lessonId}")
     @ResponseBody
-    public Result save(@PathVariable String lessonId, @RequestBody List<Grammar> grammars){
-        grammarService.saveGrammars(grammars, lessonId);
+    public Result save(@PathVariable String lessonId, @RequestBody List<Grammar> grammars, @RequestBody List<String> meanings){
+        grammarService.saveGrammars(grammars, lessonId, meanings);
         return new Result(true, StatusCode.SUCCESS, "save grammarlist success");
     }
 
@@ -51,7 +51,7 @@ public class GrammarController {
         return new Result(true, StatusCode.SUCCESS, "delete vocab success");
     }
 
-    @PutMapping("/update/{lessonId}/{vocabId}")
+    @PutMapping("/update/{lessonId}/{grammarId}")
     @ResponseBody
     public Result update(@PathVariable String lessonId, @PathVariable String grammarId, @RequestBody Grammar updatedGrammar){
         grammarService.update(grammarId, updatedGrammar, lessonId);

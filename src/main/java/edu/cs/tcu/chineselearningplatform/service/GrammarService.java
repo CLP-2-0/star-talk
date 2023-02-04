@@ -1,6 +1,7 @@
 package edu.cs.tcu.chineselearningplatform.service;
 
 import edu.cs.tcu.chineselearningplatform.dao.GrammarRepository;
+import edu.cs.tcu.chineselearningplatform.dao.LessonRepository;
 import edu.cs.tcu.chineselearningplatform.entity.Grammar;
 import edu.cs.tcu.chineselearningplatform.entity.Lesson;
 import org.bson.types.ObjectId;
@@ -31,12 +32,15 @@ public class GrammarService {
         grammarRepository.save(newGrammar);
     }
 
-    public void saveGrammars(List<Grammar> grammars, String lessonId){
+    public void saveGrammars(List<Grammar> grammars, String lessonId, List<String> meaning){
         Lesson lesson = lessonService.findById(lessonId);
         List newGrammars = new ArrayList<>();
+        int i =0;
         for(Grammar g: grammars){
             System.out.println(g.getGrammer());
             save(g, lessonId, newGrammars);
+            saveMeaning(g.getId(), meaning.get(i));
+            i++;
         }
         lesson.setGrammars(newGrammars);
         lessonService.save(lesson);
@@ -61,4 +65,12 @@ public class GrammarService {
         grammarRepository.save(updatedGrammar);
         lessonService.save(lesson);
     }
+
+    public void saveMeaning(String grammarId, String meaning) {
+        Grammar grammar = grammarRepository.findByObjectId(new ObjectId(grammarId));
+        grammar.setExplaination(meaning);
+        grammarRepository.save(grammar);
+    }
+
+
 }

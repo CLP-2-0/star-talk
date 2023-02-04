@@ -4,6 +4,7 @@ import edu.cs.tcu.chineselearningplatform.dao.LessonRepository;
 import edu.cs.tcu.chineselearningplatform.entity.Lesson;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,4 +64,21 @@ public class LessonService {
         lessonRepository.deleteById(lessonId);
     }
 
+
+    public void saveGrammarMeanings(String lessonId, List<String> grammarMeanings){
+        Lesson lesson = lessonRepository.findById(lessonId).get();
+        lesson.setGrammarMeaning(grammarMeanings);
+        lessonRepository.save(lesson);
+    }
+
+    public List<String> getSavedGrammarMeanings(String lessonId){
+        Optional<Lesson> lesson = lessonRepository.findById(lessonId);
+        if(lesson.isPresent()){
+            return lesson.get().getGrammarMeaning();
+        }
+        return new ArrayList<>();
+    }
+
 }
+
+

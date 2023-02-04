@@ -14,6 +14,16 @@ public class Lesson implements Serializable {
     private String id;
     private String title;
     private String content;
+    private List<String> grammarMeaning = new ArrayList<>();
+
+    public List<String> getGrammarMeaning() {
+        return this.grammarMeaning;
+    }
+
+    public void setGrammarMeaning(List<String> grammarMeaning) {
+        this.grammarMeaning = grammarMeaning;
+    }
+
     @DBRef
     private List<Vocab> vocabs = new ArrayList<>();
     @DBRef
