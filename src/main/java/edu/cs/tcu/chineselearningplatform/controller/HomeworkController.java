@@ -29,6 +29,7 @@ public class HomeworkController {
     @PostMapping("/{sid}/{lid}")
     @ResponseBody
     public Result save(@RequestBody List<GradedQuestion> questions, @PathVariable String sid, @PathVariable String lid) {
+        System.out.println(sid + lid);
         homeworkService.save(questions, sid, lid);
         return new Result(true, StatusCode.SUCCESS, "Save homework success");
     }
@@ -36,7 +37,7 @@ public class HomeworkController {
     /**
      * Method to find one homework.
      * @param id of the homework to be sought.
-     * @return Result object that contains flag, status code, message, and found lesson.
+     * @return Result object that contains flag, status code, message, and found homework.
      */
 
     @GetMapping("/{homeworkId}")
