@@ -13,16 +13,17 @@ import java.util.List;
 public class User implements Serializable {
     @Id
     private String id;
-    private String name;
+    private String nickname;
     private String username;
-    private String password;
+    private String email;
+    private String picture;
     private String role;
     @DBRef
     private List<Section> sections = new ArrayList<>();
 
-    public User(String username) {
-        this.username = username;
-    }
+//    public User(String username) {
+//        this.username = username;
+//    }
 
     public void addSection(Section section){
         this.sections.add(section);
@@ -34,13 +35,20 @@ public class User implements Serializable {
         section.setInstructor(null);
     }
 
-
-    public String getName() {
-        return name;
+    public String getId() {
+        return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getUsername() {
@@ -51,13 +59,20 @@ public class User implements Serializable {
         this.username = username;
     }
 
-    @JsonIgnore
-    public String getPassword() {
-        return password;
+    public String getEmail() {
+        return email;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
     }
 
     public String getRole() {
@@ -68,14 +83,6 @@ public class User implements Serializable {
         this.role = role;
     }
 
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
     @JsonIgnore
     public List<Section> getSections() {
         return sections;

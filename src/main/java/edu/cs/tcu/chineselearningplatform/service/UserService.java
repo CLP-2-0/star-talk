@@ -5,6 +5,8 @@ import edu.cs.tcu.chineselearningplatform.entity.User;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
     private UserRepository userRepository;
@@ -26,8 +28,24 @@ public class UserService {
      * Method to save an user.
      * @param user to be saved.
      */
-    public void save(User user) {
+    public void save(User newUser) {
+        userRepository.save(newUser);
+    }
+
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    public void update(String username, User updatedUser) {
+        User user = userRepository.findByUsername(username);
+        user.setUsername(username);
+        user.setNickname(updatedUser.getNickname());
+        user.setRole(updatedUser.getRole());
+        user.setPicture(updatedUser.getPicture());
         userRepository.save(user);
     }
 
+    public void delete(String username) {
+        userRepository.deleteByUsername(username);
+    }
 }

@@ -53,7 +53,6 @@ public class SectionService {
     }
 
     public List<Section> findByTeacher(String username) {
-        System.out.println(userService.findByUsername(username).getSections());
         return userService.findByUsername(username).getSections();
     }
 }

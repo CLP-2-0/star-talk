@@ -15,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.List.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
@@ -62,4 +63,25 @@ public class QuestionControllerTest {
 
         verify(questionService, times(1)).delete("63bd7c2684ebc03a6ff95122");
     }
+
+ //   @Test
+//    void testFindByLesson() {
+//        Question question1 = new Question();
+//        question1.setQuestion("Q1");
+//        question1.setAnswer("A1");
+//      //  question1.setLesson("2");
+//
+//        Question question2 = new Question();
+//        question2.setQuestion("Q2");
+//        question2.setAnswer("A2");
+//       // question2.setLesson("2");
+//
+//        List<Question> expectedQuestions = of(question1, question2);
+//
+//        when(questionService.findAllByLesson("lesson1"))
+//                .thenReturn(expectedQuestions);
+//
+//        Result r = questionController.findAllByLesson("lesson1");
+//        assertEquals(expectedQuestions, r.getData());
+//    }
     }

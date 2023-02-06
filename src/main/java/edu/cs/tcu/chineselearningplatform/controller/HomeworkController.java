@@ -1,5 +1,6 @@
 package edu.cs.tcu.chineselearningplatform.controller;
 
+import edu.cs.tcu.chineselearningplatform.entity.GradedQuestion;
 import edu.cs.tcu.chineselearningplatform.entity.Homework;
 import edu.cs.tcu.chineselearningplatform.entity.Question;
 import edu.cs.tcu.chineselearningplatform.entity.util.Result;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/homeworks")
+@RequestMapping("/homework")
 public class HomeworkController {
     private HomeworkService homeworkService;
 
@@ -25,10 +26,10 @@ public class HomeworkController {
      * @param homework to be saved.
      * @return Result object that contains flag, status code, message.
      */
-    @PostMapping
+    @PostMapping("/{sid}/{lid}")
     @ResponseBody
-    public Result save( @RequestBody Homework newHomework) {
-        homeworkService.save(newHomework);
+    public Result save(@RequestBody List<GradedQuestion> questions, @PathVariable String sid, @PathVariable String lid) {
+        homeworkService.save(questions, sid, lid);
         return new Result(true, StatusCode.SUCCESS, "Save homework success");
     }
 
@@ -45,29 +46,15 @@ public class HomeworkController {
     }
 
     /**
-     * Method to find all questions for a lesson.
-     * @param id of the question under a lesson to be sought.
-     * @return Result object that contains flag, status code, message, and found lesson.
+     * Method to find a homework for a lesson of a section.
+     * @params id of the section and id of the lesson in it.
+     * @return Result object that contains flag, status code, message, and found homework.
      */
-    @GetMapping("/homework/{sectionId}")
+    @GetMapping("/{sid}/{lid}")
     @ResponseBody
-    public Result findAllBySection(@PathVariable String sectionId) {
-        return new Result(true, StatusCode.SUCCESS, "List of all homework for that section", homeworkService.findAllBySection(sectionId));
+    public Result findHomework(@PathVariable String sid, @PathVariable String lid) {
+        return new Result(true, StatusCode.SUCCESS, "The result homework", homeworkService.findHomework(sid, lid));
     }
-
-    @GetMapping("/user/{userId}")
-    @ResponseBody
-    public Result findAllByUserId(@PathVariable String userId) {
-        return new Result(true, StatusCode.SUCCESS, "List of all homework for that user", homeworkService.findAllByUserId(userId));
-    }
-
-    @GetMapping("/question/{questionId}")
-    @ResponseBody
-    public Result findAllByQuestionId(@PathVariable String questionId) {
-        return new Result(true, StatusCode.SUCCESS, "List of all questions for that question", homeworkService.findAllByQuestionId(questionId));
-    }
-
-
 
     /**
      * Method to find all homeworks.

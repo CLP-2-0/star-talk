@@ -2,18 +2,25 @@ package edu.cs.tcu.chineselearningplatform.service;
 
 import edu.cs.tcu.chineselearningplatform.dao.HomeworkRepository;
 import edu.cs.tcu.chineselearningplatform.dao.QuestionRepository;
-import edu.cs.tcu.chineselearningplatform.entity.Homework;
-import edu.cs.tcu.chineselearningplatform.entity.Question;
+import edu.cs.tcu.chineselearningplatform.dao.SectionRepository;
+import edu.cs.tcu.chineselearningplatform.entity.*;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class HomeworkService {
     private HomeworkRepository homeworkRepository;
-
-    public HomeworkService(HomeworkRepository homeworkRepository){
+    private SectionService sectionService;
+    private LessonService lessonService;
+    private SectionRepository sectionRepository;
+    public HomeworkService(HomeworkRepository homeworkRepository, SectionService sectionService, LessonService lessonService, SectionRepository sectionRepository){
         this.homeworkRepository = homeworkRepository;
+        this.sectionService = sectionService;
+        this.lessonService = lessonService;
+        this.sectionRepository = sectionRepository;
     }
 
     /**
@@ -25,31 +32,35 @@ public class HomeworkService {
         return homeworkRepository.findById(id).get();
     }
 
-    public Homework findByObjectId(String id) {
-        return homeworkRepository.findByObjectId(new ObjectId(id));
+    public Homework findHomework(String sid, String lid) {
+        Section currSection = sectionService.findById(sid).get();
+        String homeworkId = currSection.getHomeworkMap().get(lid);
+        Homework hw = homeworkRepository.findByObjectId(new ObjectId(homeworkId));
+        return hw;
     }
-
-
-    public List<Homework> findAllBySection(String sectionId) {
-        return homeworkRepository.findAllBySection(sectionId);
-    }
-
-    public List<Homework> findAllByUserId(String userId) {
-        return homeworkRepository.findAllByUserId(userId);
-    }
-
-    public List<Homework> findAllByQuestionId(String questionId) {
-        return homeworkRepository.findAllByQuestionId(questionId);
-    }
-
 
     /**
      * Method to save one homework.
      * @param homework to be saved.
      * @return Result object that contains flag, status code, message.
      */
-    public void save(Homework newHomework) {
-        homeworkRepository.save(newHomework);
+    public void save(List<GradedQuestion> questions, String sid, String lid) {
+        Homework hw = new Homework();
+        hw.setQuestionList(questions);
+        Section currSection = sectionService.findById(sid).get();
+        hw.setSection(currSection);
+        Lesson currLesson = lessonService.findById(lid);
+        hw.setLesson(currLesson);
+        homeworkRepository.save(hw);
+        String updateOldHw = currSection.addHomework(lid, hw.getId());
+        System.out.println(currSection + " line 67 " + updateOldHw);
+        System.out.println("new hw " + hw.getId());
+        sectionRepository.save(currSection);
+
+        if(updateOldHw != null) {
+            Homework oldHw = homeworkRepository.findByObjectId(new ObjectId(updateOldHw));
+            homeworkRepository.delete(oldHw);
+        }
     }
 
     /**

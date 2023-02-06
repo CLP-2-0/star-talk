@@ -1,17 +1,11 @@
 package edu.cs.tcu.chineselearningplatform.service;
 
 import edu.cs.tcu.chineselearningplatform.dao.HomeworkRepository;
-import edu.cs.tcu.chineselearningplatform.dao.QuestionRepository;
-import edu.cs.tcu.chineselearningplatform.entity.Homework;
-import edu.cs.tcu.chineselearningplatform.entity.Question;
-import org.bson.types.ObjectId;
-import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 
 public class HomeworkServiceTest {
 
