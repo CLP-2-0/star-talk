@@ -62,5 +62,4 @@ public class LessonService {
     public void delete(String lessonId) {
         lessonRepository.deleteById(lessonId);
     }
-
 }

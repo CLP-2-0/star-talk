@@ -16,6 +16,7 @@ public class Homework implements Serializable {
     private Lesson lesson;
     private String type;
     private String attachment;
+    @DBRef
     private List<GradedQuestion> questionList = new ArrayList<>();
     private List<Integer> points = new ArrayList<>();
 

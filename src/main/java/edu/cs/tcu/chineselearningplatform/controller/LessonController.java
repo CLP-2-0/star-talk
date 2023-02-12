@@ -17,30 +17,6 @@ public class LessonController {
     public LessonController(LessonService lessonService){
         this.lessonService = lessonService;
     }
-
-    //
-    /**
-     * Method to save one lesson.
-     * @param lesson to be saved.
-     * @return Result object that contains flag, status code, message.
-     */
-    @PostMapping
-    @ResponseBody
-    public Result save(@RequestBody Lesson newLesson) {
-        lessonService.save(newLesson);
-        return new Result(true, StatusCode.SUCCESS, "Save lesson success");
-    }
-    /**
-     * Method to find one lesson.
-     * @param id of the lesson to be sought.
-     * @return Result object that contains flag, status code, message, and found lesson.
-     */
-    @GetMapping("/{lessonId}")
-    @ResponseBody
-    public Result findById(@PathVariable String lessonId) {
-        return new Result(true, StatusCode.SUCCESS, "Find lesson by id success", lessonService.findById(lessonId));
-    }
-
     /**
      * Method to find all lesson.
      * @param
@@ -74,4 +50,27 @@ public class LessonController {
         lessonService.delete(lessonId);
         return new Result(true,StatusCode.SUCCESS,"Delete lesson success");
     }
+    /**
+     * Method to find one lesson.
+     * @param id of the lesson to be sought.
+     * @return Result object that contains flag, status code, message, and found lesson.
+     */
+    @GetMapping("/{lessonId}")
+    @ResponseBody
+    public Result findById(@PathVariable String lessonId) {
+        return new Result(true, StatusCode.SUCCESS, "Find lesson by id success", lessonService.findById(lessonId));
+    }
+    //
+    /**
+     * Method to save one lesson.
+     * @param lesson to be saved.
+     * @return Result object that contains flag, status code, message.
+     */
+    @PostMapping
+    @ResponseBody
+    public Result save(@RequestBody Lesson newLesson) {
+        lessonService.save(newLesson);
+        return new Result(true, StatusCode.SUCCESS, "Save lesson success");
+    }
+
 }

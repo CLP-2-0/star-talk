@@ -32,7 +32,7 @@ public class QuestionServiceTest {
 
         when(questionRepository.findByObjectId(any(ObjectId.class))).thenReturn(question1);
 
-        Question res = questionService.findByObjectId("6342139d1d62b17c341a49b1");
+        Question res = questionService.findById("6342139d1d62b17c341a49b1");
 
         assertEquals(question1.getQuestion(), res.getQuestion());
     }

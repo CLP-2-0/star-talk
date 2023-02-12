@@ -73,8 +73,17 @@ class LessonControllerTest {
 //    @Test
 //    void update() {
 //        Lesson lesson1 = new Lesson();
+//        Lesson lesson2 = new Lesson();
 //        lesson1.setTitle("Chinese lesson5");
 //        lesson1.setContent("this is lesson 5");
+//        lesson2.setTitle("Updated lesson");
+//        lesson2.setContent("updated lesson content");
+//
+//        when(lessonService.update("15", lesson2)
+//                .thenReturn(lesson1);
+//
+//        Result r = lessonController.findById("15");
+//        assertEquals(lesson1, r.getData());
 //    }
 
     @Test

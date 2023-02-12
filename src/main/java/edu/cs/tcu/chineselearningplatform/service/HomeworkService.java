@@ -1,5 +1,6 @@
 package edu.cs.tcu.chineselearningplatform.service;
 
+import edu.cs.tcu.chineselearningplatform.dao.GradedQuestionRepository;
 import edu.cs.tcu.chineselearningplatform.dao.HomeworkRepository;
 import edu.cs.tcu.chineselearningplatform.dao.QuestionRepository;
 import edu.cs.tcu.chineselearningplatform.dao.SectionRepository;
@@ -16,11 +17,13 @@ public class HomeworkService {
     private SectionService sectionService;
     private LessonService lessonService;
     private SectionRepository sectionRepository;
-    public HomeworkService(HomeworkRepository homeworkRepository, SectionService sectionService, LessonService lessonService, SectionRepository sectionRepository){
+    private GradedQuestionRepository gradedQuestionRepository;
+    public HomeworkService(HomeworkRepository homeworkRepository, SectionService sectionService, LessonService lessonService, SectionRepository sectionRepository, GradedQuestionRepository gradedQuestionRepository){
         this.homeworkRepository = homeworkRepository;
         this.sectionService = sectionService;
         this.lessonService = lessonService;
         this.sectionRepository = sectionRepository;
+        this.gradedQuestionRepository = gradedQuestionRepository;
     }
 
     /**
@@ -45,6 +48,9 @@ public class HomeworkService {
      * @return Result object that contains flag, status code, message.
      */
     public void save(List<GradedQuestion> questions, String sid, String lid) {
+        for(GradedQuestion q: questions) {
+            gradedQuestionRepository.save(q);
+        }
         Homework hw = new Homework();
         hw.setQuestionList(questions);
         Section currSection = sectionService.findById(sid).get();
@@ -55,12 +61,19 @@ public class HomeworkService {
         String updateOldHw = currSection.addHomework(lid, hw.getId());
         System.out.println(currSection + " line 67 " + updateOldHw);
         System.out.println("new hw " + hw.getId());
+
+
         sectionRepository.save(currSection);
 
         if(updateOldHw != null) {
             Homework oldHw = homeworkRepository.findByObjectId(new ObjectId(updateOldHw));
+            for(GradedQuestion q: oldHw.getQuestionList()){
+                gradedQuestionRepository.delete(q);
+            }
             homeworkRepository.delete(oldHw);
         }
+
+
     }
 
     /**

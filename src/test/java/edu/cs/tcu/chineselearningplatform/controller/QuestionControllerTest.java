@@ -2,8 +2,10 @@ package edu.cs.tcu.chineselearningplatform.controller;
 
 
 import edu.cs.tcu.chineselearningplatform.dao.QuestionRepository;
+import edu.cs.tcu.chineselearningplatform.entity.Lesson;
 import edu.cs.tcu.chineselearningplatform.entity.Question;
 import edu.cs.tcu.chineselearningplatform.entity.util.Result;
+import edu.cs.tcu.chineselearningplatform.service.LessonService;
 import edu.cs.tcu.chineselearningplatform.service.QuestionService;
 
 import org.junit.jupiter.api.Test;
@@ -27,6 +29,8 @@ public class QuestionControllerTest {
     QuestionService questionService;
     @InjectMocks
     QuestionController questionController;
+
+    List<Question> list;
 
     @Test
     void testFindById() {
@@ -64,24 +68,22 @@ public class QuestionControllerTest {
         verify(questionService, times(1)).delete("63bd7c2684ebc03a6ff95122");
     }
 
- //   @Test
-//    void testFindByLesson() {
+//    @Test
+//    void findAllByLesson() {
 //        Question question1 = new Question();
-//        question1.setQuestion("Q1");
-//        question1.setAnswer("A1");
-//      //  question1.setLesson("2");
-//
+//        Lesson lesson1 = new Lesson();
+//        question1.setLesson(lesson1);
 //        Question question2 = new Question();
-//        question2.setQuestion("Q2");
-//        question2.setAnswer("A2");
-//       // question2.setLesson("2");
+//        question1.setLesson(lesson1);
 //
-//        List<Question> expectedQuestions = of(question1, question2);
+//        list = new ArrayList<>();
+//        list.add(question1);
+//        list.add(question2);
 //
-//        when(questionService.findAllByLesson("lesson1"))
-//                .thenReturn(expectedQuestions);
+//        when(questionService.findAllByLesson("1"))
+//                .thenReturn(list);
 //
-//        Result r = questionController.findAllByLesson("lesson1");
-//        assertEquals(expectedQuestions, r.getData());
+//        Result r = questionController.findAllByLesson("1");
+//        assertEquals(question1, r.getData());
 //    }
     }
