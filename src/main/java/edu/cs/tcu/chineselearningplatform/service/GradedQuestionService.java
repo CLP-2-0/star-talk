@@ -17,12 +17,10 @@ import java.util.List;
 public class GradedQuestionService {
     private GradedQuestionRepository gradedQuestionRepository;
     private AnswerRepository answerRepository;
-    private AudioFileRepository audioFileRepository;
     private GoogleDrive googleDrive = new GoogleDrive();
-    public GradedQuestionService(GradedQuestionRepository gradedQuestionRepository, AnswerRepository answerRepository, AudioFileRepository audioFileRepository){
+    public GradedQuestionService(GradedQuestionRepository gradedQuestionRepository, AnswerRepository answerRepository){
         this.gradedQuestionRepository = gradedQuestionRepository;
         this.answerRepository = answerRepository;
-        this.audioFileRepository = audioFileRepository;
     }
 
     public GradedQuestion findGradedQuestion(String id) {
