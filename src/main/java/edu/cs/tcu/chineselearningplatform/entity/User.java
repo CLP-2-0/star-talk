@@ -21,6 +21,10 @@ public class User implements Serializable {
     @DBRef
     private List<Section> sections = new ArrayList<>();
 
+    @DBRef
+    private List<Section> courses = new ArrayList<>();
+
+
 //    public User(String username) {
 //        this.username = username;
 //    }
@@ -90,6 +94,15 @@ public class User implements Serializable {
 
     public void setSections(List<Section> sections) {
         this.sections = sections;
+    }
+
+    @JsonIgnore
+    public List<Section> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(Section courses) {
+        this.courses.add(courses);
     }
 
     @Override

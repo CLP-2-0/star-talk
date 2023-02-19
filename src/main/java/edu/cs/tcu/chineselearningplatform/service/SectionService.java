@@ -55,4 +55,20 @@ public class SectionService {
     public List<Section> findByTeacher(String username) {
         return userService.findByUsername(username).getSections();
     }
+
+    /**
+     * Method to add student to course/section (Student join course/section).
+     * @param "sectionId" of the section the student belongs to, student Id of the student.
+     * @return Result object that contains flag, status code, message.
+     */
+    public void assignStudent(String sectionId, String studentId) {
+        //find student by studentID
+        User studentToBeAdded = userRepository.findById(studentId).get();
+        Section course = sectionRepository.findById(sectionId).get();
+
+        course.addStudent(studentToBeAdded);
+        sectionRepository.save(course);
+        userRepository.save(studentToBeAdded);
+
+    }
 }
