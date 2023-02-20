@@ -42,7 +42,7 @@ public class UserService {
         user.setNickname(updatedUser.getNickname());
         user.setFirstname(updatedUser.getFirstname());
         user.setLastname(updatedUser.getLastname());
-        user.setPicture(updatedUser.getPicture());
+        user.setEmail_verified(updatedUser.getEmail_verified());
         userRepository.save(user);
     }
 
