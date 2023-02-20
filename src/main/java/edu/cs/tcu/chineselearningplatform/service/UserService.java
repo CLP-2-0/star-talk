@@ -40,7 +40,8 @@ public class UserService {
         User user = userRepository.findByUsername(username);
         user.setUsername(username);
         user.setNickname(updatedUser.getNickname());
-        user.setRole(updatedUser.getRole());
+        user.setFirstname(updatedUser.getFirstname());
+        user.setLastname(updatedUser.getLastname());
         user.setPicture(updatedUser.getPicture());
         userRepository.save(user);
     }
