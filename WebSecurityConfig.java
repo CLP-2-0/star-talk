@@ -19,7 +19,7 @@ public class WebSecurityConfig implements WebMvcConfigurer{
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("https://red-sky-021a1e20f.2.azurestaticapps.net") //frontend url
+                .allowedOrigins("https://lemon-ocean-0d908fb10.2.azurestaticapps.net") //frontend url
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true)
