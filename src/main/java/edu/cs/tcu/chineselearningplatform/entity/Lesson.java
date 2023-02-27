@@ -18,6 +18,7 @@ public class Lesson implements Serializable {
     private List<Vocab> vocabs = new ArrayList<>();
     @DBRef
     private List<Question> questionsBank = new ArrayList<>();
+    private Homework predefined;
 
     public Lesson() {
 
@@ -100,5 +101,13 @@ public class Lesson implements Serializable {
 
     public void setVocabs(List<Vocab> vocabs) {
         this.vocabs = vocabs;
+    }
+
+    public Homework getPredefined() {
+        return predefined;
+    }
+
+    public void setPredefined(Homework predefined) {
+        this.predefined = predefined;
     }
 }

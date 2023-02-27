@@ -11,6 +11,7 @@ public class Answer implements Serializable {
     private String id;
     private String type;
     private String key;
+    private String username;
 
     public String getId() {
         return id;
@@ -34,5 +35,13 @@ public class Answer implements Serializable {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

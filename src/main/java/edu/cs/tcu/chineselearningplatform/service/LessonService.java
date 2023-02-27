@@ -1,7 +1,13 @@
 package edu.cs.tcu.chineselearningplatform.service;
 
+import edu.cs.tcu.chineselearningplatform.dao.GradedQuestionRepository;
+import edu.cs.tcu.chineselearningplatform.dao.HomeworkRepository;
 import edu.cs.tcu.chineselearningplatform.dao.LessonRepository;
+import edu.cs.tcu.chineselearningplatform.entity.GradedQuestion;
+import edu.cs.tcu.chineselearningplatform.entity.Homework;
 import edu.cs.tcu.chineselearningplatform.entity.Lesson;
+import edu.cs.tcu.chineselearningplatform.entity.Section;
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,9 +16,13 @@ import java.util.Optional;
 @Service
 public class LessonService {
     private LessonRepository lessonRepository;
+    private GradedQuestionRepository gradedQuestionRepository;
+    private HomeworkRepository homeworkRepository;
 
-    public LessonService(LessonRepository lessonRepository){
+    public LessonService(LessonRepository lessonRepository, GradedQuestionRepository gradedQuestionRepository, HomeworkRepository homeworkRepository){
         this.lessonRepository = lessonRepository;
+        this.gradedQuestionRepository = gradedQuestionRepository;
+        this.homeworkRepository = homeworkRepository;
     }
 
     /**
@@ -43,7 +53,7 @@ public class LessonService {
     /**
      * Method to update one lesson.
      * @param lesson to be updated.
-     * @return Result object that contains flag, status code, message.
+     * @return All lessons.
      */
     public void update(String lessonId, Lesson updatedLesson) {
         Lesson lesson = lessonRepository.findById(lessonId).get();
@@ -55,11 +65,28 @@ public class LessonService {
 
     }
     /**
-     * Method to delte one lesson.
+     * Method to delete one lesson.
      * @param lesson to be deleted.
-     * @return Result object that contains flag, status code, message.
      */
     public void delete(String lessonId) {
         lessonRepository.deleteById(lessonId);
+    }
+
+    /**
+     * Method to save a predefined homework to one lesson.
+     * @param homework to be saved.
+     */
+    public void savePredefinedHomework(String lessonId, List<GradedQuestion> questions) {
+        for(GradedQuestion q: questions) {
+            gradedQuestionRepository.save(q);
+        }
+        Homework hw = new Homework();
+        hw.setQuestionList(questions);
+        System.out.println(hw);
+        Lesson currLesson = findById(lessonId);
+//        hw.setLesson(currLesson);
+        homeworkRepository.save(hw);
+        currLesson.setPredefined(hw);
+        lessonRepository.save(currLesson);
     }
 }
