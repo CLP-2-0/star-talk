@@ -7,7 +7,9 @@ import edu.cs.tcu.chineselearningplatform.entity.GradedQuestion;
 import edu.cs.tcu.chineselearningplatform.entity.Homework;
 import edu.cs.tcu.chineselearningplatform.entity.Lesson;
 import edu.cs.tcu.chineselearningplatform.entity.Section;
+import edu.cs.tcu.chineselearningplatform.entity.util.StatusCode;
 import org.bson.types.ObjectId;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,6 +43,15 @@ public class LessonService {
      */
     public void save(Lesson newLesson) {
         lessonRepository.save(newLesson);
+    }
+
+    /**
+     * Method to save all lesson.
+     * @param lessons to be saved.
+     * @return Result object that contains flag, status code, message.
+     */
+    public void saveAll(List<Lesson> lessons) {
+        lessonRepository.saveAll(lessons);
     }
     /**
      * Method to find all lesson.
@@ -89,4 +100,7 @@ public class LessonService {
         currLesson.setPredefined(hw);
         lessonRepository.save(currLesson);
     }
+
+
+
 }

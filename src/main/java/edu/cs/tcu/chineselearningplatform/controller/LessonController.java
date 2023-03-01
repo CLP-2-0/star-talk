@@ -74,6 +74,17 @@ public class LessonController {
         return new Result(true, StatusCode.SUCCESS, "Save lesson success");
     }
     /**
+     * Method to save all lesson.
+     * @param lessons to be saved.
+     * @return Result object that contains flag, status code, message.
+     */
+    @PostMapping("/saveAllLessons")
+    @ResponseBody
+    public Result saveAll(@RequestBody List<Lesson> lessons) {
+        lessonService.saveAll(lessons);
+        return new Result(true, StatusCode.SUCCESS, "Save lessons success");
+    }
+    /**
      * Method to save one homework.
      * @param homework to be saved.
      * @return Result object that contains flag, status code, message.
@@ -84,5 +95,6 @@ public class LessonController {
         lessonService.savePredefinedHomework(lid, questions);
         return new Result(true, StatusCode.SUCCESS, "Save homework success");
     }
+
 
 }
