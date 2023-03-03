@@ -1,5 +1,6 @@
 package edu.cs.tcu.chineselearningplatform.entity;
 
+import static com.mongodb.internal.connection.tlschannel.util.Util.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
@@ -137,6 +138,45 @@ public class UserTest {
 
         // assert that the sections list for the user is equal to the original list
         assertEquals(sections, user.getSections());
+    }
+
+    @Test
+    public void testGetCourses() {
+        User user = new User();
+        Section course1 = new Section();
+        Section course2 = new Section();
+
+        user.setCourses(course1);
+        user.setCourses(course2);
+
+        assertEquals(2, user.getCourses().size());
+        assertTrue(user.getCourses().contains(course1));
+        assertTrue(user.getCourses().contains(course2));
+    }
+
+    @Test
+    public void testSetCourses() {
+        User user = new User();
+        Section course1 = new Section();
+        Section course2 = new Section();
+
+        user.setCourses(course1);
+        user.setCourses(course2);
+
+        assertEquals(2, user.getCourses().size());
+        assertTrue(user.getCourses().contains(course1));
+        assertTrue(user.getCourses().contains(course2));
+    }
+
+    @Test
+    public void testToString() {
+        String id = "123";
+        String username = "testuser";
+        User user = new User();
+        user.setId(id);
+        user.setUsername(username);
+        String expectedString = "User{id=" + id + ", username='" + username + "'}";
+        assertEquals(expectedString, user.toString());
     }
 
 }

@@ -14,8 +14,6 @@ public class Homework implements Serializable {
     private String id;
     private Section section;
     private Lesson lesson;
-    private String type;
-    private String attachment;
     @DBRef
     private List<GradedQuestion> questionList = new ArrayList<>();
     private List<Integer> points = new ArrayList<>();
@@ -30,14 +28,6 @@ public class Homework implements Serializable {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public Section getSection() {
@@ -72,12 +62,5 @@ public class Homework implements Serializable {
         this.questionList = questionList;
     }
 
-    public String getAttachment() {
-        return attachment;
-    }
-
-    public void setAttachment(String attachment) {
-        this.attachment = attachment;
-    }
 
 }

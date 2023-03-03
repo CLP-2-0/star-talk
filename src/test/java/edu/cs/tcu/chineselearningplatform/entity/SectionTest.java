@@ -108,4 +108,20 @@ public class SectionTest {
         assertEquals(students, section.getStudents());
     }
 
+    @Test
+    public void testAddStudent() {
+        User student = new User();
+        section.addStudent(student);
+        assertEquals(1, section.getStudents().size());
+    }
+
+    @Test
+    public void testRemoveStudent() {
+        User student = new User();
+        section.addStudent(student);
+        section.removeStudent(student);
+        assertEquals(0, section.getStudents().size());
+    }
+
+
 }

@@ -22,20 +22,6 @@ public class HomeworkTest {
     }
 
     @Test
-    public void testGetType() {
-        Homework homework = new Homework();
-        homework.setType("type");
-        assertEquals("type", homework.getType());
-    }
-
-    @Test
-    public void testSetType() {
-        Homework homework = new Homework();
-        homework.setType("type");
-        assertEquals("type", homework.getType());
-    }
-
-    @Test
     public void testGetSection() {
         Homework homework = new Homework();
         Section section = new Section();
@@ -105,17 +91,5 @@ public class HomeworkTest {
         assertEquals(questionList, homework.getQuestionList());
     }
 
-    @Test
-    public void testGetAttachment() {
-        Homework homework = new Homework();
-        homework.setAttachment("attachment");
-        assertEquals("attachment", homework.getAttachment());
-    }
 
-    @Test
-    public void testSetAttachment() {
-        Homework homework = new Homework();
-        homework.setAttachment("attachment");
-        assertEquals("attachment", homework.getAttachment());
-    }
 }

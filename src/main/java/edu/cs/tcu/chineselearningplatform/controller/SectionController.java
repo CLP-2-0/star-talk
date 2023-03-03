@@ -59,4 +59,19 @@ public class SectionController {
         sectionService.save(newSection);
         return new Result(true, StatusCode.SUCCESS, "Save section success");
     }
+
+
+    /**
+     * Method to add student to course/section (Student join course/section).
+     * @param "sectionId" of the section the student belongs to, student Id of the student.
+     * @return Result object that contains flag, status code, message.
+     */
+    @PutMapping("/{sectionId}/{studentId}")
+    @ResponseBody
+    public Result assignStudent(@PathVariable String sectionId,@PathVariable String studentId){
+        sectionService.assignStudent(sectionId,studentId);
+        return new Result(true, StatusCode.SUCCESS, "Student joined success");
+    }
+
 }
+

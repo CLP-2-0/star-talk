@@ -46,4 +46,20 @@ public class AnswerTest {
         answer.setKey("A");
         assertEquals("A", answer.getKey());
     }
+
+    @Test
+    public void testGetUsername() {
+        Answer answer = new Answer();
+        answer.setUsername("Bob");
+        assertEquals("Bob", answer.getUsername());
+    }
+
+    @Test
+    public void testSetUsername() {
+        Answer answer = new Answer();
+        answer.setUsername("Bob");
+        assertEquals("Bob", answer.getUsername());
+    }
+
+
 }

@@ -194,4 +194,27 @@ public class LessonTest {
         Assertions.assertEquals(vocabs, lesson.getVocabs());
     }
 
+
+
+    @Test
+    public void testGetPredefined() {
+        Lesson lesson = new Lesson();
+        Homework homework = new Homework();
+        lesson.setPredefined(homework);
+        Assertions.assertEquals(homework, lesson.getPredefined());
+    }
+
+    @Test
+    public void testSetPredefined() {
+        Lesson lesson = new Lesson();
+        Homework homework = new Homework();
+        lesson.setPredefined(homework);
+        Assertions.assertEquals(homework, lesson.getPredefined());
+
+        Homework newHomework = new Homework();
+        lesson.setPredefined(newHomework);
+        Assertions.assertEquals(newHomework, lesson.getPredefined());
+    }
+
+
 }

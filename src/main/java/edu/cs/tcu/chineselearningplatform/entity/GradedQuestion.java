@@ -5,7 +5,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Document("GradedQuestion")
@@ -14,7 +16,7 @@ public class GradedQuestion implements Serializable {
     private String id;
     private Question question;
     private Integer point;
-    private Map<String, String> answersMap = new HashMap<String, String>();
+    private List<Answer> answerList = new ArrayList<>();
 
     public String getId() {
         return id;
@@ -40,16 +42,16 @@ public class GradedQuestion implements Serializable {
         this.point = point;
     }
 
-    public Map<String, String> getAnswersMap() {
-        return answersMap;
+    public List<Answer> getAnswerList() {
+        return answerList;
     }
 
-    public void setAnswersMap(Map<String, String> answersMap) {
-        this.answersMap = answersMap;
+    public void setAnswerList(List<Answer> answerList) {
+        this.answerList = answerList;
     }
 
-    public void addAnswer(String username, String answerId) {
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        answersMap.put(timestamp.getTime() + "-"+ username, answerId);
+    public void addAnswer(Answer answer) {
+        answerList.add(answer);
     }
+
 }

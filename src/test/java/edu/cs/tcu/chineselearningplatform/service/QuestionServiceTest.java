@@ -1,96 +1,146 @@
-//package edu.cs.tcu.chineselearningplatform.service;
-//
-//import edu.cs.tcu.chineselearningplatform.dao.QuestionRepository;
-//import edu.cs.tcu.chineselearningplatform.entity.Lesson;
-//import edu.cs.tcu.chineselearningplatform.entity.Question;
-//import org.bson.types.ObjectId;
-//import org.junit.jupiter.api.Test;
-//import org.junit.jupiter.api.extension.ExtendWith;
-//import org.mockito.InjectMocks;
-//import org.mockito.Mock;
-//import org.mockito.junit.jupiter.MockitoExtension;
-//
-//import static org.mockito.ArgumentMatchers.any;
-//import static org.junit.jupiter.api.Assertions.*;
-//import static org.mockito.Mockito.doAnswer;
-//import static org.mockito.Mockito.when;
-//
-//@ExtendWith(MockitoExtension.class)
-//
-//public class QuestionServiceTest {
-//    @Mock
-//    QuestionRepository questionRepository;
-//    @InjectMocks
-//    QuestionService questionService;
-//    @Mock
-//    LessonService lessonService;
+package edu.cs.tcu.chineselearningplatform.service;
+
+import edu.cs.tcu.chineselearningplatform.dao.QuestionRepository;
+import edu.cs.tcu.chineselearningplatform.entity.Lesson;
+import edu.cs.tcu.chineselearningplatform.entity.Question;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
+public class QuestionServiceTest {
+
+    private QuestionService questionService;
+
+    @Mock
+    private QuestionRepository questionRepositoryMock;
+
+    @Mock
+    private LessonService lessonServiceMock;
+
+    private Lesson testLesson;
+    private Question testQuestion;
+
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+        questionService = new QuestionService(questionRepositoryMock, lessonServiceMock);
+
+        // create a test lesson
+        testLesson = new Lesson();
+        testLesson.setId("lessonId");
+
+
+        // create a test question
+        testQuestion = new Question();
+        testQuestion.setId("questionId");
+        testQuestion.setQuestion("What is your name?");
+        testQuestion.setAnswer("My name is John");
+        testQuestion.setLesson(testLesson);
+    }
+
+    @Test
+    public void testFindById() {
+        when(questionRepositoryMock.findById("questionId")).thenReturn(Optional.of(testQuestion));
+
+        Question foundQuestion = questionService.findById("questionId");
+
+        verify(questionRepositoryMock, times(1)).findById("questionId");
+        assertNotNull(foundQuestion);
+        assertEquals("What is your name?", foundQuestion.getQuestion());
+        assertEquals("My name is John", foundQuestion.getAnswer());
+        assertEquals(testLesson.getId(), foundQuestion.getLesson().getId());
+    }
+
+    @Test
+    public void testFindAllByLesson() {
+        List<Question> questionList = new ArrayList<>();
+        questionList.add(testQuestion);
+
+        when(questionRepositoryMock.findAllByLesson("lessonId")).thenReturn(questionList);
+
+        List<Question> foundQuestionList = questionService.findAllByLesson("lessonId");
+
+        verify(questionRepositoryMock, times(1)).findAllByLesson("lessonId");
+        assertNotNull(foundQuestionList);
+        assertEquals(1, foundQuestionList.size());
+        assertEquals("What is your name?", foundQuestionList.get(0).getQuestion());
+        assertEquals("My name is John", foundQuestionList.get(0).getAnswer());
+        assertEquals(testLesson.getId(), foundQuestionList.get(0).getLesson().getId());
+    }
+
+    @Test
+    public void testSave() {
+        when(lessonServiceMock.findById(any(String.class))).thenReturn(testLesson);
+        when(questionRepositoryMock.save(any(Question.class))).thenReturn(testQuestion);
+
+        questionService.save(testQuestion, "lessonId");
+
+        verify(lessonServiceMock, times(1)).findById("lessonId");
+        verify(lessonServiceMock, times(1)).save(any(Lesson.class));
+        verify(questionRepositoryMock, times(1)).save(testQuestion);
+    }
+
+
 //    @Test
-//    void testFindById() {
-//        Question question1 = new Question();
-//        question1.setQuestion("Q1");
-//        question1.setAnswer("A1");
+//    public void testFindAll() {
+//        List<Question> questionList = new ArrayList<>();
+//        questionList.add(testQuestion);
 //
+//        when(questionRepositoryMock.findAll()).thenReturn(questionList);
 //
+//        List<Question> foundQuestionList = questionService.findAll();
 //
-//        when(questionRepository.findByObjectId(any(ObjectId.class))).thenReturn(question1);
-//
-//        Question res = questionService.findById("6342139d1d62b17c341a49b1");
-//
-//        assertEquals(question1.getQuestion(), res.getQuestion());
+//        verify(questionRepositoryMock, times(1)).findAll();
+//        assertNotNull(foundQuestionList);
+//        assertEquals(1, foundQuestionList.size());
+//        assertEquals("What is your name?", foundQuestionList.get(0).getQuestion());
+//        assertEquals("My name is John");
 //    }
-////
-////    @Test
-////    void save() {
-////        Question question1 = new Question();
-////        question1.setQuestion("Q1");
-////        question1.setAnswer("A1");
-////        question1.setId("6342139d1d62b17c341a49b1");
-////
-////        Lesson lesson = new Lesson();
-////        lesson.setId("100");
-////
-////        when(lessonService.findById(any(String.class))).thenReturn(lesson);
-////
-////        doAnswer(invocation -> {
-////            Object arg0 = invocation.getArgument(0);
-////
-////            assertEquals(question1, arg0);
-////            return null;
-////        }).when(questionRepository).save(any(Question.class));
-////
-////        doAnswer(invocation -> {
-////            Object arg0 = invocation.getArgument(0);
-////
-////            assertEquals(lesson, arg0);
-////            return null;
-////        }).when(lessonService).save(any(Lesson.class));
-//////        questionService.save(question1, "100");
-////    }
+
+//    @Test
+//    public void testUpdate() {
 //
-////    @Test
-////    void delete() {
-////        Question question1 = new Question();
-////        question1.setQuestion("Q1");
-////        question1.setAnswer("A1");
-////
-////        Lesson lesson = new Lesson();
-////        lesson.setId("100");
-////
-////        when(lessonService.findById(any(String.class))).thenReturn(lesson);
-////        when(questionRepository.findByObjectId(any(ObjectId.class))).thenReturn(question1);
-////        doAnswer(invocation -> {
-////            Object arg0 = invocation.getArgument(0);
-////
-////            assertEquals(question1, arg0);
-////            return null;
-////        }).when(questionRepository).delete(any(Question.class));
-////
-////        doAnswer(invocation -> {
-////            Object arg0 = invocation.getArgument(0);
-////
-////            assertEquals(lesson, arg0);
-////            return null;
-////        }).when(lessonService).save(any(Lesson.class));
-////        questionService.delete("6342139d1d62b17c341a49b1");
-////    }
-//}
+//        // create the initial question object
+//        Question question = new Question();
+//        question.setId("questionId");
+//        question.setQuestion("What is your name?");
+//        question.setAnswer("My name is Alice");
+//
+//        // create the updated question object
+//        Question updatedQuestion = new Question();
+//        updatedQuestion.setQuestion("What is your age?");
+//        updatedQuestion.setAnswer("I am 25 years old");
+//
+//        // create the lesson object
+//        Lesson lesson = new Lesson();
+//        lesson.setId("lessonId");
+//
+//        // mock the repository and service methods
+//        when(questionRepositoryMock.findById("questionId")).thenReturn(Optional.of(question));
+//        when(lessonServiceMock.findById("lessonId")).thenReturn(lesson);
+//        when(questionRepositoryMock.save(any(Question.class))).thenReturn(updatedQuestion);
+//
+//        // call the update method
+//        questionService.update("questionId", updatedQuestion);
+//
+//        // verify that the repository and service methods were called
+//        verify(questionRepositoryMock, times(2)).findById("questionId");
+//        verify(lessonServiceMock, times(1)).findById("lessonId");
+//        verify(questionRepositoryMock, times(1)).save(any(Question.class));
+//
+//        // assert that the question was updated correctly
+//        assertEquals("What is your age?", question.getQuestion());
+//        assertEquals("I am 25 years old", question.getAnswer());
+//        assertEquals(lesson.getId(), question.getLesson().getId());
+//    }
+
+}

@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,7 @@ public class Section implements Serializable {
     private User instructor;
 
     @DBRef
-    private List<User> students;
+    private List<User> students = new ArrayList<>();
     private Map<String, String> homeworkMap = new HashMap<>();
 
     public Section() {
@@ -78,4 +79,15 @@ public class Section implements Serializable {
         this.students = students;
     }
 
+
+    public void addStudent(User student){
+
+        student.setCourses(this);
+        this.students.add(student);
+//        System.out.println(students);
+    }
+    public void removeStudent(User student){
+        student.setCourses(null);
+        this.students.remove(student);
+    }
 }

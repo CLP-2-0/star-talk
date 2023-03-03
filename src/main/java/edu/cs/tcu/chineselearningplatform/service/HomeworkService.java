@@ -48,6 +48,7 @@ public class HomeworkService {
      * @return Result object that contains flag, status code, message.
      */
     public void save(List<GradedQuestion> questions, String sid, String lid) {
+        System.out.println("save homework");
         for(GradedQuestion q: questions) {
             gradedQuestionRepository.save(q);
         }

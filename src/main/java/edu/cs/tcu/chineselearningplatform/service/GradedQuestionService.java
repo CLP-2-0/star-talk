@@ -1,5 +1,6 @@
 package edu.cs.tcu.chineselearningplatform.service;
 
+import edu.cs.tcu.chineselearningplatform.GoogleDrive;
 import edu.cs.tcu.chineselearningplatform.dao.AnswerRepository;
 import edu.cs.tcu.chineselearningplatform.dao.GradedQuestionRepository;
 import edu.cs.tcu.chineselearningplatform.entity.Answer;
@@ -7,14 +8,16 @@ import edu.cs.tcu.chineselearningplatform.entity.GradedQuestion;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.security.GeneralSecurityException;
+import java.sql.Timestamp;
+import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class GradedQuestionService {
     private GradedQuestionRepository gradedQuestionRepository;
     private AnswerRepository answerRepository;
+    private GoogleDrive googleDrive = new GoogleDrive();
     public GradedQuestionService(GradedQuestionRepository gradedQuestionRepository, AnswerRepository answerRepository){
         this.gradedQuestionRepository = gradedQuestionRepository;
         this.answerRepository = answerRepository;
@@ -25,22 +28,24 @@ public class GradedQuestionService {
         return question;
     }
 
-    public void saveAnswerToAQuestion(Answer answer, String username, String questionId) {
+    public void saveAnswerToAQuestion(Answer answer, String username, String questionId) throws IOException, GeneralSecurityException {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        answer.setUsername(timestamp.getTime() + "_" +username);
+        if(answer.getType().equals("audio")){
+            String base64 = answer.getKey();
+            //Get file ID from google drive
+            String fid = googleDrive.uploadFile(base64, answer.getUsername());
+            answer.setKey(fid);
+        }
         answerRepository.save(answer);
         GradedQuestion question = findGradedQuestion(questionId);
-        question.addAnswer(username, answer.getId());
+        question.addAnswer(answer);
         gradedQuestionRepository.save(question);
     }
 
-    public List<String> getAllAnswerForAQuestion(String questionId) {
+    public List<Answer> getAllAnswerForAQuestion(String questionId) {
         GradedQuestion question = findGradedQuestion(questionId);
-        Map answerMap = question.getAnswersMap();
-        List<String> list = new ArrayList<>();
-        answerMap.forEach((k, v) -> {
-            String username = k.toString().split("-")[1];
-            Answer answer = answerRepository.findByObjectId(new ObjectId(v.toString()));
-            list.add(username + "_" + answer.getType() + "_" + answer.getKey());
-        });
-        return list;
+
+        return question.getAnswerList();
     }
 }

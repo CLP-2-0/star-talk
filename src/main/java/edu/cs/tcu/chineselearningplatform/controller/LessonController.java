@@ -1,5 +1,6 @@
 package edu.cs.tcu.chineselearningplatform.controller;
 
+import edu.cs.tcu.chineselearningplatform.entity.GradedQuestion;
 import edu.cs.tcu.chineselearningplatform.entity.Lesson;
 import edu.cs.tcu.chineselearningplatform.entity.util.Result;
 import edu.cs.tcu.chineselearningplatform.entity.util.StatusCode;
@@ -60,7 +61,7 @@ public class LessonController {
     public Result findById(@PathVariable String lessonId) {
         return new Result(true, StatusCode.SUCCESS, "Find lesson by id success", lessonService.findById(lessonId));
     }
-    //
+
     /**
      * Method to save one lesson.
      * @param lesson to be saved.
@@ -71,6 +72,17 @@ public class LessonController {
     public Result save(@RequestBody Lesson newLesson) {
         lessonService.save(newLesson);
         return new Result(true, StatusCode.SUCCESS, "Save lesson success");
+    }
+    /**
+     * Method to save one homework.
+     * @param homework to be saved.
+     * @return Result object that contains flag, status code, message.
+     */
+    @PostMapping("/homework/{lid}")
+    @ResponseBody
+    public Result save(@RequestBody List<GradedQuestion> questions, @PathVariable String lid) {
+        lessonService.savePredefinedHomework(lid, questions);
+        return new Result(true, StatusCode.SUCCESS, "Save homework success");
     }
 
 }

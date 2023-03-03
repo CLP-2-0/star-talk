@@ -29,8 +29,8 @@ public class HomeworkControllerTest {
     @Test
     void testFindById() {
         Homework homework1 = new Homework();
-        homework1.setType("student");
-        homework1.setAttachment("hw1 updated");
+//       homework1.setType("student");
+//       homework1.setAttachment("hw1 updated");
 
         when(homeworkService.findById("634c8d1356eee1d489ecf66c"))
                 .thenReturn(homework1);

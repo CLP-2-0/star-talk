@@ -1,15 +1,21 @@
 package edu.cs.tcu.chineselearningplatform.entity;
 
+import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
 
 public class GradedQuestionTest {
     private GradedQuestion gradedQuestion;
     private Question question;
-    private Map<String, String> answersMap;
+
 
     @BeforeEach
     public void setUp() {
@@ -17,14 +23,12 @@ public class GradedQuestionTest {
         question.setId("1");
 
 
-        answersMap = new HashMap<>();
-        answersMap.put("12345-username", "answerId");
+
 
         gradedQuestion = new GradedQuestion();
         gradedQuestion.setId("1");
         gradedQuestion.setQuestion(question);
         gradedQuestion.setPoint(5);
-        gradedQuestion.setAnswersMap(answersMap);
     }
 
     @Test
@@ -63,21 +67,38 @@ public class GradedQuestionTest {
     }
 
     @Test
-    public void testGetAnswersMap() {
-        Assertions.assertEquals(answersMap, gradedQuestion.getAnswersMap());
+    public void testGetAnswerList() {
+        GradedQuestion gradedQuestion1 = new GradedQuestion();
+        List<Answer> answerList = new ArrayList<>();
+        Answer answer = new Answer();
+        answerList.add(answer);
+        gradedQuestion1.setAnswerList(answerList);
+        assertEquals(answerList, gradedQuestion1.getAnswerList());
     }
 
     @Test
-    public void testSetAnswersMap() {
-        Map<String, String> newAnswersMap = new HashMap<>();
-        newAnswersMap.put("67890-username", "newAnswerId");
-        gradedQuestion.setAnswersMap(newAnswersMap);
-        Assertions.assertEquals(newAnswersMap, gradedQuestion.getAnswersMap());
+    public void testSetAnswerList() {
+        GradedQuestion gradedQuestion1 = new GradedQuestion();
+        List<Answer> answerList = new ArrayList<>();
+        Answer answer = new Answer();
+        answerList.add(answer);
+        gradedQuestion1.setAnswerList(answerList);
+        assertEquals(answerList, gradedQuestion1.getAnswerList());
     }
 
     @Test
     public void testAddAnswer() {
-        gradedQuestion.addAnswer("testUser", "testAnswerId");
-        Assertions.assertTrue(gradedQuestion.getAnswersMap().containsValue("testAnswerId"));
+        Answer answer = new Answer();
+        answer.setId("1");
+        answer.setType("Text");
+
+        gradedQuestion.addAnswer(answer);
+
+        List<Answer> expectedAnswers = new ArrayList<>();
+        expectedAnswers.add(answer);
+
+        Assertions.assertEquals(expectedAnswers, gradedQuestion.getAnswerList());
+
     }
+
 }
