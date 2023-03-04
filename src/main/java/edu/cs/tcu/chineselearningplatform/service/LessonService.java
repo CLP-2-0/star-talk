@@ -82,11 +82,22 @@ public class LessonService {
         }
         Homework hw = new Homework();
         hw.setQuestionList(questions);
-        System.out.println(hw);
         Lesson currLesson = findById(lessonId);
-//        hw.setLesson(currLesson);
         homeworkRepository.save(hw);
         currLesson.setPredefined(hw);
+        lessonRepository.save(currLesson);
+    }
+
+    public void saveExam(String lessonId, List<GradedQuestion> questions, String time) {
+        for(GradedQuestion q: questions) {
+            gradedQuestionRepository.save(q);
+        }
+        Homework exam = new Homework();
+        exam.setQuestionList(questions);
+        exam.setTime(time);
+        Lesson currLesson = findById(lessonId);
+        homeworkRepository.save(exam);
+        currLesson.setExam(exam);
         lessonRepository.save(currLesson);
     }
 }
