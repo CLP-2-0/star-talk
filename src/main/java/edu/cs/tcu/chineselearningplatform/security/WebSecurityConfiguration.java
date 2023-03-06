@@ -31,7 +31,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://127.0.0.1:3000/","http://localhost:3000/","https://lemon-ocean-0d908fb10.2.azurestaticapps.net/", "https://capable-sundae-e66f44.netlify.app/", "https://clpfrontend.z13.web.core.windows.net", "https://clpfrontend.z13.web.core.windows.net/"));
+        configuration.setAllowedOrigins(Arrays.asList("http://127.0.0.1:3000/","http://localhost:3000/","https://lemon-ocean-0d908fb10.2.azurestaticapps.net/", "https://capable-sundae-e66f44.netlify.app/"));
         configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH"));
         configuration.setAllowCredentials(true);
         //the below three lines will add the relevant CORS response headers
