@@ -14,32 +14,16 @@ public class UserTest {
     private Section section1;
     private Section section2;
 
-    @Before
-    public void setUp() {
-        user = new User();
-        user.setId("1");
-        user.setNickname("Test User");
-        user.setUsername("testuser");
-        user.setEmail("testuser@example.com");
-        user.setPicture("http://example.com/testuser.jpg");
-        user.setRole("student");
-
-        section1 = new Section();
-        section1.setId("1");
-        section1.setSection("Chinese 101");
-
-        section2 = new Section();
-        section2.setId("2");
-        section2.setSection("Chinese 201");
-    }
-
     @Test
     public void testGetId() {
-        assertEquals("1", user.getId());
+        User user = new User();
+        user.setId("2");
+        assertEquals("2", user.getId());
     }
 
     @Test
     public void testSetId() {
+        User user = new User();
         user.setId("2");
         assertEquals("2", user.getId());
     }

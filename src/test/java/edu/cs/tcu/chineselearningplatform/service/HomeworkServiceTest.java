@@ -4,7 +4,7 @@ import edu.cs.tcu.chineselearningplatform.dao.GradedQuestionRepository;
 import edu.cs.tcu.chineselearningplatform.dao.HomeworkRepository;
 import edu.cs.tcu.chineselearningplatform.dao.SectionRepository;
 import edu.cs.tcu.chineselearningplatform.entity.*;
-import org.bson.types.ObjectId;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -15,9 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.mongodb.assertions.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+import static org.mockito.BDDMockito.given;
 
 @SpringBootTest
 public class HomeworkServiceTest {
@@ -45,6 +49,9 @@ public class HomeworkServiceTest {
     private GradedQuestion gradedQuestion;
     private List<GradedQuestion> gradedQuestionList;
     private Homework homework;
+    private Homework homework2;
+
+    List<Homework> homeworks;
 
     @BeforeEach
     public void setUp() {
@@ -68,6 +75,21 @@ public class HomeworkServiceTest {
         homework.setSection(section);
         homework.setLesson(lesson);
         homework.setQuestionList(gradedQuestionList);
+
+        homework2 = new Homework();
+        homework2.setId("1");
+        homework2.setSection(section);
+        homework2.setLesson(lesson);
+        homework2.setQuestionList(gradedQuestionList);
+
+        this.homeworks = new ArrayList<>();
+        this.homeworks.add(homework);
+        this.homeworks.add(homework2);
+    }
+
+    @AfterEach
+    void tearDown() {
+
     }
 
     @Test
@@ -113,5 +135,52 @@ public class HomeworkServiceTest {
 //        // Verify the results
 //        assertEquals(homework, result);
 //    }
+
+    @Test
+    public void testFindAll() {
+        // Given
+        given(this.homeworkRepository.findAll()).willReturn(this.homeworks);
+
+        // When
+        List<Homework> actualHomeworks = this.homeworkService.findAll();
+
+        // Then
+        assertThat(actualHomeworks.size()).isEqualTo(this.homeworks.size());
+        verify(this.homeworkRepository, times(1)).findAll();
+    }
+
+    @Test
+    void testUpdateSuccess() {
+        Homework updatedHomework = new Homework();
+        updatedHomework.setId("1");
+        updatedHomework.setSection(section);
+
+        when(homeworkRepository.findById("1")).thenReturn(Optional.of(homework));
+        homeworkService.update("1", updatedHomework);
+
+        verify(homeworkRepository, times(1)).save((homework));
+        assertEquals(section, homework.getSection());
+    }
+
+
+
+    @Test
+    void testDeleteSuccess() {
+        // Given
+        String homeworkId = "123456789";
+        Homework homework = new Homework();
+        homework.setId(homeworkId);
+
+        given(this.homeworkRepository.findById(homeworkId)).willReturn(Optional.of(homework));
+
+        // When
+        this.homeworkService.delete(homeworkId);
+
+        // Then
+        verify(this.homeworkRepository, times(1)).findById(homeworkId);
+        verify(this.homeworkRepository, times(1)).delete(homework);
+    }
+
+
 }
 

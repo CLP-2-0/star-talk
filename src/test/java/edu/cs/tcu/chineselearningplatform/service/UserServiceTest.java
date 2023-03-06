@@ -2,6 +2,8 @@ package edu.cs.tcu.chineselearningplatform.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,9 @@ import org.mockito.MockitoAnnotations;
 
 import edu.cs.tcu.chineselearningplatform.dao.UserRepository;
 import edu.cs.tcu.chineselearningplatform.entity.User;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
 
 public class UserServiceTest {
 
@@ -112,18 +117,20 @@ public class UserServiceTest {
         assertEquals("teacher", user.getRole());
     }
 
-//    @Test
-//    public void testDelete() {
-//        User user = new User();
-//        user.setUsername("testuser");
-//        user.setNickname("Test User");
-//
-//        when(userRepository.findByUsername("testuser")).thenReturn(user);
-//
-//        userService.delete("testuser");
-//
-//        Mockito.verify(userRepository, times(1)).findByUsername("testuser");
-//        Mockito.verify(userRepository, times(1)).deleteByUsername("testuser");
-//    }
+    @Test
+    public void testDeleteUser() {
+        // Given
+        User user = new User();
+        user.setUsername("testuser");
+        userService.save(user);
+
+        // When
+        userService.delete("testuser");
+        List<User> userList = userService.findAll();
+
+        // Then
+        assertThat(userList).doesNotContain(user);
+    }
+
 
 }

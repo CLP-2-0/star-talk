@@ -3,7 +3,6 @@ package edu.cs.tcu.chineselearningplatform.service;
 import edu.cs.tcu.chineselearningplatform.dao.QuestionRepository;
 import edu.cs.tcu.chineselearningplatform.entity.Lesson;
 import edu.cs.tcu.chineselearningplatform.entity.Question;
-import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
 
@@ -59,13 +58,15 @@ public class QuestionService {
 
     /**
      * Method to update one question.
+     *
      * @param question to be updated.
      * @return Result object that contains flag, status code, message.
      */
-    public void update(String questionId, Question updatedQuestion) {
+    public Question update(String questionId, Question updatedQuestion) {
         updatedQuestion.setId(questionId);
         questionRepository.save(updatedQuestion);
 
+        return updatedQuestion;
     }
 
     /**

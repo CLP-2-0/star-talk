@@ -3,6 +3,7 @@ package edu.cs.tcu.chineselearningplatform.service;
 import edu.cs.tcu.chineselearningplatform.dao.QuestionRepository;
 import edu.cs.tcu.chineselearningplatform.entity.Lesson;
 import edu.cs.tcu.chineselearningplatform.entity.Question;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -12,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.mockito.BDDMockito.given;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -29,6 +32,8 @@ public class QuestionServiceTest {
     private Lesson testLesson;
     private Question testQuestion;
 
+    List<Question> questions;
+
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -45,6 +50,14 @@ public class QuestionServiceTest {
         testQuestion.setQuestion("What is your name?");
         testQuestion.setAnswer("My name is John");
         testQuestion.setLesson(testLesson);
+
+        this.questions = new ArrayList<>();
+        this.questions.add(testQuestion);
+    }
+
+    @AfterEach
+    void tearDown() {
+
     }
 
     @Test
@@ -90,57 +103,58 @@ public class QuestionServiceTest {
     }
 
 
-//    @Test
-//    public void testFindAll() {
-//        List<Question> questionList = new ArrayList<>();
-//        questionList.add(testQuestion);
-//
-//        when(questionRepositoryMock.findAll()).thenReturn(questionList);
-//
-//        List<Question> foundQuestionList = questionService.findAll();
-//
-//        verify(questionRepositoryMock, times(1)).findAll();
-//        assertNotNull(foundQuestionList);
-//        assertEquals(1, foundQuestionList.size());
-//        assertEquals("What is your name?", foundQuestionList.get(0).getQuestion());
-//        assertEquals("My name is John");
-//    }
+    @Test
+    public void testFindAll() {
+        // Given
+        given(this.questionRepositoryMock.findAll()).willReturn(this.questions);
 
-//    @Test
-//    public void testUpdate() {
-//
-//        // create the initial question object
-//        Question question = new Question();
-//        question.setId("questionId");
-//        question.setQuestion("What is your name?");
-//        question.setAnswer("My name is Alice");
-//
-//        // create the updated question object
-//        Question updatedQuestion = new Question();
-//        updatedQuestion.setQuestion("What is your age?");
-//        updatedQuestion.setAnswer("I am 25 years old");
-//
-//        // create the lesson object
-//        Lesson lesson = new Lesson();
-//        lesson.setId("lessonId");
-//
-//        // mock the repository and service methods
-//        when(questionRepositoryMock.findById("questionId")).thenReturn(Optional.of(question));
-//        when(lessonServiceMock.findById("lessonId")).thenReturn(lesson);
-//        when(questionRepositoryMock.save(any(Question.class))).thenReturn(updatedQuestion);
-//
-//        // call the update method
-//        questionService.update("questionId", updatedQuestion);
-//
-//        // verify that the repository and service methods were called
-//        verify(questionRepositoryMock, times(2)).findById("questionId");
-//        verify(lessonServiceMock, times(1)).findById("lessonId");
-//        verify(questionRepositoryMock, times(1)).save(any(Question.class));
-//
-//        // assert that the question was updated correctly
-//        assertEquals("What is your age?", question.getQuestion());
-//        assertEquals("I am 25 years old", question.getAnswer());
-//        assertEquals(lesson.getId(), question.getLesson().getId());
-//    }
+        // When
+        List<Question> actualQuestions = this.questionService.findAll();
+
+        // Then
+        assertThat(actualQuestions.size()).isEqualTo(this.questions.size());
+        verify(this.questionRepositoryMock, times(1)).findAll();
+    }
+
+    @Test
+    public void testUpdate() {
+        // Given
+        Question oldQuestion = new Question();
+        oldQuestion.setId("1");
+        oldQuestion.setQuestion("What is your name?");
+
+        Question update = new Question();
+        update.setQuestion("What is your name?");
+
+        given(this.questionRepositoryMock.findById("1")).willReturn(Optional.of(oldQuestion));
+        given(this.questionRepositoryMock.save(oldQuestion)).willReturn(oldQuestion);
+
+        // When
+        Question updatedQuestion = this.questionService.update("1", update);
+
+        // Then
+        assertThat(updatedQuestion.getId()).isEqualTo("1");
+        assertThat(updatedQuestion.getQuestion()).isEqualTo(update.getQuestion());
+        verify(this.questionRepositoryMock, times(1)).findById("1");
+        verify(this.questionRepositoryMock, times(1)).save(oldQuestion);
+    }
+
+
+    @Test
+    void testDeleteSuccess() {
+        // Given
+        String questionId = "123456789";
+        Question question = new Question();
+        question.setId(questionId);
+
+        given(this.questionRepositoryMock.findById(questionId)).willReturn(Optional.of(question));
+
+        // When
+        this.questionService.delete(questionId);
+
+        // Then
+        verify(this.questionRepositoryMock, times(1)).findById(questionId);
+        verify(this.questionRepositoryMock, times(1)).delete(question);
+    }
 
 }

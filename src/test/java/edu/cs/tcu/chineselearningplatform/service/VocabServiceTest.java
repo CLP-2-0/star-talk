@@ -12,6 +12,8 @@ import org.mockito.MockitoAnnotations;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.BDDMockito.given;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -25,10 +27,25 @@ public class VocabServiceTest {
 
     private VocabService vocabService;
 
+    private Vocab vocab;
+    private Vocab updatedVocab;
+    private String vocabId;
+    private String lessonId;
+
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         vocabService = new VocabService(vocabRepository, lessonService);
+
+        lessonId = "1";
+        vocabId = "1";
+        vocab = new Vocab();
+        vocab.setId(vocabId);
+        vocab.setWord("hello");
+        updatedVocab = new Vocab();
+        updatedVocab.setId(vocabId);
+        updatedVocab.setWord("hi");
+
     }
 
     @Test
@@ -81,44 +98,65 @@ public class VocabServiceTest {
         verify(vocabRepository, times(2)).save(any(Vocab.class));
         verify(lessonService, times(1)).save(lesson);
     }
+    @Test
+    public void testUpdateVocab() {
+        // Given
+        String vocabId = "1";
+        String lessonId = "123";
+        Vocab oldVocab = new Vocab();
+        oldVocab.setId(vocabId);
+        oldVocab.setWord("oldWord");
+        oldVocab.setMeaning("oldMeaning");
+        Vocab updatedVocab = new Vocab();
+        updatedVocab.setId(vocabId);
+        updatedVocab.setWord("updatedWord");
+        updatedVocab.setMeaning("updatedMeaning");
+        Lesson lesson = new Lesson();
+        lesson.setId(lessonId);
+        lesson.addVocab(oldVocab);
 
-//    @Test
-//    public void testDelete() {
-//        String vocabId = "vocab123";
-//        String lessonId = "lesson123";
-//        Vocab vocab = new Vocab();
-//        Lesson lesson = new Lesson();
-//        lesson.setId(lessonId);
-//
-//        when(lessonService.findById(lessonId)).thenReturn(lesson);
-//        when(vocabRepository.findByObjectId(new ObjectId(vocabId))).thenReturn(vocab);
-//
-//        vocabService.delete(vocabId, lessonId);
-//
-//        verify(vocabRepository, times(1)).delete(vocab);
-//        verify(lessonService, times(1)).save(lesson);
-//    }
+        given(this.lessonService.findById(lessonId)).willReturn(lesson);
+        given(this.vocabRepository.findByObjectId(new ObjectId(vocabId))).willReturn(oldVocab);
+        given(this.vocabRepository.save(updatedVocab)).willReturn(updatedVocab);
 
-//    @Test
-//    public void testUpdate() {
-//        Lesson lesson = new Lesson();
-//        lesson.setTitle("Test Lesson");
-//        lessonService.save(lesson);
-//
-//        Vocab vocab = new Vocab();
-//        vocab.setWord("Test Word");
-//        vocab.setLesson(lesson);
-//        vocabService.save(vocab, lesson.getId(), new ArrayList<Vocab>());
-//
-//        Vocab updatedVocab = new Vocab();
-//        updatedVocab.setWord("Updated Word");
-//
-//        String vocabId = vocab.getId();
-//        vocabService.update(vocabId, updatedVocab, lesson.getId());
-//
-//        Vocab retrievedVocab = vocabService.findByObjectId(vocabId);
-//        assertEquals(updatedVocab.getWord(), retrievedVocab.getWord());
-//    }
+        // When
+        Vocab actualVocab = vocabService.update(vocabId, updatedVocab, lessonId);
+
+        // Then
+        assertThat(actualVocab).isEqualTo(updatedVocab);
+        assertThat(actualVocab.getWord()).isEqualTo(updatedVocab.getWord());
+        assertThat(actualVocab.getMeaning()).isEqualTo(updatedVocab.getMeaning());
+        verify(this.lessonService, times(1)).findById(lessonId);
+        verify(this.vocabRepository, times(1)).findByObjectId(new ObjectId(vocabId));
+        verify(this.vocabRepository, times(1)).save(updatedVocab);
+        verify(lesson, times(1)).updateVocab(oldVocab, updatedVocab);
+        verify(this.lessonService, times(1)).save(lesson);
+    }
+
+
+
+    @Test
+    public void testDeleteVocab() {
+        // Given
+        Lesson lesson = new Lesson();
+        Vocab vocab = new Vocab();
+        vocab.setWord("testword");
+        lesson.addVocab(vocab);
+
+        given(this.lessonService.findById("lesson1")).willReturn(lesson);
+        given(this.vocabRepository.findByObjectId(new ObjectId("6174df345f14ad9c7a330f1d"))).willReturn(vocab);
+
+        // When
+        vocabService.delete("6174df345f14ad9c7a330f1d", "lesson1");
+
+        // Then
+        assertThat(lesson.getVocabs()).doesNotContain(vocab);
+        verify(this.lessonService, times(1)).findById("lesson1");
+        verify(this.vocabRepository, times(1)).findByObjectId(new ObjectId("6174df345f14ad9c7a330f1d"));
+        verify(this.vocabRepository, times(1)).delete(vocab);
+        verify(this.lessonService, times(1)).save(lesson);
+    }
+
 
 
 }

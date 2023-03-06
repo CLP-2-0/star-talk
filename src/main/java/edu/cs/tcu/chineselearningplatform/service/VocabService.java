@@ -66,7 +66,7 @@ public class VocabService {
         lessonService.save(lesson);
     }
 
-    public void update(String vocabId, Vocab updatedVocab, String lessonId) {
+    public Vocab update(String vocabId, Vocab updatedVocab, String lessonId) {
         Lesson lesson = lessonService.findById(lessonId);
         Vocab vocab = vocabRepository.findByObjectId(new ObjectId(vocabId));
         System.out.println("first " + lessonId);
@@ -78,6 +78,6 @@ public class VocabService {
 
         vocabRepository.save(updatedVocab);
         lessonService.save(lesson);
-
+        return vocab;
     }
 }
