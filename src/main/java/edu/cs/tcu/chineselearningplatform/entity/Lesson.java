@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@Document("LessonTest")
+@Document("Lesson")
 public class Lesson implements Serializable {
     @Id
     private String id;
