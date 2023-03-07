@@ -12,6 +12,7 @@ import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -93,14 +94,36 @@ public class LessonService {
         }
         Homework hw = new Homework();
         hw.setQuestionList(questions);
-        System.out.println(hw);
         Lesson currLesson = findById(lessonId);
-//        hw.setLesson(currLesson);
         homeworkRepository.save(hw);
         currLesson.setPredefined(hw);
         lessonRepository.save(currLesson);
     }
 
+    public void saveExam(String lessonId, List<GradedQuestion> questions, String time) {
+        for(GradedQuestion q: questions) {
+            gradedQuestionRepository.save(q);
+        }
+        Homework exam = new Homework();
+        exam.setQuestionList(questions);
+        exam.setTime(time);
+        Lesson currLesson = findById(lessonId);
+        homeworkRepository.save(exam);
+        currLesson.setExam(exam);
+        lessonRepository.save(currLesson);
+    }
 
+    public void saveGrammarMeanings(String lessonId, List<String> grammarMeanings) {
+        Lesson lesson = lessonRepository.findById(lessonId).get();
+        lesson.setGrammarMeaning(grammarMeanings);
+        lessonRepository.save(lesson);
+    }
 
+    public List<String> getSavedGrammarMeanings(String lessonId) {
+        Optional<Lesson> lesson = lessonRepository.findById(lessonId);
+        if (lesson.isPresent()) {
+            return lesson.get().getGrammarMeaning();
+        }
+        return new ArrayList<>();
+    }
 }

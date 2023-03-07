@@ -21,6 +21,18 @@ public class Lesson implements Serializable {
     @DBRef
     private List<Question> questionsBank = new ArrayList<>();
     private Homework predefined;
+    private List<Question> examBank = new ArrayList<>();
+    private Homework exam;
+
+    private List<String> grammarMeaning = new ArrayList<>();
+
+    public List<String> getGrammarMeaning() {
+        return grammarMeaning;
+    }
+
+    public void setGrammarMeaning(List<String> grammarMeaning) {
+        this.grammarMeaning = grammarMeaning;
+    }
 
     public Lesson() {
 
@@ -119,5 +131,32 @@ public class Lesson implements Serializable {
 
     public void setPredefined(Homework predefined) {
         this.predefined = predefined;
+    }
+
+    public List<Question> getExamBank() {
+        return examBank;
+    }
+
+    public void setExamBank(List<Question> examBank) {
+        this.examBank = examBank;
+    }
+
+    public void addEQuestion(Question question){
+
+        this.examBank.add(question);
+        question.setLesson(this);
+    }
+
+    public void removeEQuestion(Question question){
+        this.examBank.remove(question);
+        question.setLesson(null);
+    }
+
+    public Homework getExam() {
+        return exam;
+    }
+
+    public void setExam(Homework exam) {
+        this.exam = exam;
     }
 }

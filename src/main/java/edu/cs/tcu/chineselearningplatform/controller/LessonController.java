@@ -91,10 +91,30 @@ public class LessonController {
      */
     @PostMapping("/homework/{lid}")
     @ResponseBody
-    public Result save(@RequestBody List<GradedQuestion> questions, @PathVariable String lid) {
+    public Result saveHomework(@RequestBody List<GradedQuestion> questions, @PathVariable String lid) {
         lessonService.savePredefinedHomework(lid, questions);
         return new Result(true, StatusCode.SUCCESS, "Save homework success");
     }
 
+    @PostMapping("/exam/{lid}/{time}")
+    @ResponseBody
+    public Result saveExam(@RequestBody List<GradedQuestion> questions, @PathVariable String lid, @PathVariable String time) {
+        lessonService.saveExam(lid, questions, time);
+        return new Result(true, StatusCode.SUCCESS, "Save exam success");
+    }
+
+    @PostMapping("/{lessonId}/grammars")
+    @ResponseBody
+    public Result setAllGrammarMeanings(@PathVariable("lessonId") String lessonId, @RequestBody List<String> grammarMeanings){
+        lessonService.saveGrammarMeanings(lessonId, grammarMeanings);
+        return new Result(true,StatusCode.SUCCESS,"Find all grammar");
+    }
+
+    @GetMapping("/{lessonId}/grammar-meanings")
+    @ResponseBody
+    public Result getAllGrammarMeanings(@PathVariable("lessonId") String lessonId){
+        List<String> grammarMeanings = lessonService.getSavedGrammarMeanings(lessonId);
+        return new Result(true, StatusCode.SUCCESS, "getallgrammarmeanings success", grammarMeanings);
+    }
 
 }
