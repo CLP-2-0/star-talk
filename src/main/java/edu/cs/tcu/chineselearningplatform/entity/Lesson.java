@@ -22,6 +22,15 @@ public class Lesson implements Serializable {
     private List<Question> examBank = new ArrayList<>();
     private Homework exam;
 
+    private List<String> grammarMeaning = new ArrayList<>();
+
+    public List<String> getGrammarMeaning() {
+        return grammarMeaning;
+    }
+
+    public void setGrammarMeaning(List<String> grammarMeaning) {
+        this.grammarMeaning = grammarMeaning;
+    }
 
     public Lesson() {
 

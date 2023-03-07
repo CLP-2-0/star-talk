@@ -92,4 +92,18 @@ public class LessonController {
         return new Result(true, StatusCode.SUCCESS, "Save exam success");
     }
 
+    @PostMapping("/{lessonId}/grammars")
+    @ResponseBody
+    public Result setAllGrammarMeanings(@PathVariable("lessonId") String lessonId, @RequestBody List<String> grammarMeanings){
+        lessonService.saveGrammarMeanings(lessonId, grammarMeanings);
+        return new Result(true,StatusCode.SUCCESS,"Find all grammar");
+    }
+
+    @GetMapping("/{lessonId}/grammar-meanings")
+    @ResponseBody
+    public Result getAllGrammarMeanings(@PathVariable("lessonId") String lessonId){
+        List<String> grammarMeanings = lessonService.getSavedGrammarMeanings(lessonId);
+        return new Result(true, StatusCode.SUCCESS, "getallgrammarmeanings success", grammarMeanings);
+    }
+
 }
