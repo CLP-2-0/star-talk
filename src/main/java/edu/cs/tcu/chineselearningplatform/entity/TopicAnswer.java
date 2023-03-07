@@ -1,5 +1,6 @@
 package edu.cs.tcu.chineselearningplatform.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -38,14 +39,8 @@ public class TopicAnswer implements Serializable {
         this.content = content;
     }
 
-    public User getUser() {
-        return answerCreator;
-    }
 
-    public void setUser(User user) {
-        this.answerCreator = user;
-    }
-
+    @JsonIgnore
     public ForumTopic getTopic() {
         return topic;
     }
@@ -70,4 +65,22 @@ public class TopicAnswer implements Serializable {
         this.lastUpdatedDate = lastUpdatedDate;
     }
 
+    public User getAnswerCreator() {
+        return answerCreator;
+    }
+
+    public void setAnswerCreator(User answerCreator) {
+        this.answerCreator = answerCreator;
+    }
+
+
+//    public void addAnswerCreator(User answerCreator) {
+//        this.answerCreator.add(answerCreator);
+//        answerCreator.getTopicAnswer().add(this);
+//    }
+//
+//    public void removeAnswerCreator(User answerCreator) {
+//        this.answerCreator = null;
+//        answerCreator.setTopicAnswer(null);
+//    }
 }

@@ -55,18 +55,7 @@ public class TopicController {
         return new Result(true,StatusCode.SUCCESS,"Delete success");
     }
 
-    @PostMapping("/{topicId}/answers")
-    @ResponseBody
-    public Result createAnswer(@PathVariable String topicId, @RequestBody TopicAnswer newAnswer) {
-        topicService.createAnswer(topicId, newAnswer);
-        return new Result(true, StatusCode.SUCCESS, "Answer added to topic");
-    }
 
-    @GetMapping("/{topicId}/answers")
-    @ResponseBody
-    public Result findAllAnswersByTopicId(@PathVariable String topicId) {
-        List<TopicAnswer> allAnswers = topicService.findAllAnswersByTopicId(topicId);
-        return new Result(true, StatusCode.SUCCESS, "Find all answers by topic id!", allAnswers);
-    }
+
 }
 

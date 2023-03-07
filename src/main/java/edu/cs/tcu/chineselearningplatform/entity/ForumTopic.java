@@ -82,4 +82,14 @@ public class ForumTopic implements Serializable {
     public void setTopicAnswer(List<TopicAnswer> topicAnswer) {
         this.topicAnswer = topicAnswer;
     }
+
+    public void addAnswer(TopicAnswer answer){
+        this.topicAnswer.add(answer);
+        answer.setTopic(this);
+    }
+
+    public void removeAnswer(TopicAnswer answer){
+        this.topicAnswer.remove(answer);
+        answer.setTopic(null);
+    }
 }

@@ -14,13 +14,9 @@ import java.util.List;
 public class TopicService {
 
     private TopicRepository topicRepository;
-    private TopicAnswerRepository topicAnswerRepository;
-    private TopicAnswerService topicAnswerService;
 
-    public TopicService(TopicRepository topicRepository, TopicAnswerRepository topicAnswerRepository, TopicAnswerService topicAnswerService) {
+    public TopicService(TopicRepository topicRepository) {
         this.topicRepository = topicRepository;
-        this.topicAnswerRepository = topicAnswerRepository;
-        this.topicAnswerService = topicAnswerService;
     }
 
     public List<ForumTopic> findAll() {
@@ -47,18 +43,4 @@ public class TopicService {
         topicRepository.deleteById(topicId);
     }
 
-    public void createAnswer(String topicId, TopicAnswer newAnswer) {
-        ForumTopic topic = topicRepository.findById(topicId).get();
-
-        List<TopicAnswer> answers = topic.getTopicAnswer();
-        answers.add(newAnswer);
-
-        topic.setTopicAnswer(answers);
-        topicRepository.save(topic);
-
-    }
-
-    public List<TopicAnswer> findAllAnswersByTopicId(String topicId) {
-        return topic.findByUsername(username).getSections();
-    }
 }
