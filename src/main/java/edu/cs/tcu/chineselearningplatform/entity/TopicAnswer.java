@@ -7,6 +7,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Document("TopicAnswer")
 public class TopicAnswer implements Serializable {
@@ -19,6 +21,9 @@ public class TopicAnswer implements Serializable {
 
     @DBRef
     private ForumTopic topic;
+
+    @DBRef
+    private List<Reply> replies = new ArrayList<>();
 
     private LocalDateTime createdDate;
     private LocalDateTime lastUpdatedDate;
@@ -73,14 +78,20 @@ public class TopicAnswer implements Serializable {
         this.answerCreator = answerCreator;
     }
 
+    public List<Reply> getReplies() {
+        return replies;
+    }
 
-//    public void addAnswerCreator(User answerCreator) {
-//        this.answerCreator.add(answerCreator);
-//        answerCreator.getTopicAnswer().add(this);
-//    }
-//
-//    public void removeAnswerCreator(User answerCreator) {
-//        this.answerCreator = null;
-//        answerCreator.setTopicAnswer(null);
-//    }
+    public void setReplies(List<Reply> replies) {
+        this.replies = replies;
+    }
+
+    public void addReply(Reply reply){
+        this.replies.add(reply);
+        reply.setTopicAnswer(this);
+    }
+    public void removeReply(Reply reply){
+        this.replies.remove(reply);
+        reply.setTopicAnswer(null);
+    }
 }

@@ -1,13 +1,19 @@
-//package edu.cs.tcu.chineselearningplatform.datainitializer;
-//
-//import edu.cs.tcu.chineselearningplatform.dao.UserRepository;
-//
-//import edu.cs.tcu.chineselearningplatform.entity.User;
-//import org.springframework.boot.CommandLineRunner;
-//import org.springframework.stereotype.Component;
-//
-//@Component
-//public class MockDataInitializer implements CommandLineRunner {
+package edu.cs.tcu.chineselearningplatform.datainitializer;
+
+import edu.cs.tcu.chineselearningplatform.dao.UserRepository;
+
+import edu.cs.tcu.chineselearningplatform.entity.User;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+@Component
+public class MockDataInitializer implements CommandLineRunner {
+    @Override
+    public void run(String... args) throws Exception {
+
+    }
+}
+
 //    private UserRepository userRepository;
 ////    private LessonRepository lessonRepository;
 ////    private VocabRepository vocabRepository;

@@ -36,6 +36,8 @@ public class TopicService {
         topic.setId(topicId);
         topic.setTitle(updatedTopic.getTitle());
         topic.setContent(updatedTopic.getContent());
+        topic.setReplyCount(updatedTopic.getReplyCount());
+        topic.setUserActive(updatedTopic.getUserActive());
         topicRepository.save(topic);
     }
 
