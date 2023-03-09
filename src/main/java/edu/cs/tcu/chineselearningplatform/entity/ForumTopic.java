@@ -19,6 +19,7 @@ public class ForumTopic implements Serializable {
     private String title;
     private String content;
     private Integer replyCount;
+    private Integer userActive;
     private LocalDateTime createdDate;
     private LocalDateTime lastPostDate;
     @DBRef
@@ -74,6 +75,13 @@ public class ForumTopic implements Serializable {
         this.lastPostDate = lastPostDate;
     }
 
+    public Integer getUserActive() {
+        return userActive;
+    }
+
+    public void setUserActive(Integer userActive) {
+        this.userActive = userActive;
+    }
 
     public List<TopicAnswer> getTopicAnswer() {
         return topicAnswer;
