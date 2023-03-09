@@ -74,6 +74,17 @@ public class LessonController {
         return new Result(true, StatusCode.SUCCESS, "Save lesson success");
     }
     /**
+     * Method to save all lesson.
+     * @param lessons to be saved.
+     * @return Result object that contains flag, status code, message.
+     */
+    @PostMapping("/saveAllLessons")
+    @ResponseBody
+    public Result saveAll(@RequestBody List<Lesson> lessons) {
+        lessonService.saveAll(lessons);
+        return new Result(true, StatusCode.SUCCESS, "Save lessons success");
+    }
+    /**
      * Method to save one homework.
      * @param homework to be saved.
      * @return Result object that contains flag, status code, message.
@@ -90,6 +101,20 @@ public class LessonController {
     public Result saveExam(@RequestBody List<GradedQuestion> questions, @PathVariable String lid, @PathVariable String time) {
         lessonService.saveExam(lid, questions, time);
         return new Result(true, StatusCode.SUCCESS, "Save exam success");
+    }
+
+    @PostMapping("/{lessonId}/grammars")
+    @ResponseBody
+    public Result setAllGrammarMeanings(@PathVariable("lessonId") String lessonId, @RequestBody List<String> grammarMeanings){
+        lessonService.saveGrammarMeanings(lessonId, grammarMeanings);
+        return new Result(true,StatusCode.SUCCESS,"Find all grammar");
+    }
+
+    @GetMapping("/{lessonId}/grammar-meanings")
+    @ResponseBody
+    public Result getAllGrammarMeanings(@PathVariable("lessonId") String lessonId){
+        List<String> grammarMeanings = lessonService.getSavedGrammarMeanings(lessonId);
+        return new Result(true, StatusCode.SUCCESS, "getallgrammarmeanings success", grammarMeanings);
     }
 
 }

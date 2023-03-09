@@ -7,9 +7,12 @@ import edu.cs.tcu.chineselearningplatform.entity.GradedQuestion;
 import edu.cs.tcu.chineselearningplatform.entity.Homework;
 import edu.cs.tcu.chineselearningplatform.entity.Lesson;
 import edu.cs.tcu.chineselearningplatform.entity.Section;
+import edu.cs.tcu.chineselearningplatform.entity.util.StatusCode;
 import org.bson.types.ObjectId;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,6 +44,15 @@ public class LessonService {
      */
     public void save(Lesson newLesson) {
         lessonRepository.save(newLesson);
+    }
+
+    /**
+     * Method to save all lesson.
+     * @param lessons to be saved.
+     * @return Result object that contains flag, status code, message.
+     */
+    public void saveAll(List<Lesson> lessons) {
+        lessonRepository.saveAll(lessons);
     }
     /**
      * Method to find all lesson.
@@ -99,5 +111,19 @@ public class LessonService {
         homeworkRepository.save(exam);
         currLesson.setExam(exam);
         lessonRepository.save(currLesson);
+    }
+
+    public void saveGrammarMeanings(String lessonId, List<String> grammarMeanings) {
+        Lesson lesson = lessonRepository.findById(lessonId).get();
+        lesson.setGrammarMeaning(grammarMeanings);
+        lessonRepository.save(lesson);
+    }
+
+    public List<String> getSavedGrammarMeanings(String lessonId) {
+        Optional<Lesson> lesson = lessonRepository.findById(lessonId);
+        if (lesson.isPresent()) {
+            return lesson.get().getGrammarMeaning();
+        }
+        return new ArrayList<>();
     }
 }

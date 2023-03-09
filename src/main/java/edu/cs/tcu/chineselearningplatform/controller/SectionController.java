@@ -60,10 +60,10 @@ public class SectionController {
      * @param section to be saved.
      * @return Result object that contains flag, status code, message.
      */
-    @PostMapping
+    @PostMapping("/{username}")
     @ResponseBody
-    public Result save(@RequestBody Section newSection) {
-        sectionService.save(newSection);
+    public Result save(@RequestBody Section newSection, @PathVariable String username) {
+        sectionService.save(newSection,username);
         return new Result(true, StatusCode.SUCCESS, "Save section success");
     }
 

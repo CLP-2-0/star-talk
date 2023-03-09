@@ -3,6 +3,7 @@ package edu.cs.tcu.chineselearningplatform.entity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ public class Lesson implements Serializable {
     private String id;
     private String title;
     private String content;
+    private int order;
     @DBRef
     private List<Vocab> vocabs = new ArrayList<>();
     @DBRef
@@ -22,6 +24,15 @@ public class Lesson implements Serializable {
     private List<Question> examBank = new ArrayList<>();
     private Homework exam;
 
+    private List<String> grammarMeaning = new ArrayList<>();
+
+    public List<String> getGrammarMeaning() {
+        return grammarMeaning;
+    }
+
+    public void setGrammarMeaning(List<String> grammarMeaning) {
+        this.grammarMeaning = grammarMeaning;
+    }
 
     public Lesson() {
 
@@ -96,6 +107,14 @@ public class Lesson implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
     }
 
     public List<Vocab> getVocabs() {

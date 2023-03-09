@@ -15,7 +15,10 @@ public class User implements Serializable {
     private String id;
     private String nickname;
     private String username;
+    private String lastname;
+    private String firstname;
     private String email;
+    private String email_verified;
     private String picture;
     private String role;
     @DBRef
@@ -23,6 +26,9 @@ public class User implements Serializable {
 
     @DBRef
     private List<Section> courses = new ArrayList<>();
+
+    @DBRef
+    private List<TopicAnswer> topicAnswer = new ArrayList<>();
 
 
 //    public User(String username) {
@@ -103,6 +109,43 @@ public class User implements Serializable {
 
     public void setCourses(Section courses) {
         this.courses.add(courses);
+    }
+
+    @JsonIgnore
+    public List<TopicAnswer> getTopicAnswer() {
+        return topicAnswer;
+    }
+
+    public void setTopicAnswer(List<TopicAnswer> topicAnswer) {
+        this.topicAnswer = topicAnswer;
+    }
+
+
+
+
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getEmail_verified() {
+        return email_verified;
+    }
+
+    public void setEmail_verified(String email_verified) {
+        this.email_verified = email_verified;
     }
 
     @Override

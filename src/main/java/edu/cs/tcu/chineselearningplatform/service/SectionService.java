@@ -55,10 +55,11 @@ public class SectionService {
     /**
      * Method to save one section.
      * @param section to be saved.
+     * @param username
      * @return Result object that contains flag, status code, message.
      */
-    public void save(Section newSection) {
-        User user = userRepository.findAll().get(0);
+    public void save(Section newSection, String username) {
+        User user = userRepository.findByUsername(username);
         newSection.setInstructor(user);
         user.addSection(newSection);
         sectionRepository.save(newSection);
