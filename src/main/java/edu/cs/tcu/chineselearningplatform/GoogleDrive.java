@@ -79,7 +79,7 @@ public class GoogleDrive {
                 .setAccessType("offline")
                 .build();
 //        LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
-        LocalServerReceiver receiver = new LocalServerReceiver.Builder().setHost("20.119.8.24").setPort(8888).build();
+        LocalServerReceiver receiver = new LocalServerReceiver.Builder().setHost("https://clp-backend.azurewebsites.net").setPort(8888).build();
         Credential credential = new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
         //returns an authorized Credential object.
         return credential;
