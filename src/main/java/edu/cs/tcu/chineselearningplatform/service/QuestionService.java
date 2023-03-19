@@ -47,6 +47,14 @@ public class QuestionService {
         lessonService.save(lesson);
     }
 
+    public void saveExamQuestion(Question newQuestion, String lessonId) {
+        Lesson lesson = lessonService.findById(lessonId);
+        lesson.addEQuestion(newQuestion);
+        System.out.println(lessonId);
+        questionRepository.save(newQuestion);
+        lessonService.save(lesson);
+    }
+
     /**
      * Method to find all homework.
      * @param

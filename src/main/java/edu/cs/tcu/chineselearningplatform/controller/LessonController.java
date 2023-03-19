@@ -15,44 +15,52 @@ import java.util.List;
 public class LessonController {
     private LessonService lessonService;
 
-    public LessonController(LessonService lessonService){
+    public LessonController(LessonService lessonService) {
         this.lessonService = lessonService;
     }
+
     /**
      * Method to find all lesson.
+     *
      * @param
      * @return Result object that contains flag, status code, message, and found lesson.
      */
     @GetMapping
     @ResponseBody
-    public Result findAll(){
+    public Result findAll() {
         List<Lesson> all = lessonService.findAll();
-        return new Result(true,StatusCode.SUCCESS,"Find all lessons", all);
+        return new Result(true, StatusCode.SUCCESS, "Find all lessons", all);
     }
+
     /**
      * Method to update one lesson.
+     *
      * @param lesson to be updated.
      * @return Result object that contains flag, status code, message.
      */
     @PutMapping("/{lessonId}")
     @ResponseBody
-    public Result update(@PathVariable String lessonId, @RequestBody Lesson updatedLesson){
-        lessonService.update(lessonId,updatedLesson);
+    public Result update(@PathVariable String lessonId, @RequestBody Lesson updatedLesson) {
+        lessonService.update(lessonId, updatedLesson);
         return new Result(true, StatusCode.SUCCESS, "Update lesson success");
     }
+
     /**
      * Method to delte one lesson.
+     *
      * @param lesson to be deleted.
      * @return Result object that contains flag, status code, message.
      */
     @DeleteMapping("/{lessonId}")
     @ResponseBody
-    public Result delete(@PathVariable String lessonId){
+    public Result delete(@PathVariable String lessonId) {
         lessonService.delete(lessonId);
-        return new Result(true,StatusCode.SUCCESS,"Delete lesson success");
+        return new Result(true, StatusCode.SUCCESS, "Delete lesson success");
     }
+
     /**
      * Method to find one lesson.
+     *
      * @param id of the lesson to be sought.
      * @return Result object that contains flag, status code, message, and found lesson.
      */
@@ -64,6 +72,7 @@ public class LessonController {
 
     /**
      * Method to save one lesson.
+     *
      * @param lesson to be saved.
      * @return Result object that contains flag, status code, message.
      */
@@ -73,16 +82,53 @@ public class LessonController {
         lessonService.save(newLesson);
         return new Result(true, StatusCode.SUCCESS, "Save lesson success");
     }
+
+    /**
+     * Method to save all lesson.
+     *
+     * @param lessons to be saved.
+     * @return Result object that contains flag, status code, message.
+     */
+    @PostMapping("/saveAllLessons")
+    @ResponseBody
+    public Result saveAll(@RequestBody List<Lesson> lessons) {
+        lessonService.saveAll(lessons);
+        return new Result(true, StatusCode.SUCCESS, "Save lessons success");
+    }
+
     /**
      * Method to save one homework.
+     *
      * @param homework to be saved.
      * @return Result object that contains flag, status code, message.
      */
     @PostMapping("/homework/{lid}")
     @ResponseBody
-    public Result save(@RequestBody List<GradedQuestion> questions, @PathVariable String lid) {
+    public Result saveHomework(@RequestBody List<GradedQuestion> questions, @PathVariable String lid) {
         lessonService.savePredefinedHomework(lid, questions);
         return new Result(true, StatusCode.SUCCESS, "Save homework success");
+    }
+
+
+    @PostMapping("/exam/{lid}/{time}")
+    @ResponseBody
+    public Result saveExam(@RequestBody List<GradedQuestion> questions, @PathVariable String lid, @PathVariable String time) {
+        lessonService.saveExam(lid, questions, time);
+        return new Result(true, StatusCode.SUCCESS, "Save exam success");
+    }
+
+    @PostMapping("/{lessonId}/grammars")
+    @ResponseBody
+    public Result setAllGrammarMeanings(@PathVariable("lessonId") String lessonId, @RequestBody List<String> grammarMeanings) {
+        lessonService.saveGrammarMeanings(lessonId, grammarMeanings);
+        return new Result(true, StatusCode.SUCCESS, "Find all grammar");
+    }
+
+    @GetMapping("/{lessonId}/grammar-meanings")
+    @ResponseBody
+    public Result getAllGrammarMeanings(@PathVariable("lessonId") String lessonId) {
+        List<String> grammarMeanings = lessonService.getSavedGrammarMeanings(lessonId);
+        return new Result(true, StatusCode.SUCCESS, "getallgrammarmeanings success", grammarMeanings);
     }
 
 }

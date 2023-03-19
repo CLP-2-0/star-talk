@@ -1,5 +1,8 @@
 package edu.cs.tcu.chineselearningplatform.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import edu.cs.tcu.chineselearningplatform.entity.Exam;
+import edu.cs.tcu.chineselearningplatform.entity.ExamAnswer;
 import edu.cs.tcu.chineselearningplatform.entity.Lesson;
 import edu.cs.tcu.chineselearningplatform.entity.Section;
 import edu.cs.tcu.chineselearningplatform.entity.util.Result;
@@ -7,6 +10,10 @@ import edu.cs.tcu.chineselearningplatform.entity.util.StatusCode;
 import edu.cs.tcu.chineselearningplatform.service.SectionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.util.List;
 
 @Controller
 @RequestMapping("/sections")
@@ -53,10 +60,10 @@ public class SectionController {
      * @param section to be saved.
      * @return Result object that contains flag, status code, message.
      */
-    @PostMapping
+    @PostMapping("/{username}")
     @ResponseBody
-    public Result save(@RequestBody Section newSection) {
-        sectionService.save(newSection);
+    public Result save(@RequestBody Section newSection, @PathVariable String username) {
+        sectionService.save(newSection,username);
         return new Result(true, StatusCode.SUCCESS, "Save section success");
     }
 
@@ -71,6 +78,33 @@ public class SectionController {
     public Result assignStudent(@PathVariable String sectionId,@PathVariable String studentId){
         sectionService.assignStudent(sectionId,studentId);
         return new Result(true, StatusCode.SUCCESS, "Student joined success");
+    }
+
+    @PostMapping("/exam/{sid}/{lid}")
+    @ResponseBody
+    public Result saveExam(@RequestBody Exam exam, @PathVariable String sid, @PathVariable String lid) {
+        sectionService.saveExam(sid, lid, exam);
+        return new Result(true, StatusCode.SUCCESS, "Save exam success");
+    }
+
+    @GetMapping("/exam/{sid}/{lid}")
+    @ResponseBody
+    public Result getExam(@PathVariable String sid, @PathVariable String lid) {
+        return new Result(true, StatusCode.SUCCESS, "Find exam by section success", sectionService.getExamBySection(sid,lid));
+    }
+
+    @PostMapping("/submission/{sid}/{lid}")
+    @ResponseBody
+    public Result saveSubmission(@RequestBody List<ExamAnswer> answers, @PathVariable String sid, @PathVariable String lid) throws IOException, GeneralSecurityException {
+        sectionService.saveExamSubmission(answers, sid, lid);
+        return new Result(true, StatusCode.SUCCESS, "Save exam submission success");
+    }
+
+    @PutMapping("/submission/{sid}/{lid}/{idx}")
+    @ResponseBody
+    public Result gradeSubmission(@RequestBody List<ExamAnswer> answers, @PathVariable String sid, @PathVariable String lid, @PathVariable Integer idx) throws JsonProcessingException {
+        sectionService.gradeExamSubmission(answers, sid, lid, idx);
+        return new Result(true, StatusCode.SUCCESS, "Grade exam submission success");
     }
 
 }

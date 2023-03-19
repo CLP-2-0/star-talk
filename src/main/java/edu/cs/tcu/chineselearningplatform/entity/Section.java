@@ -22,6 +22,7 @@ public class Section implements Serializable {
     @DBRef
     private List<User> students = new ArrayList<>();
     private Map<String, String> homeworkMap = new HashMap<>();
+    private Map<String, String> examMap = new HashMap<>();
 
     public Section() {
 
@@ -89,5 +90,25 @@ public class Section implements Serializable {
     public void removeStudent(User student){
         student.setCourses(null);
         this.students.remove(student);
+    }
+
+    public Map<String, String> getExamMap() {
+        return examMap;
+    }
+
+    public void setExamMap(Map<String, String> examMap) {
+        this.examMap = examMap;
+    }
+
+    public String addExam(String lesson, String exam) {
+        if(examMap.containsKey(lesson)){
+            String oldExam = examMap.get(lesson);
+            examMap.put(lesson, exam);
+            return oldExam;
+        }
+        examMap.put(lesson, exam);
+        System.out.println("after put");
+
+        return null;
     }
 }

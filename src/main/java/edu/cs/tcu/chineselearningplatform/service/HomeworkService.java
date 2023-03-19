@@ -1,8 +1,6 @@
 package edu.cs.tcu.chineselearningplatform.service;
 
-import edu.cs.tcu.chineselearningplatform.dao.GradedQuestionRepository;
-import edu.cs.tcu.chineselearningplatform.dao.HomeworkRepository;
-import edu.cs.tcu.chineselearningplatform.dao.SectionRepository;
+import edu.cs.tcu.chineselearningplatform.dao.*;
 import edu.cs.tcu.chineselearningplatform.entity.*;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
@@ -16,6 +14,7 @@ public class HomeworkService {
     private LessonService lessonService;
     private SectionRepository sectionRepository;
     private GradedQuestionRepository gradedQuestionRepository;
+
     public HomeworkService(HomeworkRepository homeworkRepository, SectionService sectionService, LessonService lessonService, SectionRepository sectionRepository, GradedQuestionRepository gradedQuestionRepository){
         this.homeworkRepository = homeworkRepository;
         this.sectionService = sectionService;

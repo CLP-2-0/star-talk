@@ -32,6 +32,13 @@ public class QuestionController {
         return new Result(true, StatusCode.SUCCESS, "Save question success");
     }
 
+    @PostMapping("/e/{lessonId}")
+    @ResponseBody
+    public Result saveExamQuestion( @RequestBody Question newQuestion, @PathVariable String lessonId) {
+        questionService.saveExamQuestion(newQuestion, lessonId);
+        return new Result(true, StatusCode.SUCCESS, "Save question success");
+    }
+
     /**
      * Method to find one question.
      * @param id of the question to be sought.

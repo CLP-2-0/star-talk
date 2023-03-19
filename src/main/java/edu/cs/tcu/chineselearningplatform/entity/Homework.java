@@ -16,7 +16,7 @@ public class Homework implements Serializable {
     private Lesson lesson;
     @DBRef
     private List<GradedQuestion> questionList = new ArrayList<>();
-    private List<Integer> points = new ArrayList<>();
+    private String time;
 
     public Homework(){
 
@@ -46,14 +46,6 @@ public class Homework implements Serializable {
         this.lesson = lesson;
     }
 
-    public List<Integer> getPoints() {
-        return points;
-    }
-
-    public void setGrade(List<Integer> points) {
-        this.points = points;
-    }
-
     public List<GradedQuestion> getQuestionList() {
         return questionList;
     }
@@ -62,5 +54,12 @@ public class Homework implements Serializable {
         this.questionList = questionList;
     }
 
+    public String getTime() {
+        return time;
+    }
 
+
+    public void setTime(String time) {
+        this.time = time;
+    }
 }
