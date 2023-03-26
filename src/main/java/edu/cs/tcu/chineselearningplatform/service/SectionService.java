@@ -2,10 +2,7 @@ package edu.cs.tcu.chineselearningplatform.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import edu.cs.tcu.chineselearningplatform.GoogleDrive;
-import edu.cs.tcu.chineselearningplatform.dao.ExamAnswerRepository;
-import edu.cs.tcu.chineselearningplatform.dao.ExamRepository;
-import edu.cs.tcu.chineselearningplatform.dao.SectionRepository;
-import edu.cs.tcu.chineselearningplatform.dao.UserRepository;
+import edu.cs.tcu.chineselearningplatform.dao.*;
 import edu.cs.tcu.chineselearningplatform.entity.*;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
@@ -23,15 +20,20 @@ public class SectionService {
     private ExamRepository examRepository;
     private LessonService lessonService;
     private ExamAnswerRepository examAnswerRepository;
-    private GoogleDrive googleDrive = new GoogleDrive();
+    private LessonRepository lessonRepository;
+    private GradedQuestionRepository gradedQuestionRepository;
+    private HomeworkRepository homeworkRepository;
 
-    public SectionService(SectionRepository sectionRepository, UserRepository userRepository, UserService userService, ExamRepository examRepository, LessonService lessonService, ExamAnswerRepository examAnswerRepository){
+    public SectionService(SectionRepository sectionRepository, UserRepository userRepository, UserService userService, ExamRepository examRepository, LessonService lessonService, ExamAnswerRepository examAnswerRepository, LessonRepository lessonRepository, GradedQuestionRepository gradedQuestionRepository, HomeworkRepository homeworkRepository){
         this.sectionRepository = sectionRepository;
         this.userRepository = userRepository;
         this.userService = userService;
         this.examRepository = examRepository;
         this.lessonService = lessonService;
         this.examAnswerRepository = examAnswerRepository;
+        this.lessonRepository = lessonRepository;
+        this.gradedQuestionRepository = gradedQuestionRepository;
+        this.homeworkRepository = homeworkRepository;
     }
 
     /**
@@ -87,12 +89,29 @@ public class SectionService {
 
     }
 
-    public void saveExam(String sid, String lid, Exam exam) {
-        examRepository.save(exam);
-        Section currSection = findById(sid).get();
-        Lesson currLesson = lessonService.findById(lid);
-        String updateOldExam = currSection.addExam(lid, exam.getId());
+    public void saveExamContent(String lessonId, List<GradedQuestion> questions, String time) {
 
+    }
+
+    public void saveExam(String sid, String lid, String start, String day, String length, List<GradedQuestion> questions) {
+        for(GradedQuestion q: questions) {
+            gradedQuestionRepository.save(q);
+        }
+        Homework examContent = new Homework();
+        examContent.setQuestionList(questions);
+        homeworkRepository.save(examContent);
+
+        Exam exam = new Exam();
+        exam.setExam(examContent);
+        exam.setLength(length);
+        exam.setStartTime(start);
+        exam.setStartDate(day);
+        examRepository.save(exam);
+
+        Lesson currLesson = lessonService.findById(lid);
+        Section currSection = findById(sid).get();
+        String updateOldExam = currSection.addExam(lid, exam.getId());
+        System.out.println(exam.getLength());
         sectionRepository.save(currSection);
 
         if(updateOldExam != null) {
@@ -105,7 +124,7 @@ public class SectionService {
     public Exam getExamBySection(String sid, String lid) {
         Section currSection = findById(sid).get();
         String examId = currSection.getExamMap().get(lid);
-        Exam exam = examRepository.findByObjectId(new ObjectId(examId));
+        Exam exam = examRepository.findById(examId).get();
         return exam;
 
     }
@@ -113,12 +132,12 @@ public class SectionService {
     public void saveExamSubmission(List<ExamAnswer> answers, String sid, String lid) throws IOException, GeneralSecurityException {
         for(ExamAnswer a: answers){
             Answer ans = a.getAnswer();
-            if(ans.getType().equals("audio")){
-                String base64 = ans.getKey();
-                //Get file ID from google drive
-                String fid = googleDrive.uploadFile(base64, a.getStudent());
-                ans.setKey(fid);
-            }
+//            if(ans.getType().equals("audio")){
+//                String base64 = ans.getKey();
+//                //Get file ID from google drive
+////                String fid = googleDrive.uploadFile(base64, a.getStudent());
+//                ans.setKey(fid);
+//            }
             examAnswerRepository.save(a);
         }
         Exam exam = getExamBySection(sid, lid);
@@ -138,6 +157,10 @@ public class SectionService {
         exam.addToGradeMap(student, grade);
         examRepository.save(exam);
 
+    }
+
+    public void saveSection(Section section) {
+        sectionRepository.save(section);
     }
 
 }

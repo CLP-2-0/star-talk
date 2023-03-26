@@ -18,6 +18,7 @@ public class GradedQuestionService {
     private GradedQuestionRepository gradedQuestionRepository;
     private AnswerRepository answerRepository;
     private GoogleDrive googleDrive = new GoogleDrive();
+
     public GradedQuestionService(GradedQuestionRepository gradedQuestionRepository, AnswerRepository answerRepository){
         this.gradedQuestionRepository = gradedQuestionRepository;
         this.answerRepository = answerRepository;
@@ -31,12 +32,7 @@ public class GradedQuestionService {
     public void saveAnswerToAQuestion(Answer answer, String username, String questionId) throws IOException, GeneralSecurityException {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         answer.setUsername(timestamp.getTime() + "_" +username);
-        if(answer.getType().equals("audio")){
-            String base64 = answer.getKey();
-            //Get file ID from google drive
-            String fid = googleDrive.uploadFile(base64, answer.getUsername());
-            answer.setKey(fid);
-        }
+
         answerRepository.save(answer);
         GradedQuestion question = findGradedQuestion(questionId);
         question.addAnswer(answer);

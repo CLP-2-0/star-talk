@@ -23,6 +23,8 @@ public class Section implements Serializable {
     private List<User> students = new ArrayList<>();
     private Map<String, String> homeworkMap = new HashMap<>();
     private Map<String, String> examMap = new HashMap<>();
+    private Map<String, String> questionBankMap = new HashMap<>();
+    private Map<String, String> equestionBankMap = new HashMap<>();
 
     public Section() {
 
@@ -110,5 +112,21 @@ public class Section implements Serializable {
         System.out.println("after put");
 
         return null;
+    }
+
+    public Map<String, String> getQuestionBankMap() {
+        return questionBankMap;
+    }
+
+    public void setQuestionBankMap(Map<String, String> questionBankMap) {
+        this.questionBankMap = questionBankMap;
+    }
+
+    public Map<String, String> getEquestionBankMap() {
+        return equestionBankMap;
+    }
+
+    public void setEquestionBankMap(Map<String, String> equestionBankMap) {
+        this.equestionBankMap = equestionBankMap;
     }
 }
