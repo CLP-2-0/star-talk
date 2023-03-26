@@ -97,4 +97,30 @@ public class QuestionController {
         questionService.delete(questionId);
         return new Result(true,StatusCode.SUCCESS,"Delete question success");
     }
+
+    @PostMapping("/{lessonId}/{sid}")
+    @ResponseBody
+    public Result saveQuestionToSec( @RequestBody Question newQuestion, @PathVariable String lessonId, @PathVariable String sid) {
+        questionService.saveToSec(newQuestion, lessonId, sid);
+        return new Result(true, StatusCode.SUCCESS, "Save question success");
+    }
+
+    @GetMapping("/{lessonId}/{sid}")
+    @ResponseBody
+    public Result findQuestionBankByLesson(@PathVariable String lessonId, @PathVariable String sid) {
+        return new Result(true, StatusCode.SUCCESS, "List of all questions for that lesson", questionService.getQuestionBankByLesson(lessonId, sid));
+    }
+
+    @PostMapping("/e/{lessonId}/{sid}")
+    @ResponseBody
+    public Result saveEQuestionToSec( @RequestBody Question newQuestion, @PathVariable String lessonId, @PathVariable String sid) {
+        questionService.saveEToSec(newQuestion, lessonId, sid);
+        return new Result(true, StatusCode.SUCCESS, "Save question success");
+    }
+
+    @GetMapping("/e/{lessonId}/{sid}")
+    @ResponseBody
+    public Result findEQuestionBankByLesson(@PathVariable String lessonId, @PathVariable String sid) {
+        return new Result(true, StatusCode.SUCCESS, "List of all questions for that lesson", questionService.getEQuestionBankByLesson(lessonId, sid));
+    }
 }

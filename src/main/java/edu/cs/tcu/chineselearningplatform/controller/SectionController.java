@@ -1,10 +1,7 @@
 package edu.cs.tcu.chineselearningplatform.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import edu.cs.tcu.chineselearningplatform.entity.Exam;
-import edu.cs.tcu.chineselearningplatform.entity.ExamAnswer;
-import edu.cs.tcu.chineselearningplatform.entity.Lesson;
-import edu.cs.tcu.chineselearningplatform.entity.Section;
+import edu.cs.tcu.chineselearningplatform.entity.*;
 import edu.cs.tcu.chineselearningplatform.entity.util.Result;
 import edu.cs.tcu.chineselearningplatform.entity.util.StatusCode;
 import edu.cs.tcu.chineselearningplatform.service.SectionService;
@@ -79,10 +76,10 @@ public class SectionController {
         return new Result(true, StatusCode.SUCCESS, "Student joined success");
     }
 
-    @PostMapping("/exam/{sid}/{lid}")
+    @PostMapping("/exam/{sid}/{lid}/{start}/{day}/{length}")
     @ResponseBody
-    public Result saveExam(@RequestBody Exam exam, @PathVariable String sid, @PathVariable String lid) {
-        sectionService.saveExam(sid, lid, exam);
+    public Result saveExam(@RequestBody List<GradedQuestion> questions, @PathVariable String sid, @PathVariable String lid, @PathVariable String start, @PathVariable String day, @PathVariable String length) {
+        sectionService.saveExam(sid, lid, start, day, length, questions);
         return new Result(true, StatusCode.SUCCESS, "Save exam success");
     }
 
