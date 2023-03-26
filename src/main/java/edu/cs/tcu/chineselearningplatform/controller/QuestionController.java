@@ -98,6 +98,7 @@ public class QuestionController {
         return new Result(true,StatusCode.SUCCESS,"Delete question success");
     }
 
+
     @PostMapping("/{lessonId}/{sid}")
     @ResponseBody
     public Result saveQuestionToSec( @RequestBody Question newQuestion, @PathVariable String lessonId, @PathVariable String sid) {
@@ -124,3 +125,4 @@ public class QuestionController {
         return new Result(true, StatusCode.SUCCESS, "List of all questions for that lesson", questionService.getEQuestionBankByLesson(lessonId, sid));
     }
 }
+

@@ -45,4 +45,3 @@ public class GradedQuestionService {
         return question.getAnswerList();
     }
 }
-

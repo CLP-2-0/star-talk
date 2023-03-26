@@ -48,6 +48,13 @@ public class UserController {
         return new Result(true, StatusCode.SUCCESS, "Update user success");
     }
 
+//    @PutMapping("/{username}/picture")
+//    @ResponseBody
+//    public Result updatePicture(@PathVariable String username, @RequestBody String picture){
+//        userService.update(username, picture);
+//        return new Result(true, StatusCode.SUCCESS, "Update user success");
+//    }
+
     @DeleteMapping("/{username}")
     @ResponseBody
     public Result delete(@PathVariable String username){

@@ -64,6 +64,7 @@ public class SectionController {
         return new Result(true, StatusCode.SUCCESS, "Save section success");
     }
 
+
     /**
      * Method to add student to course/section (Student join course/section).
      * @param "sectionId" of the section the student belongs to, student Id of the student.
@@ -104,3 +105,4 @@ public class SectionController {
     }
 
 }
+

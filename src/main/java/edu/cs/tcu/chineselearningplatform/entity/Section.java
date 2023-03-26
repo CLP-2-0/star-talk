@@ -82,6 +82,7 @@ public class Section implements Serializable {
         this.students = students;
     }
 
+
     public void addStudent(User student){
 
         student.setCourses(this);
