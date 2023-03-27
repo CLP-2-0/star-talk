@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
@@ -17,9 +18,12 @@ public class Exam implements Serializable {
     private String id;
     private String startTime;
     private String startDate;
+    private String length;
     private List<List<ExamAnswer>> submissions = new ArrayList<>();
     @JsonInclude(JsonInclude.Include.ALWAYS)
     private HashMap<String, Integer> gradeMap = new HashMap<>();
+    @DBRef
+    private Homework exam;
 
     public String getId() {
         return id;
@@ -79,5 +83,21 @@ public class Exam implements Serializable {
         gradeMap.put(username, grade);
         System.out.println(gradeMap);
         System.out.println(getGradeMap());
+    }
+
+    public String getLength() {
+        return length;
+    }
+
+    public void setLength(String length) {
+        this.length = length;
+    }
+
+    public Homework getExam() {
+        return exam;
+    }
+
+    public void setExam(Homework exam) {
+        this.exam = exam;
     }
 }
