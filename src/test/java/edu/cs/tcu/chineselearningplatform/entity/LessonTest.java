@@ -8,6 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @SpringBootTest
 public class LessonTest {
 
@@ -29,8 +31,8 @@ public class LessonTest {
         List<Vocab> expectedVocabs = new ArrayList<>();
         expectedVocabs.add(vocab);
 
-        Assertions.assertEquals(expectedVocabs, lesson.getVocabs());
-        Assertions.assertEquals(lesson, vocab.getLesson());
+        assertEquals(expectedVocabs, lesson.getVocabs());
+        assertEquals(lesson, vocab.getLesson());
     }
 
     @Test
@@ -44,7 +46,7 @@ public class LessonTest {
 
         List<Vocab> expectedVocabs = new ArrayList<>();
 
-        Assertions.assertEquals(expectedVocabs, lesson.getVocabs());
+        assertEquals(expectedVocabs, lesson.getVocabs());
         Assertions.assertNull(vocab.getLesson());
     }
 
@@ -64,8 +66,8 @@ public class LessonTest {
         List<Vocab> expectedVocabs = new ArrayList<>();
         expectedVocabs.add(updatedVocab);
 
-        Assertions.assertEquals(expectedVocabs, lesson.getVocabs());
-        Assertions.assertEquals(lesson, updatedVocab.getLesson());
+        assertEquals(expectedVocabs, lesson.getVocabs());
+        assertEquals(lesson, updatedVocab.getLesson());
     }
 
     @Test
@@ -79,8 +81,8 @@ public class LessonTest {
         List<Question> expectedQuestions = new ArrayList<>();
         expectedQuestions.add(question);
 
-        Assertions.assertEquals(expectedQuestions, lesson.getQuestionsBank());
-        Assertions.assertEquals(lesson, question.getLesson());
+        assertEquals(expectedQuestions, lesson.getQuestionsBank());
+        assertEquals(lesson, question.getLesson());
     }
 
     @Test
@@ -94,7 +96,7 @@ public class LessonTest {
 
         List<Question> expectedQuestions = new ArrayList<>();
 
-        Assertions.assertEquals(expectedQuestions, lesson.getQuestionsBank());
+        assertEquals(expectedQuestions, lesson.getQuestionsBank());
         Assertions.assertNull(question.getLesson());
     }
 
@@ -107,7 +109,7 @@ public class LessonTest {
         questionsBank.add(question2);
         lesson.setQuestionsBank(questionsBank);
 
-        Assertions.assertEquals(questionsBank, lesson.getQuestionsBank());
+        assertEquals(questionsBank, lesson.getQuestionsBank());
     }
 
     @Test
@@ -119,7 +121,7 @@ public class LessonTest {
         questionsBank.add(question2);
         lesson.setQuestionsBank(questionsBank);
 
-        Assertions.assertEquals(questionsBank, lesson.getQuestionsBank());
+        assertEquals(questionsBank, lesson.getQuestionsBank());
     }
 
     @Test
@@ -127,7 +129,7 @@ public class LessonTest {
         String id = "lesson123";
         lesson.setId(id);
 
-        Assertions.assertEquals(id, lesson.getId());
+        assertEquals(id, lesson.getId());
     }
 
     @Test
@@ -135,7 +137,7 @@ public class LessonTest {
         String id = "lesson123";
         lesson.setId(id);
 
-        Assertions.assertEquals(id, lesson.getId());
+        assertEquals(id, lesson.getId());
     }
 
     @Test
@@ -143,7 +145,7 @@ public class LessonTest {
         String title = "Lesson Title";
         lesson.setTitle(title);
 
-        Assertions.assertEquals(title, lesson.getTitle());
+        assertEquals(title, lesson.getTitle());
     }
 
     @Test
@@ -151,7 +153,7 @@ public class LessonTest {
         String title = "Lesson Title";
         lesson.setTitle(title);
 
-        Assertions.assertEquals(title, lesson.getTitle());
+        assertEquals(title, lesson.getTitle());
     }
 
     @Test
@@ -159,7 +161,7 @@ public class LessonTest {
         String content = "Lesson Content";
         lesson.setContent(content);
 
-        Assertions.assertEquals(content, lesson.getContent());
+        assertEquals(content, lesson.getContent());
     }
 
     @Test
@@ -167,7 +169,7 @@ public class LessonTest {
         String content = "Lesson Content";
         lesson.setContent(content);
 
-        Assertions.assertEquals(content, lesson.getContent());
+        assertEquals(content, lesson.getContent());
     }
 
     @Test
@@ -179,7 +181,7 @@ public class LessonTest {
         vocabs.add(vocab2);
         lesson.setVocabs(vocabs);
 
-        Assertions.assertEquals(vocabs, lesson.getVocabs());
+        assertEquals(vocabs, lesson.getVocabs());
     }
 
     @Test
@@ -191,7 +193,7 @@ public class LessonTest {
         vocabs.add(vocab2);
         lesson.setVocabs(vocabs);
 
-        Assertions.assertEquals(vocabs, lesson.getVocabs());
+        assertEquals(vocabs, lesson.getVocabs());
     }
 
 
@@ -201,7 +203,7 @@ public class LessonTest {
         Lesson lesson = new Lesson();
         Homework homework = new Homework();
         lesson.setPredefined(homework);
-        Assertions.assertEquals(homework, lesson.getPredefined());
+        assertEquals(homework, lesson.getPredefined());
     }
 
     @Test
@@ -209,12 +211,134 @@ public class LessonTest {
         Lesson lesson = new Lesson();
         Homework homework = new Homework();
         lesson.setPredefined(homework);
-        Assertions.assertEquals(homework, lesson.getPredefined());
+        assertEquals(homework, lesson.getPredefined());
 
         Homework newHomework = new Homework();
         lesson.setPredefined(newHomework);
-        Assertions.assertEquals(newHomework, lesson.getPredefined());
+        assertEquals(newHomework, lesson.getPredefined());
     }
 
+    @Test
+    public void testGetAndSetGrammarMeaning() {
+        // create a new lesson
+        Lesson lesson = new Lesson();
+
+        // create a list of grammar meanings
+        List<String> grammarMeaningList = new ArrayList<>();
+        grammarMeaningList.add("grammar meaning 1");
+        grammarMeaningList.add("grammar meaning 2");
+
+        // set the grammar meanings
+        lesson.setGrammarMeaning(grammarMeaningList);
+
+        // check that the get method returns the correct list of grammar meanings
+        assertEquals(grammarMeaningList, lesson.getGrammarMeaning());
+
+        // create a new list of grammar meanings
+        List<String> newGrammarMeaningList = new ArrayList<>();
+        newGrammarMeaningList.add("new grammar meaning 1");
+        newGrammarMeaningList.add("new grammar meaning 2");
+
+        // set the new grammar meanings
+        lesson.setGrammarMeaning(newGrammarMeaningList);
+
+        // check that the get method returns the new list of grammar meanings
+        assertEquals(newGrammarMeaningList, lesson.getGrammarMeaning());
+    }
+
+    @Test
+    void testGetExamBank() {
+        // create a lesson with an exam bank
+        Lesson lesson = new Lesson();
+        List<Question> examBank = new ArrayList<>();
+        examBank.add(new Question());
+        lesson.setExamBank(examBank);
+
+        // verify that the exam bank returned by getExamBank() matches the one set above
+        Assertions.assertEquals(examBank, lesson.getExamBank());
+    }
+
+    @Test
+    void testSetExamBank() {
+        // create a lesson and a new exam bank
+        Lesson lesson = new Lesson();
+        List<Question> examBank = new ArrayList<>();
+        examBank.add(new Question());
+
+        // set the new exam bank using setExamBank()
+        lesson.setExamBank(examBank);
+
+        // verify that the exam bank returned by getExamBank() matches the one set above
+        Assertions.assertEquals(examBank, lesson.getExamBank());
+    }
+
+    @Test
+    void testAddEQuestion() {
+        // create a lesson and a new question
+        Lesson lesson = new Lesson();
+        Question question = new Question();
+
+        // add the question to the exam bank using addEQuestion()
+        lesson.addEQuestion(question);
+
+        // verify that the exam bank now contains the added question
+        Assertions.assertTrue(lesson.getExamBank().contains(question));
+        Assertions.assertEquals(lesson, question.getLesson());
+    }
+
+    @Test
+    void testRemoveEQuestion() {
+        // create a lesson with an exam bank and a question in the bank
+        Lesson lesson = new Lesson();
+        Question question = new Question();
+        lesson.addEQuestion(question);
+
+        // remove the question from the exam bank using removeEQuestion()
+        lesson.removeEQuestion(question);
+
+        // verify that the exam bank no longer contains the removed question
+        Assertions.assertFalse(lesson.getExamBank().contains(question));
+        Assertions.assertNull(question.getLesson());
+    }
+
+    @Test
+    void testGetExam() {
+        // create a lesson with an exam
+        Lesson lesson = new Lesson();
+        Homework exam = new Homework();
+        lesson.setExam(exam);
+
+        // verify that the exam returned by getExam() matches the one set above
+        Assertions.assertEquals(exam, lesson.getExam());
+    }
+
+    @Test
+    void testSetExam() {
+        // create a lesson and a new exam
+        Lesson lesson = new Lesson();
+        Homework exam = new Homework();
+
+        // set the new exam using setExam()
+        lesson.setExam(exam);
+
+        // verify that the exam returned by getExam() matches the one set above
+        Assertions.assertEquals(exam, lesson.getExam());
+    }
+
+    @Test
+    public void testSetOrder() {
+        int expectedOrder = 1;
+        lesson.setOrder(expectedOrder);
+        int actualOrder = lesson.getOrder();
+        assertEquals(expectedOrder, actualOrder);
+    }
+
+    @Test
+    public void testGetOrder() {
+        int expectedOrder = 2;
+        lesson.setOrder(expectedOrder);
+        int actualOrder = lesson.getOrder();
+        assertEquals(expectedOrder, actualOrder);
+    }
 
 }

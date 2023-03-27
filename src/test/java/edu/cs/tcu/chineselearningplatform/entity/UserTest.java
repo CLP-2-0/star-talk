@@ -1,166 +1,127 @@
 package edu.cs.tcu.chineselearningplatform.entity;
 
-import static com.mongodb.internal.connection.tlschannel.util.Util.assertTrue;
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import static com.mongodb.assertions.Assertions.assertNotNull;
+import static com.mongodb.internal.connection.tlschannel.util.Util.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@SpringBootTest
 public class UserTest {
-    private User user;
-    private Section section1;
-    private Section section2;
-
-    @Test
-    public void testGetId() {
-        User user = new User();
-        user.setId("2");
-        assertEquals("2", user.getId());
-    }
-
-    @Test
-    public void testSetId() {
-        User user = new User();
-        user.setId("2");
-        assertEquals("2", user.getId());
-    }
-
-    @Test
-    public void testGetNickname() {
-        assertEquals("Test User", user.getNickname());
-    }
-
-    @Test
-    public void testSetNickname() {
-        user.setNickname("New User");
-        assertEquals("New User", user.getNickname());
-    }
-
-    @Test
-    public void testGetUsername() {
-        assertEquals("testuser", user.getUsername());
-    }
-
-    @Test
-    public void testSetUsername() {
-        user.setUsername("newuser");
-        assertEquals("newuser", user.getUsername());
-    }
-
-    @Test
-    public void testGetEmail() {
-        assertEquals("testuser@example.com", user.getEmail());
-    }
-
-    @Test
-    public void testSetEmail() {
-        user.setEmail("newuser@example.com");
-        assertEquals("newuser@example.com", user.getEmail());
-    }
-
-    @Test
-    public void testGetPicture() {
-        assertEquals("http://example.com/testuser.jpg", user.getPicture());
-    }
-
-    @Test
-    public void testSetPicture() {
-        user.setPicture("http://example.com/newuser.jpg");
-        assertEquals("http://example.com/newuser.jpg", user.getPicture());
-    }
-
-    @Test
-    public void testGetRole() {
-        assertEquals("student", user.getRole());
-    }
-
-    @Test
-    public void testSetRole() {
-        user.setRole("instructor");
-        assertEquals("instructor", user.getRole());
-    }
 
     @Test
     public void testAddSection() {
-        user.addSection(section1);
-        List<Section> sections = new ArrayList<>();
-        sections.add(section1);
-        assertEquals(sections, user.getSections());
-        assertEquals(user, section1.getInstructor());
+        User user = new User();
+        Section section = new Section();
+
+        user.addSection(section);
+
+        assertEquals(1, user.getSections().size());
+        assertEquals(user, section.getInstructor());
     }
 
     @Test
     public void testRemoveSection() {
-        user.addSection(section1);
-        user.addSection(section2);
-        user.removeSection(section1);
-        List<Section> sections = new ArrayList<>();
-        sections.add(section2);
-        assertEquals(sections, user.getSections());
-        assertEquals(null, section1.getInstructor());
-    }
-
-    @Test
-    public void testSetSections() {
-        // create a user
         User user = new User();
+        Section section = new Section();
+        user.addSection(section);
 
-        // create two sections
-        Section section1 = new Section();
-        Section section2 = new Section();
+        user.removeSection(section);
 
-        // add the sections to a list
-        List<Section> sections = new ArrayList<>();
-        sections.add(section1);
-        sections.add(section2);
-
-        // set the list of sections for the user
-        user.setSections(sections);
-
-        // assert that the sections list for the user is equal to the original list
-        assertEquals(sections, user.getSections());
-    }
-
-    @Test
-    public void testGetCourses() {
-        User user = new User();
-        Section course1 = new Section();
-        Section course2 = new Section();
-
-        user.setCourses(course1);
-        user.setCourses(course2);
-
-        assertEquals(2, user.getCourses().size());
-        assertTrue(user.getCourses().contains(course1));
-        assertTrue(user.getCourses().contains(course2));
+        assertEquals(0, user.getSections().size());
+        Assertions.assertNull(section.getInstructor());
     }
 
     @Test
     public void testSetCourses() {
         User user = new User();
-        Section course1 = new Section();
-        Section course2 = new Section();
+        Section section = new Section();
 
-        user.setCourses(course1);
-        user.setCourses(course2);
+        user.setCourses(section);
 
-        assertEquals(2, user.getCourses().size());
-        assertTrue(user.getCourses().contains(course1));
-        assertTrue(user.getCourses().contains(course2));
+        assertEquals(1, user.getCourses().size());
+        assertEquals(section, user.getCourses().get(0));
     }
 
     @Test
-    public void testToString() {
-        String id = "123";
-        String username = "testuser";
+    public void testSetTopicAnswer() {
         User user = new User();
-        user.setId(id);
-        user.setUsername(username);
-        String expectedString = "User{id=" + id + ", username='" + username + "'}";
-        assertEquals(expectedString, user.toString());
+        TopicAnswer topicAnswer = new TopicAnswer();
+        List<TopicAnswer> topicAnswers = new ArrayList<>();
+        topicAnswers.add(topicAnswer);
+        user.setTopicAnswer(topicAnswers);
+        List<TopicAnswer> userTopicAnswers = user.getTopicAnswer();
+        assertNotNull(userTopicAnswers);
+        assertEquals(1, userTopicAnswers.size());
+        assertEquals(topicAnswer, userTopicAnswers.get(0));
+    }
+
+    @Test
+    public void testGettersAndSetters() {
+        User user = new User();
+        user.setId("123");
+        user.setNickname("nickname");
+        user.setUsername("username");
+        user.setLastname("lastname");
+        user.setFirstname("firstname");
+        user.setEmail("email");
+        user.setEmail_verified("verified");
+        user.setPicture("picture");
+        user.setRole("role");
+
+        List<Section> sections = new ArrayList<>();
+        Section section = new Section();
+        section.setId("sectionId");
+        sections.add(section);
+        user.setSections(sections);
+
+        List<Section> courses = new ArrayList<>();
+        Section course = new Section();
+        course.setId("courseId");
+        courses.add(course);
+        user.setCourses(course);
+
+        List<TopicAnswer> topicAnswers = new ArrayList<>();
+        TopicAnswer topicAnswer = new TopicAnswer();
+        topicAnswer.setId("topicAnswerId");
+        topicAnswers.add(topicAnswer);
+        user.setTopicAnswer(topicAnswers);
+
+        assertEquals("123", user.getId());
+        assertEquals("nickname", user.getNickname());
+        assertEquals("username", user.getUsername());
+        assertEquals("lastname", user.getLastname());
+        assertEquals("firstname", user.getFirstname());
+        assertEquals("email", user.getEmail());
+        assertEquals("verified", user.getEmail_verified());
+        assertEquals("picture", user.getPicture());
+        assertEquals("role", user.getRole());
+
+        assertTrue(user.getSections().contains(section));
+        assertEquals(1, user.getSections().size());
+
+        assertTrue(user.getCourses().contains(course));
+        assertEquals(1, user.getCourses().size());
+
+        assertTrue(user.getTopicAnswer().contains(topicAnswer));
+        assertEquals(1, user.getTopicAnswer().size());
+    }
+
+    @Test
+    void testToString() {
+        User user = new User();
+        user.setId("123");
+        user.setUsername("johnDoe");
+
+        String expectedString = "User{id=123, username='johnDoe'}";
+        String actualString = user.toString();
+
+        assertEquals(expectedString, actualString);
     }
 
 }
