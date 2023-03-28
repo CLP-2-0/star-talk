@@ -131,16 +131,11 @@ public class SectionService {
     public void saveExamSubmission(List<ExamAnswer> answers, String sid, String lid) throws IOException, GeneralSecurityException {
         for(ExamAnswer a: answers){
             Answer ans = a.getAnswer();
-//            if(ans.getType().equals("audio")){
-//                String base64 = ans.getKey();
-//                //Get file ID from google drive
-////                String fid = googleDrive.uploadFile(base64, a.getStudent());
-//                ans.setKey(fid);
-//            }
             examAnswerRepository.save(a);
         }
         Exam exam = getExamBySection(sid, lid);
         exam.addSubmission(answers);
+        exam.addTaken(answers.get(0).getStudent());
         examRepository.save(exam);
     }
 

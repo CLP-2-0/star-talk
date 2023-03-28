@@ -17,7 +17,6 @@ import java.util.List;
 public class GradedQuestionService {
     private GradedQuestionRepository gradedQuestionRepository;
     private AnswerRepository answerRepository;
-    private GoogleDrive googleDrive = new GoogleDrive();
 
     public GradedQuestionService(GradedQuestionRepository gradedQuestionRepository, AnswerRepository answerRepository){
         this.gradedQuestionRepository = gradedQuestionRepository;
@@ -43,6 +42,22 @@ public class GradedQuestionService {
         GradedQuestion question = findGradedQuestion(questionId);
 
         return question.getAnswerList();
+    }
+
+    public void saveCommentToAnAnswer(String comment, String username, String answerId) {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        System.out.println(comment);
+
+        comment = timestamp.getTime() + "_" +username+ "_"+comment;
+        Answer a = answerRepository.findById(answerId).get();
+        a.addComment(comment);
+        answerRepository.save(a);
+
+    }
+
+    public List<String> getAllCommentsForAnAnswer(String answerId) {
+        Answer a = answerRepository.findById(answerId).get();
+        return a.getCommentList();
     }
 }
 
