@@ -24,6 +24,7 @@ public class Exam implements Serializable {
     private HashMap<String, Integer> gradeMap = new HashMap<>();
     @DBRef
     private Homework exam;
+    private List<String> takenList = new ArrayList<>();
 
     public String getId() {
         return id;
@@ -99,5 +100,17 @@ public class Exam implements Serializable {
 
     public void setExam(Homework exam) {
         this.exam = exam;
+    }
+
+    public List<String> getTakenList() {
+        return takenList;
+    }
+
+    public void setTakenList(List<String> takenList) {
+        this.takenList = takenList;
+    }
+
+    public void addTaken(String username) {
+        takenList.add(username);
     }
 }

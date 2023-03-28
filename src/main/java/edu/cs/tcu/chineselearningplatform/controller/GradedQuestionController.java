@@ -55,4 +55,17 @@ public class GradedQuestionController {
     public Result findAllAnswers(@PathVariable String id) {
         return new Result(true, StatusCode.SUCCESS, "Find answers by id success", gradedQuestionService.getAllAnswerForAQuestion(id));
     }
+
+    @PostMapping("/comment/{username}/{id}/{comment}")
+    @ResponseBody
+    public Result saveTextAnswer(@PathVariable String comment, @PathVariable String username, @PathVariable String id) {
+        gradedQuestionService.saveCommentToAnAnswer(comment, username, id);
+        return new Result(true, StatusCode.SUCCESS, "Save answer success");
+    }
+
+    @GetMapping("/comments/{id}")
+    @ResponseBody
+    public Result findAllComments(@PathVariable String id) {
+        return new Result(true, StatusCode.SUCCESS, "Find answers by id success", gradedQuestionService.getAllCommentsForAnAnswer(id));
+    }
 }
