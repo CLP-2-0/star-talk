@@ -27,8 +27,6 @@ public class User implements Serializable {
     @DBRef
     private List<Section> courses = new ArrayList<>();
 
-    @DBRef
-    private List<TopicAnswer> topicAnswer = new ArrayList<>();
 
 
 //    public User(String username) {
@@ -110,19 +108,6 @@ public class User implements Serializable {
     public void setCourses(Section courses) {
         this.courses.add(courses);
     }
-
-    @JsonIgnore
-    public List<TopicAnswer> getTopicAnswer() {
-        return topicAnswer;
-    }
-
-    public void setTopicAnswer(List<TopicAnswer> topicAnswer) {
-        this.topicAnswer = topicAnswer;
-    }
-
-
-
-
 
     public String getLastname() {
         return lastname;

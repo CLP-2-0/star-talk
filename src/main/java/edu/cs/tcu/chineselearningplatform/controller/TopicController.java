@@ -20,6 +20,10 @@ public class TopicController {
         this.topicService = topicService;
     }
 
+
+    /**
+     * Method to find all topics by section.
+     */
     @GetMapping
     @ResponseBody
     public Result findAllTopic(){
@@ -34,10 +38,10 @@ public class TopicController {
         return new Result(true, StatusCode.SUCCESS, "Find by id success", topicService.findTopicById(topicId));
     }
 
-    @PostMapping
+    @PostMapping("/{sectionId}")
     @ResponseBody
-    public Result createTopic(@RequestBody ForumTopic newTopic) {
-        topicService.createTopic(newTopic);
+    public Result createTopic(@RequestBody ForumTopic newTopic, @PathVariable String sectionId) {
+        topicService.createTopic(newTopic,sectionId);
         return new Result(true, StatusCode.SUCCESS, "Save success");
     }
 

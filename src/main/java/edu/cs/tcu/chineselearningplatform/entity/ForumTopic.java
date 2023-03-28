@@ -1,8 +1,6 @@
 package edu.cs.tcu.chineselearningplatform.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,6 +9,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Document("ForumTopic")
 public class ForumTopic implements Serializable {
@@ -25,6 +24,7 @@ public class ForumTopic implements Serializable {
     @DBRef
     private List<TopicAnswer> topicAnswer = new ArrayList<>();
 
+    private String belongSection;
 
 
     public String getId() {
@@ -89,6 +89,14 @@ public class ForumTopic implements Serializable {
 
     public void setTopicAnswer(List<TopicAnswer> topicAnswer) {
         this.topicAnswer = topicAnswer;
+    }
+
+    public String getBelongSection() {
+        return belongSection;
+    }
+
+    public void setBelongSection(String belongSection) {
+        this.belongSection = belongSection;
     }
 
     public void addAnswer(TopicAnswer answer){
