@@ -53,4 +53,5 @@ public class GradedQuestion implements Serializable {
     public void addAnswer(Answer answer) {
         answerList.add(answer);
     }
+
 }

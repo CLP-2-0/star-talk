@@ -5,7 +5,6 @@ import edu.cs.tcu.chineselearningplatform.entity.*;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -86,13 +85,15 @@ public class HomeworkService {
 
     /**
      * Method to update one homework.
+     *
      * @param homework to be updated.
      * @return Result object that contains flag, status code, message.
      */
-    public void update(String homeworkId, Homework updatedHomework) {
+    public Homework update(String homeworkId, Homework updatedHomework) {
         updatedHomework.setId(homeworkId);
         homeworkRepository.save(updatedHomework);
 
+        return updatedHomework;
     }
 
     /**
