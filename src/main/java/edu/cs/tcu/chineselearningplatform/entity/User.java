@@ -21,6 +21,7 @@ public class User implements Serializable {
     private String email_verified;
     private String picture;
     private String role;
+    private String requestedRole;
     @DBRef
     private List<Section> sections = new ArrayList<>();
 
@@ -89,6 +90,14 @@ public class User implements Serializable {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getRequestedRole() {
+        return requestedRole;
+    }
+
+    public void setRequestedRole(String requestedRole) {
+        this.requestedRole = requestedRole;
     }
 
     @JsonIgnore

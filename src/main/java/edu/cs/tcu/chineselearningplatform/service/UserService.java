@@ -44,10 +44,15 @@ public class UserService {
         user.setLastname(updatedUser.getLastname());
         user.setEmail_verified(updatedUser.getEmail_verified());
         user.setPicture(updatedUser.getPicture());
+        user.setRequestedRole(updatedUser.getRequestedRole());
+        user.setRole(updatedUser.getRole());
         userRepository.save(user);
     }
 
     public void delete(String username) {
         userRepository.deleteByUsername(username);
+    }
+
+    public User findByRequestedRole(String requestedRole) {return userRepository.findByRequestedRole(requestedRole);
     }
 }
