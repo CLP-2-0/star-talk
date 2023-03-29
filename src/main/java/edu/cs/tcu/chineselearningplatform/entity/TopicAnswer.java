@@ -16,8 +16,9 @@ public class TopicAnswer implements Serializable {
     private String id;
     private String content;
 
-    @DBRef
-    private User answerCreator;
+    private String ansCreatorUsername;
+    private String ansCreator;
+    private String pictureProfile;
 
     @DBRef
     private ForumTopic topic;
@@ -70,12 +71,28 @@ public class TopicAnswer implements Serializable {
         this.lastUpdatedDate = lastUpdatedDate;
     }
 
-    public User getAnswerCreator() {
-        return answerCreator;
+    public String getAnsCreatorUsername() {
+        return ansCreatorUsername;
     }
 
-    public void setAnswerCreator(User answerCreator) {
-        this.answerCreator = answerCreator;
+    public void setAnsCreatorUsername(String ansCreatorUsername) {
+        this.ansCreatorUsername = ansCreatorUsername;
+    }
+
+    public String getAnsCreator() {
+        return ansCreator;
+    }
+
+    public void setAnsCreator(String ansCreator) {
+        this.ansCreator = ansCreator;
+    }
+
+    public String getPictureProfile() {
+        return pictureProfile;
+    }
+
+    public void setPictureProfile(String pictureProfile) {
+        this.pictureProfile = pictureProfile;
     }
 
     public List<Reply> getReplies() {

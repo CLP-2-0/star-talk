@@ -8,27 +8,25 @@ import edu.cs.tcu.chineselearningplatform.entity.TopicAnswer;
 import edu.cs.tcu.chineselearningplatform.entity.User;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class TopicAnswerService {
 
     private TopicRepository topicRepository;
     private TopicAnswerRepository topicAnswerRepository;
-    private UserRepository userRepository;
 
 
-    public TopicAnswerService(TopicRepository topicRepository, TopicAnswerRepository topicAnswerRepository, UserRepository userRepository) {
+
+    public TopicAnswerService(TopicRepository topicRepository, TopicAnswerRepository topicAnswerRepository) {
         this.topicRepository = topicRepository;
         this.topicAnswerRepository = topicAnswerRepository;
-        this.userRepository = userRepository;
     }
 
-    public void createAnswer(String topicId, TopicAnswer answer, String username) {
+    public void createAnswer(String topicId, TopicAnswer answer) {
         ForumTopic topic = topicRepository.findById(topicId).get();
-        User answerCreator = userRepository.findByUsername(username);
-        answer.setAnswerCreator(answerCreator);
         topic.addAnswer(answer);
         topicRepository.save(topic);
         topicAnswerRepository.save(answer);
-
     }
 }

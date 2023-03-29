@@ -21,14 +21,13 @@ public class User implements Serializable {
     private String email_verified;
     private String picture;
     private String role;
+    private String requestedRole;
     @DBRef
     private List<Section> sections = new ArrayList<>();
 
     @DBRef
     private List<Section> courses = new ArrayList<>();
 
-    @DBRef
-    private List<TopicAnswer> topicAnswer = new ArrayList<>();
 
 
 //    public User(String username) {
@@ -93,6 +92,14 @@ public class User implements Serializable {
         this.role = role;
     }
 
+    public String getRequestedRole() {
+        return requestedRole;
+    }
+
+    public void setRequestedRole(String requestedRole) {
+        this.requestedRole = requestedRole;
+    }
+
     @JsonIgnore
     public List<Section> getSections() {
         return sections;
@@ -110,19 +117,6 @@ public class User implements Serializable {
     public void setCourses(Section courses) {
         this.courses.add(courses);
     }
-
-    @JsonIgnore
-    public List<TopicAnswer> getTopicAnswer() {
-        return topicAnswer;
-    }
-
-    public void setTopicAnswer(List<TopicAnswer> topicAnswer) {
-        this.topicAnswer = topicAnswer;
-    }
-
-
-
-
 
     public String getLastname() {
         return lastname;

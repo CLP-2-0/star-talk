@@ -18,10 +18,10 @@ public class ReplyController {
         this.replyService = replyService;
     }
 
-    @PostMapping("/{answerId}/reply/{username}")
+    @PostMapping("/{answerId}/reply")
     @ResponseBody
-    public Result createReply(@PathVariable String answerId, @RequestBody Reply reply, @PathVariable String username){
-        replyService.createReply(answerId,reply,username);
+    public Result createReply(@PathVariable String answerId, @RequestBody Reply reply){
+        replyService.createReply(answerId,reply);
         return new Result(true, StatusCode.SUCCESS, "Reply added to TopicAns");
     }
 }

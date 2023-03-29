@@ -16,10 +16,10 @@ public class TopicAnswerController {
         this.topicAnswerService = topicAnswerService;
     }
 
-    @PostMapping("/{topicId}/answer/{username}")
+    @PostMapping("/{topicId}/answer")
     @ResponseBody
-    public Result createAnswer(@PathVariable String topicId, @RequestBody TopicAnswer answer,@PathVariable String username) {
-        topicAnswerService.createAnswer(topicId, answer, username);
+    public Result createAnswer(@PathVariable String topicId, @RequestBody TopicAnswer answer) {
+        topicAnswerService.createAnswer(topicId, answer);
         return new Result(true, StatusCode.SUCCESS, "Answer added to topic");
     }
 }

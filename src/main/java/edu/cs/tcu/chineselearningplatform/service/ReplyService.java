@@ -13,18 +13,15 @@ public class ReplyService {
 
     private ReplyRepository replyRepository;
     private TopicAnswerRepository topicAnswerRepository;
-    private UserRepository userRepository;
 
-    public ReplyService(ReplyRepository replyRepository, TopicAnswerRepository topicAnswerRepository, UserRepository userRepository) {
+    public ReplyService(ReplyRepository replyRepository, TopicAnswerRepository topicAnswerRepository) {
         this.replyRepository = replyRepository;
         this.topicAnswerRepository = topicAnswerRepository;
-        this.userRepository = userRepository;
+
     }
 
-    public void createReply(String answerId, Reply reply, String username) {
+    public void createReply(String answerId, Reply reply) {
         TopicAnswer answer = topicAnswerRepository.findById(answerId).get();
-        User replyCreator = userRepository.findByUsername(username);
-        reply.setReplyCreator(replyCreator);
         answer.addReply(reply);
         topicAnswerRepository.save(answer);
         replyRepository.save(reply);
