@@ -23,17 +23,7 @@ public class Lesson implements Serializable {
     private Homework predefined;
     private List<Question> examBank = new ArrayList<>();
     private Homework exam;
-
-    private List<String> grammarMeaning = new ArrayList<>();
-
-    public List<String> getGrammarMeaning() {
-        return grammarMeaning;
-    }
-
-    public void setGrammarMeaning(List<String> grammarMeaning) {
-        this.grammarMeaning = grammarMeaning;
-    }
-
+    private List<Grammar> grammars = new ArrayList<>();
     public Lesson() {
 
     }
@@ -159,4 +149,13 @@ public class Lesson implements Serializable {
     public void setExam(Homework exam) {
         this.exam = exam;
     }
+
+    public List<Grammar> getGrammars() {
+        return grammars;
+    }
+
+    public void setGrammars(List<Grammar> grammars) {
+        this.grammars = grammars;
+    }
+
 }
