@@ -14,8 +14,9 @@ public class Reply implements Serializable {
     private String id;
     private String content;
 
-    @DBRef
-    private User replyCreator;
+    private String repCreatorUsername;
+    private String repCreator;
+    private String pictureProfile;
 
     @DBRef
     private TopicAnswer topicAnswer;
@@ -40,13 +41,30 @@ public class Reply implements Serializable {
         this.content = content;
     }
 
-    public User getReplyCreator() {
-        return replyCreator;
+    public String getRepCreatorUsername() {
+        return repCreatorUsername;
     }
 
-    public void setReplyCreator(User replyCreator) {
-        this.replyCreator = replyCreator;
+    public void setRepCreatorUsername(String repCreatorUsername) {
+        this.repCreatorUsername = repCreatorUsername;
     }
+
+    public String getRepCreator() {
+        return repCreator;
+    }
+
+    public void setRepCreator(String repCreator) {
+        this.repCreator = repCreator;
+    }
+
+    public String getPictureProfile() {
+        return pictureProfile;
+    }
+
+    public void setPictureProfile(String pictureProfile) {
+        this.pictureProfile = pictureProfile;
+    }
+
     @JsonIgnore
     public TopicAnswer getTopicAnswer() {
         return topicAnswer;

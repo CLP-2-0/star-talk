@@ -28,6 +28,11 @@ public class UserController {
     public Result findByUserName(@PathVariable String username) {
         return new Result(true, StatusCode.SUCCESS, "Find by user by username success", userService.findByUsername(username));
     }
+    @GetMapping("/all/{requestedRole}")
+    @ResponseBody
+    public Result findByRequestedRole(@PathVariable String requestedRole) {
+        return new Result(true, StatusCode.SUCCESS, "Find by user by requested Role success", userService.findByRequestedRole(requestedRole));
+    }
     @GetMapping
     @ResponseBody
     public Result findALl(){
