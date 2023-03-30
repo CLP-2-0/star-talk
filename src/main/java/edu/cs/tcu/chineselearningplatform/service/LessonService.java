@@ -3,10 +3,7 @@ package edu.cs.tcu.chineselearningplatform.service;
 import edu.cs.tcu.chineselearningplatform.dao.GradedQuestionRepository;
 import edu.cs.tcu.chineselearningplatform.dao.HomeworkRepository;
 import edu.cs.tcu.chineselearningplatform.dao.LessonRepository;
-import edu.cs.tcu.chineselearningplatform.entity.GradedQuestion;
-import edu.cs.tcu.chineselearningplatform.entity.Homework;
-import edu.cs.tcu.chineselearningplatform.entity.Lesson;
-import edu.cs.tcu.chineselearningplatform.entity.Section;
+import edu.cs.tcu.chineselearningplatform.entity.*;
 import edu.cs.tcu.chineselearningplatform.entity.util.StatusCode;
 import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
@@ -100,29 +97,28 @@ public class LessonService {
         lessonRepository.save(currLesson);
     }
 
-    public void saveExam(String lessonId, List<GradedQuestion> questions, String time) {
+    public void saveExam(String lessonId, List<GradedQuestion> questions) {
         for(GradedQuestion q: questions) {
             gradedQuestionRepository.save(q);
         }
         Homework exam = new Homework();
         exam.setQuestionList(questions);
-        exam.setTime(time);
         Lesson currLesson = findById(lessonId);
         homeworkRepository.save(exam);
         currLesson.setExam(exam);
         lessonRepository.save(currLesson);
     }
 
-    public void saveGrammarMeanings(String lessonId, List<String> grammarMeanings) {
+    public void saveGrammarMeanings(String lessonId, List<Grammar> grammars) {
         Lesson lesson = lessonRepository.findById(lessonId).get();
-        lesson.setGrammarMeaning(grammarMeanings);
+        lesson.setGrammars(grammars);
         lessonRepository.save(lesson);
     }
 
-    public List<String> getSavedGrammarMeanings(String lessonId) {
+    public List<Grammar> getSavedGrammars(String lessonId) {
         Optional<Lesson> lesson = lessonRepository.findById(lessonId);
         if (lesson.isPresent()) {
-            return lesson.get().getGrammarMeaning();
+            return lesson.get().getGrammars();
         }
         return new ArrayList<>();
     }

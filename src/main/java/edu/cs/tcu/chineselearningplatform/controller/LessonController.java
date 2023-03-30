@@ -1,6 +1,7 @@
 package edu.cs.tcu.chineselearningplatform.controller;
 
 import edu.cs.tcu.chineselearningplatform.entity.GradedQuestion;
+import edu.cs.tcu.chineselearningplatform.entity.Grammar;
 import edu.cs.tcu.chineselearningplatform.entity.Lesson;
 import edu.cs.tcu.chineselearningplatform.entity.util.Result;
 import edu.cs.tcu.chineselearningplatform.entity.util.StatusCode;
@@ -110,25 +111,25 @@ public class LessonController {
     }
 
 
-    @PostMapping("/exam/{lid}/{time}")
+    @PostMapping("/exam/{lid}")
     @ResponseBody
-    public Result saveExam(@RequestBody List<GradedQuestion> questions, @PathVariable String lid, @PathVariable String time) {
-        lessonService.saveExam(lid, questions, time);
+    public Result saveExam(@RequestBody List<GradedQuestion> questions, @PathVariable String lid) {
+        lessonService.saveExam(lid, questions);
         return new Result(true, StatusCode.SUCCESS, "Save exam success");
     }
 
     @PostMapping("/{lessonId}/grammars")
     @ResponseBody
-    public Result setAllGrammarMeanings(@PathVariable("lessonId") String lessonId, @RequestBody List<String> grammarMeanings) {
-        lessonService.saveGrammarMeanings(lessonId, grammarMeanings);
+    public Result setAllGrammarMeanings(@PathVariable("lessonId") String lessonId, @RequestBody List<Grammar> grammars) {
+        lessonService.saveGrammarMeanings(lessonId, grammars);
         return new Result(true, StatusCode.SUCCESS, "Find all grammar");
     }
 
     @GetMapping("/{lessonId}/grammar-meanings")
     @ResponseBody
     public Result getAllGrammarMeanings(@PathVariable("lessonId") String lessonId) {
-        List<String> grammarMeanings = lessonService.getSavedGrammarMeanings(lessonId);
-        return new Result(true, StatusCode.SUCCESS, "getallgrammarmeanings success", grammarMeanings);
+        List<Grammar> grammars = lessonService.getSavedGrammars(lessonId);
+        return new Result(true, StatusCode.SUCCESS, "Find all grammars success", grammars);
     }
 
 }
