@@ -1,6 +1,5 @@
 package edu.cs.tcu.chineselearningplatform.service;
 
-import edu.cs.tcu.chineselearningplatform.GoogleDrive;
 import edu.cs.tcu.chineselearningplatform.dao.AnswerRepository;
 import edu.cs.tcu.chineselearningplatform.dao.GradedQuestionRepository;
 import edu.cs.tcu.chineselearningplatform.entity.Answer;
